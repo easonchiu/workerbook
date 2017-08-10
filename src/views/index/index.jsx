@@ -25,16 +25,29 @@ class ViewIndex extends Component {
 		super(props)
 
 		this.setData({
-			loading: true
+			loading: false
 		})
-
-		setTimeout(e => {
-			this.data.loading = false
-		}, 1000)
 	}
 
 	shouldComponentUpdate(nProps, nState) {
 		return this.props !== nProps || this.state !== nState
+	}
+
+	componentDidMount() {
+		this.init()
+	}
+
+	async init() {
+		this.data.loading = true
+
+		try {
+			await this.props.$user.fetchInfo()
+			await this.props.$group.fetchList()
+		} catch(e) {
+			console.error(e)
+		}
+
+		this.data.loading = false
 	}
 
 	renderWriter() {
@@ -63,6 +76,9 @@ class ViewIndex extends Component {
 	}
 
 	render() {
+		
+		const group = this.props.$group.list
+
 		return (
 			<div className="view-index">
 				
@@ -73,6 +89,12 @@ class ViewIndex extends Component {
 					<div className="app-body">
 						
 						{this.renderWriter()}
+
+						<Border className="date-bar">
+							<a href="javascript:;" className="active">Today</a>
+							<a href="javascript:;">Aug 8, 2017</a>
+							<a href="javascript:;">Aug 7, 2017</a>
+						</Border>
 						
 						<Spin height={200} loading={this.data.loading}>
 							<DailyList className="list" />
@@ -82,7 +104,7 @@ class ViewIndex extends Component {
 					</div>
 					
 					<Spin className="aside-loading" height={200} loading={this.data.loading}>
-						<GroupList />
+						<GroupList resource={group} current={this.props.match.params.gid} />
 					</Spin>
 
 				</div>

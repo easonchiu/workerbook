@@ -32,6 +32,9 @@ class Header extends Component {
 	}
 
 	render() {
+
+		const store = this.props.$user.info || {}
+
 		return (
 			<div className="app-header">
 				<div className="inner">
@@ -60,8 +63,8 @@ class Header extends Component {
 					</div>
 
 					<div className="user">
-						<h6>Hello: Eason.Chiu</h6>
-						<p>FE Department</p>
+						<h6>Hello: {store.userName}</h6>
+						<p>{store.groupName}</p>
 						<span>
 							<a href="javascript:;" onClick={e => this.data.modifyPw = true}>Modify Pw</a>
 							<a href="javascript:;" onClick={::this.logoutClick}>Logout</a>
@@ -71,7 +74,7 @@ class Header extends Component {
 				</div>
 
 				<Dialog className="dailog-modifyPw" visible={this.data.modifyPw} onBgClick={e => this.data.modifyPw = false}>
-					<UserHeader className="header" name="Eason" uid={2} />
+					<UserHeader className="header" name={store.userName} uid={store.uid} />
 					<h1>Modify password</h1>
 					<div className="row">
 						<label>Old password</label>

@@ -8,7 +8,7 @@
 	text-align: center;
 	color: #fff;
 	font-size: 14px;
-	background-color: #b3ccff;
+	background-color: #a8b0b9 + 40;
 	border-radius: 50%;
 	position: relative;
 	
@@ -16,24 +16,6 @@
 		font-size: 20px;
 	}
 
-	&.c0 {
-		background: #feb5cc;
-	}
-	&.c1 {
-		background: #c7b3ff;
-	}
-	&.c2 {
-		background: #68e4b1;
-	}
-	&.c3 {
-		background: #a8e26f;
-	}
-	&.c4 {
-		background: #82c6f1;
-	}
-	&.c5 {
-		background: #f8b981;
-	}
 	p {
 		position: absolute;
 		left: 50%;
@@ -82,6 +64,43 @@
 		}
 	}
 }
+div.user-header {
+	&.c0 {
+		background: #feb5cc;
+	}
+	&.c1 {
+		background: #c7b3ff;
+	}
+	&.c2 {
+		background: #68e4b1;
+	}
+	&.c3 {
+		background: #a8e26f;
+	}
+	&.c4 {
+		background: #82c6f1;
+	}
+	&.c5 {
+		background: #f8b981;
+	}
+}
 a.user-header:hover {
-	// opacity: 0.7;
+	&.c0 {
+		background: #feb5cc;
+	}
+	&.c1 {
+		background: #c7b3ff;
+	}
+	&.c2 {
+		background: #68e4b1;
+	}
+	&.c3 {
+		background: #a8e26f;
+	}
+	&.c4 {
+		background: #82c6f1;
+	}
+	&.c5 {
+		background: #f8b981;
+	}
 }

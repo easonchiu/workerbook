@@ -22,6 +22,7 @@
 			> h1 {
 				margin-bottom: 15px;
 				font-weight: bold;
+				line-height: 20px;
 				span {
 					font-weight: normal;
 					padding-left: 5px;
@@ -29,16 +30,16 @@
 			}
 			i {
 				&.i0 {
-					background: #ebedf0;
+					background: #ebedf0 + 10;
 				}
 				&.i1 {
-					background: rgba(36,183,15,0.25);
+					background: rgba(36,183,15,0.3);
 				}
 				&.i2 {
-					background: rgba(36,183,15,0.5);
+					background: rgba(36,183,15,0.7);
 				}
 				&.i3 {
-					background: rgba(36,183,15,1);
+					background: #24b70f - 40;
 				}
 			}
 		}
@@ -84,7 +85,7 @@
 				-webkit-box-pack: justify;
 				color: #586069 + 50;
 				font-size: 12px;
-				margin-bottom: 5px;
+				margin-bottom: 8px;
 			}
 			.bd {
 				position: relative;

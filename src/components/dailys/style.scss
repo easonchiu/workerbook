@@ -7,23 +7,10 @@
 		&:last-child {
 			padding-bottom: 0;
 		}
-		> span {
-			display: block;
-			width: 14px;
-			height: 14px;
-			background-color: #b3ccff;
-			margin: 5px 10px 0 0;
-			position: relative;
-			border-radius: 50%;
-			overflow: hidden;
-			sub {
-				position: absolute;
-				left: 0;
-				top: 0;
-				width: 50%;
-				height: 7px;
-				background-color: #fff;
-			}
+		> .icon-circle {
+			margin: 1px 5px 0 0;
+			width: 20px;
+			height: 20px;
 		}
 		> p {
 			-webkit-box-flex: 1;

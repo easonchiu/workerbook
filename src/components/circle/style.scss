@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+.icon-circle {
+	width: 16px;
+	height: 16px;
+	overflow: hidden;
+	path {
+		-webkit-transform: rotate(90deg);
+	}
+	circle {
+		-webkit-transition: stroke-dasharray 0.25s;
+	}
+}

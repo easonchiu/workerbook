@@ -1,33 +1,30 @@
 import { action, observable, computed, useStrict, runInAction } from "mobx"
 
+import http from 'src/assets/libs/http'
+import axios from 'axios'
+
 useStrict(true)
 
 class Store {
 
-	@observable _list = [0, 1, 2]
+	@observable list = [] // 组列表
 
-	@computed
-	get list() {
-		return this._list
-	}
+	@action('获取组数据')
+	async fetchList() {
+		if (this.list.length > 0) {
+			return this.list
+		}
 
-	@action('删除一项')
-	pop() {
-		const list = this._list.concat([])
-		list.pop()
-		this._list = list
-	}
+		const res = await http.request({
+			method: 'get',
+	        url: `/group`,
+		})
 
-	@action('添加一项')
-	push() {
-		const list = this._list.concat([])
-		list.push(this.list.length)
-		this._list = list
-	}
+		runInAction(() => {
+			this.list = res.data
+		})
 
-	@action('删除全部')
-	clear() {
-		this._list = []
+		return res
 	}
 
 }

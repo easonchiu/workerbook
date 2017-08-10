@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom'
 const UserHeader = props => {
 	const uid = props.uid ? props.uid : 0
 	
-	let name = props.name
+	let name = props.name || ''
 	let big = false
 
 	if ((/(^[a-z]+$)/gi).test(name) && name.length > 6) {
@@ -30,7 +30,9 @@ const UserHeader = props => {
 		}
 	}
 
-	const css = cn('user-header', props.className, 'c' + uid % 6, {
+	const color = 'c' + uid % 6
+
+	const css = cn('user-header', props.className, color, {
 		'user-header--big-font': big
 	})
 

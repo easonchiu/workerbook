@@ -10,13 +10,9 @@ const Routes = () => {
 	return (
 		<Router>
 			<Switch>
-
 				<Route exact path="/login" component={ ViewLogin } />
 				
-				<Route exact path="/" component={ ViewIndex } />
-				<Route exact path="/:gid" component={ ViewIndex } />
-				<Route exact path="/home/:uid" component={ ViewHome } />
-				
+				<Route path="/" component={ ViewIndex } />
 				
 				<Redirect from="*" to="/" />
 			</Switch>

@@ -4,6 +4,8 @@ import connect from 'src/mobx'
 import reactStateData from 'react-state-data'
 import {observer} from 'mobx-react'
 
+import {setToken} from 'src/assets/libs/token'
+
 import Footer from 'src/containers/footer'
 import Input from 'src/components/input'
 import Button from 'src/components/button'
@@ -17,7 +19,9 @@ class ViewLogin extends Component {
 		super(props)
 
 		this.setData({
-			loading: false
+			loading: false,
+			username: '',
+			password: '',
 		})
 	}
 
@@ -25,11 +29,33 @@ class ViewLogin extends Component {
 		return this.props !== nProps || this.state !== nState
 	}
 
-	onSubmit() {
+	async onSubmit() {
 		this.data.loading = true
-		setTimeout(e => {
+
+		try {
+			const res = await this.props.$user.login({
+				username: this.data.username,
+				password: this.data.password
+			})
+			setToken(res.data.token)
+			await this.props.$user.fetchInfo()
+
+			this.data.loading = false
 			this.props.history.push('/')
-		}, 1000)
+		} catch(e) {
+			console.error(e)
+			this.data.loading = false
+		}
+	}
+
+	usernameChange(e) {
+		const val = e.target.value.trim()
+		this.data.username = val
+	}
+
+	passwordChange(e) {
+		const val = e.target.value.trim()
+		this.data.password = val
 	}
 
 	render() {
@@ -41,13 +67,19 @@ class ViewLogin extends Component {
 					<h1 className="logo"></h1>
 
 					<div className="row">
-						<label>User name</label>
-						<Input placeholder="your name" />
+						<label>Username</label>
+						<Input placeholder="your name"
+							value={this.data.username}
+							onChange={::this.usernameChange} />
 					</div>
 
 					<div className="row">
 						<label>Password</label>
-						<Input type="password" placeholder="your password" />
+						<Input type="password"
+							placeholder="your password"
+							value={this.data.password}
+							onChange={::this.passwordChange}
+							autoComplete="new-password" />
 					</div>
 
 					<div className="row">

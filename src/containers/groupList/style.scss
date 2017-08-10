@@ -4,15 +4,36 @@
 	-webkit-box-flex: 1;
 	overflow: hidden;
 	padding-bottom: 10px;
+	position: relative;
 	> h1 {
 		padding: 15px 15px 0 15px;
 		font-size: 16px;
+		line-height: 20px;
 		font-weight: bold;
 		display: block;
 		margin-bottom: 10px;
 	}
-	li {
+	.tools {
+		display: -webkit-box;
+		-webkit-box-align: center;
+		position: absolute;
+		right: 15px;
+		top: 15px;
+		height: 20px;
+		line-height: 20px;
 		a {
+			display: block;
+			margin-left: 10px;
+			font-size: 12px;
+			color: #8a929b;
+			cursor: pointer;
+			&:hover {
+				opacity: 0.7;
+			}
+		}
+	}
+	li {
+		a,p {
 			display: -webkit-box;
 			-webkit-box-align: center;
 			height: 40px;
@@ -33,28 +54,96 @@
 			margin-right: 10px;
 			border-radius: 50%;
 		}
-		&.active a {
+		&.active a, &.active p {
 			font-weight: bold;
 			background: #ebedf0 + 12;
 			color: #5081ff;
 		}
-		&:nth-child(6n+1) a i {
+		&:nth-child(6n+1) i {
 			background: #c7b3ff;
 		}
-		&:nth-child(6n+2) a i {
+		&:nth-child(6n+2) i {
 			background: #68e4b1;
 		}
-		&:nth-child(6n+3) a i {
+		&:nth-child(6n+3) i {
 			background: #a6ee5f;
 		}
-		&:nth-child(6n+4) a i {
+		&:nth-child(6n+4) i {
 			background: #82c6f1;
 		}
-		&:nth-child(6n+5) a i {
+		&:nth-child(6n+5) i {
 			background: #f8b981;
 		}
-		&:nth-child(6n+6) a i {
+		&:nth-child(6n+6) i {
 			background: #feb5cc;
+		}
+	}
+}
+
+.dailog-add-user {
+	.x-dialog__inner {
+		padding: 30px 50px;
+	}
+	.header {
+		margin: 0 auto 15px auto;
+	}
+	h1 {
+		text-align: center;
+		font-weight: bold;
+		color: #000;
+		margin-bottom: 20px;
+	}
+	.row {
+		display: -webkit-box;
+		-webkit-box-align: center;
+		margin-bottom: 15px;
+		&:last-child {
+			margin-bottom: 10px;
+		}
+		label {
+			display: block;
+			width: 80px;
+			text-align: right;
+			margin-right: 10px;
+			font-size: 14px;
+			color: #586069 + 50;
+		}
+		input {
+			-webkit-box-flex: 1;
+		}
+	}
+}
+
+.dailog-add-group {
+	.x-dialog__inner {
+		padding: 30px 50px;
+	}
+	.header {
+		margin: 0 auto 15px auto;
+	}
+	h1 {
+		text-align: center;
+		font-weight: bold;
+		color: #000;
+		margin-bottom: 20px;
+	}
+	.row {
+		display: -webkit-box;
+		-webkit-box-align: center;
+		margin-bottom: 15px;
+		&:last-child {
+			margin-bottom: 10px;
+		}
+		label {
+			display: block;
+			width: 80px;
+			text-align: right;
+			margin-right: 10px;
+			font-size: 14px;
+			color: #586069 + 50;
+		}
+		input {
+			-webkit-box-flex: 1;
 		}
 	}
 }

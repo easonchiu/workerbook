@@ -12,6 +12,8 @@ import Border from 'src/containers/border'
 import Button from 'src/components/button'
 import DailyList from 'src/containers/dailyList'
 import Dailys from 'src/components/dailys'
+import Spin from 'src/containers/spin'
+
 
 @connect
 @reactStateData
@@ -20,6 +22,7 @@ class ViewHome extends Component {
 	constructor(props) {
 		super(props)
 		this.setData({
+			loading: false,
 			dateVisible: false,
 			dateX: 0,
 			dateY: 0,
@@ -29,6 +32,23 @@ class ViewHome extends Component {
 
 	shouldComponentUpdate(nProps, nState) {
 		return this.props !== nProps || this.state !== nState
+	}
+
+	componentDidMount() {
+		this.init()
+	}
+
+	async init() {
+		this.data.loading = true
+
+		try {
+			await this.props.$user.fetchInfo()
+			await this.props.$group.fetchList()
+		} catch(e) {
+			console.error(e)
+		}
+
+		this.data.loading = false
 	}
 
 	gridMouseOver(e) {
@@ -109,7 +129,7 @@ class ViewHome extends Component {
 	renderHomePage() {
 		return (
 			<div className="homepage">
-				<UserHeader name="babyface" uid={1} className="header" />
+				<UserHeader colorful name="babyface" uid={1} className="header" />
 				<Border className="main">
 					<h1>Eason.Chiu<span>FE Department</span></h1>
 					{this.renderGrid()}
@@ -130,6 +150,9 @@ class ViewHome extends Component {
 	}
 
 	render() {
+
+		const group = this.props.$group.list
+		
 		return (
 			<div className="view-home">
 				
@@ -145,7 +168,9 @@ class ViewHome extends Component {
 
 					</div>
 
-					<GroupList />
+					<Spin className="aside-loading" height={200} loading={this.data.loading}>
+						<GroupList resource={group} current={this.props.match.params.gid} />
+					</Spin>
 
 				</div>
 

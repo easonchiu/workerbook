@@ -26,10 +26,10 @@ const webpackConfig = merge(baseWebpackConfig, {
 	    disableHostCheck: true,
 	    port: config.develop.port,
 	    proxy: {
-	    	'/api/*': {
+	    	'/proxy': {
 	            target: 'http://easy-mock.com/mock/598acde5a1d30433d85adfab/workerbook',
 	            pathRewrite: {
-	            	'^/api/': '/'
+	            	'/proxy': ''
 	            },
 	            changeOrigin: true,
 	            secure: false,
