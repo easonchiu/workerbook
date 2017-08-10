@@ -1,8 +1,12 @@
 import React from 'react'
-import $demo from './demo'
+import $group from './group'
+import $user from './user'
+import $daily from './daily'
 
 const states = {
-	$demo
+	$user,
+	$group,
+	$daily,
 }
 
 export default Comp => props => {
