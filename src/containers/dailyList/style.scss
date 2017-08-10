@@ -1,0 +1,35 @@
+@charset "utf-8";
+
+.daily-list {
+	.daily-item {
+		display: -webkit-box;
+		margin-bottom: 15px;
+	}
+	.header {
+		margin-right: 15px;
+	}
+	.daily-bd {
+		-webkit-box-flex: 1;
+		padding: 15px;
+		> h1 {
+			display: -webkit-box;
+			font-weight: normal;
+			line-height: 20px;
+			margin-bottom: 8px;
+			time {
+				font-size: 18px;
+				margin-right: 10px;
+				font-weight: bold;
+			}
+			a {
+				font-size: 14px;
+				display: block;
+				color: #5081ff;
+				&:hover {
+					color: #33b400;
+				}
+			}
+		}
+		
+	}
+}

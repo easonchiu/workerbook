@@ -1,0 +1,60 @@
+@charset "utf-8";
+
+.app-group-list {
+	-webkit-box-flex: 1;
+	overflow: hidden;
+	padding-bottom: 10px;
+	> h1 {
+		padding: 15px 15px 0 15px;
+		font-size: 16px;
+		font-weight: bold;
+		display: block;
+		margin-bottom: 10px;
+	}
+	li {
+		a {
+			display: -webkit-box;
+			-webkit-box-align: center;
+			height: 40px;
+			line-height: 40px;
+			padding: 0 15px;
+			font-size: 14px;
+			color: #586069;
+			&:hover {
+				background: #ebedf0 + 12;
+				color: #5081ff;
+			}
+		}
+		i {
+			display: block;
+			width: 10px;
+			height: 10px;
+			background: #c7b3ff;
+			margin-right: 10px;
+			border-radius: 50%;
+		}
+		&.active a {
+			font-weight: bold;
+			background: #ebedf0 + 12;
+			color: #5081ff;
+		}
+		&:nth-child(6n+1) a i {
+			background: #c7b3ff;
+		}
+		&:nth-child(6n+2) a i {
+			background: #68e4b1;
+		}
+		&:nth-child(6n+3) a i {
+			background: #a6ee5f;
+		}
+		&:nth-child(6n+4) a i {
+			background: #82c6f1;
+		}
+		&:nth-child(6n+5) a i {
+			background: #f8b981;
+		}
+		&:nth-child(6n+6) a i {
+			background: #feb5cc;
+		}
+	}
+}

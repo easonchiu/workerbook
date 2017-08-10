@@ -1,0 +1,59 @@
+@charset "utf-8";
+
+.app-dailys {
+	li {
+		display: -webkit-box;
+		padding-bottom: 10px;
+		&:last-child {
+			padding-bottom: 0;
+		}
+		> span {
+			display: block;
+			width: 14px;
+			height: 14px;
+			background-color: #b3ccff;
+			margin: 5px 10px 0 0;
+			position: relative;
+			border-radius: 50%;
+			overflow: hidden;
+			sub {
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 50%;
+				height: 7px;
+				background-color: #fff;
+			}
+		}
+		> p {
+			-webkit-box-flex: 1;
+			display: block;
+			font-size: 14px;
+			line-height: 24px;
+			color: #586069;
+		}
+		> .tools {
+			display: -webkit-box;
+			height: 24px;
+			line-height: 24px;
+			visibility: hidden;
+			pointer-events: none;
+			a {
+				display: block;
+				margin-left: 10px;
+				font-size: 12px;
+				color: #8a929b;
+				cursor: pointer;
+				&:hover {
+					opacity: 0.7;
+				}
+			}
+		}
+		&:hover {
+			.tools {
+				visibility: visible;
+				pointer-events: auto;
+			}
+		}
+	}
+}
