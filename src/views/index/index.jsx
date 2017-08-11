@@ -23,7 +23,8 @@ class ViewIndex extends Component {
 		super(props)
 
 		this.setData({
-			loading: false
+			loading: false,
+			key: 0
 		})
 	}
 
@@ -36,7 +37,7 @@ class ViewIndex extends Component {
 	}
 
 	async init() {
-		this.data.loading = true
+		// this.data.loading = true
 
 		try {
 			await this.props.$user.fetchInfo()
@@ -44,7 +45,11 @@ class ViewIndex extends Component {
 			console.error(e)
 		}
 
-		this.data.loading = false
+		// this.data.loading = false
+	}
+
+	update() {
+		this.data.key++
 	}
 
 	render() {
@@ -52,39 +57,34 @@ class ViewIndex extends Component {
 		const group = this.props.$group.list
 
 		return (
-			<Router>
-				<div className="view">
+			<div className="view">
+
+				<Route component={Header} />
+
+				<div className="app-main">
 					
-					<Route component={Header} />
+					<div className="app-body">
 
-					<div className="app-main">
-						
-						<div className="app-body">
+						<Route exact path="/home" component={MyDailyHeader} />
+						<Route exact path="/home" component={MyDailyList} />
 
-							<Route exact path="/home/:id" component={MyDailyHeader} />
-							<Route exact path="/home/:id" component={MyDailyList} />
+						<Route exact path="/daily" component={WriterBox} />
 
-							<Route exact path="/" component={WriterBox} />
-							<Route exact path="/:gid" component={WriterBox} />
+						<Route exact path="/daily" component={UserDailyList} />
 
-							<Route exact path="/" component={UserDailyList} />
-							<Route exact path="/:gid" component={UserDailyList} />
-
-							<Route exact path="/" component={UserList} />
-							<Route exact path="/:gid" component={UserList} />
-
-						</div>
-						
-						<div className="app-aside">
-							<Route component={GroupList} />
-						</div>
+						<Route exact path="/daily" component={UserList} />
 
 					</div>
-
-					<Footer />
+					
+					<div className="app-aside">
+						<Route exact path="/daily" component={GroupList} />
+					</div>
 
 				</div>
-			</Router>
+
+				<Footer />
+
+			</div>
 		)
 	}
 }

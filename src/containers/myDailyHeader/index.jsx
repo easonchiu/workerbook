@@ -1,12 +1,17 @@
 import './style'
 import React, {Component} from 'react'
+
+import connect from 'src/mobx'
 import reactStateData from 'react-state-data'
+import {observer} from 'mobx-react'
 
 import UserHeader from 'src/components/userHeader'
 import Border from 'src/components/border'
 import Dailys from 'src/components/dailys'
 
+@connect
 @reactStateData
+@observer
 class MyDailyHeader extends Component {
 	constructor(props) {
 		super(props)
@@ -95,12 +100,26 @@ class MyDailyHeader extends Component {
 	}
 
 	render() {
+		
+		const user = this.props.$user
+
 		return (
 			<div className="my-daily-header">
-				<UserHeader colorful name="babyface" uid={1} className="header" />
+				{
+					user.info ?
+					<UserHeader colorful name={user.info.userName} uid={user.info.uid} className="header" /> :
+					<UserHeader name="" className="header" />
+				}
 				<Border className="main">
-					<h1>Eason.Chiu<span>FE Department</span></h1>
+					
+					{
+						user.info ?
+						<h1>{user.info.userName}<span>{user.info.groupName}</span></h1> :
+						<h1 style={{opacity:0.1}}>Loading...</h1>
+					}
+					
 					{this.renderGrid()}
+
 					{
 						this.data.somedayVisible ?
 						<div className="someday">

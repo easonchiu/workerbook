@@ -1,6 +1,7 @@
 import './style'
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
+import qs from 'qs'
 
 import connect from 'src/mobx'
 import reactStateData from 'react-state-data'
@@ -21,29 +22,25 @@ class GroupList extends Component {
 		super(props)
 
 		this.setData({
-			loading: false
+			loading: true
 		})
 	}
 
 	componentDidMount() {
-		this.init()
+		this.fetchData()
 	}
 
-	async init() {
+	async fetchData() {
 		this.data.loading = true
-
-		try {
-			await this.props.$group.fetchList()
-		} catch(e) {
-			console.error(e)
-		}
-
+		await this.props.$group.fetchList()
 		this.data.loading = false
 	}
 
 	render() {
 		
 		const group = this.props.$group.list
+
+		const {gid} = qs.parse(this.props.location.search, {ignoreQueryPrefix:true})
 
 		return (
 			<Border className="app-group-list">
@@ -54,21 +51,21 @@ class GroupList extends Component {
 				</div>
 				<Spin loading={this.data.loading} height={200}>
 					<ul>
-						<li className={this.props.current===undefined?'active':''}>
+						<li className={gid===undefined?'active':''}>
 							{
-								this.props.current===undefined ?
+								gid===undefined ?
 								<p><i />All</p> :
-								<Link to="/"><i />All</Link>
+								<Link to="/daily"><i />All</Link>
 							}
 						</li>
 						{
 							group.map(res => {
 								return (
-									<li key={res.gid} className={this.props.current==res.gid?'active':''}>
+									<li key={res.gid} className={gid==res.gid?'active':''}>
 										{
-											this.props.current==res.gid ?
+											gid==res.gid ?
 											<p><i />{res.groupName}</p> :
-											<Link to={'/'+res.gid}><i />{res.groupName}</Link>
+											<Link to={'/daily?gid='+res.gid}><i />{res.groupName}</Link>
 										}
 									</li>
 								)

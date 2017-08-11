@@ -1,7 +1,12 @@
+ 用户信息+验证用户
+ GET /user/info
+
  日报列表
  GET /daily/list
- 分组信息+组的全部用户
+ 分组信息
  GET /group
+ 组的全部用户
+ GET /group/user
 
  某个用户的日报列表
  GET /user/daily/list

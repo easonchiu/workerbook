@@ -61,6 +61,7 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
-    "js-cookie": "^2.1.4"
+    "js-cookie": "^2.1.4",
+    "qs": "^6.5.0"
   }
 }

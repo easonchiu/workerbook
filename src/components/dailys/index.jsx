@@ -14,57 +14,26 @@ class Dailys extends Component {
 	render() {
 		// <li><RecordInput btnText="Rewrite" /></li>
 		const css = cn('app-dailys', this.props.className)
+		const list = this.props.resource || []
+
 		return (
 			<ul className={css}>
-				<li>
-					<Circle process={50} />
-					<p>整理产品原型，设计稿整理</p>
-					{
-						this.props.rewriteabled ?
-						<div className="tools">
-							<a href="javascript:;">Rewrite</a>
-							<a href="javascript:;">Delete</a>
-						</div> :
-						null
-					}
-				</li>
-				
-				<li>
-					<Circle process={20} />
-					<p>安联代步车什么代码bug修复</p>
-					{
-						this.props.rewriteabled ?
-						<div className="tools">
-							<a href="javascript:;">Rewrite</a>
-							<a href="javascript:;">Delete</a>
-						</div> :
-						null
-					}
-				</li>
-				<li>
-					<Circle process={100} />
-					<p>吃饭睡觉写代码</p>
-					{
-						this.props.rewriteabled ?
-						<div className="tools">
-							<a href="javascript:;">Rewrite</a>
-							<a href="javascript:;">Delete</a>
-						</div> :
-						null
-					}
-				</li>
-				<li>
-					<Circle process={70} />
-					<p>吃饭睡觉写代码</p>
-					{
-						this.props.rewriteabled ?
-						<div className="tools">
-							<a href="javascript:;">Rewrite</a>
-							<a href="javascript:;">Delete</a>
-						</div> :
-						null
-					}
-				</li>
+				{
+					list.map(res => (
+						<li key={res.id}>
+							<Circle progress={res.progress} />
+							<p>{res.record}</p>
+							{
+								this.props.rewriteabled ?
+								<div className="tools">
+									<a href="javascript:;">Rewrite</a>
+									<a href="javascript:;">Delete</a>
+								</div> :
+								null
+							}
+						</li>
+					))
+				}
 			</ul>
 		)
 	}
