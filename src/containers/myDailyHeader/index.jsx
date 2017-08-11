@@ -1,56 +1,24 @@
-import styles from './style'
-import React, { Component } from 'react'
-import connect from 'src/mobx'
+import './style'
+import React, {Component} from 'react'
 import reactStateData from 'react-state-data'
-import {observer} from 'mobx-react'
 
-import Header from 'src/containers/header'
 import UserHeader from 'src/components/userHeader'
-import Footer from 'src/containers/footer'
-import GroupList from 'src/containers/groupList'
-import Border from 'src/containers/border'
-import Button from 'src/components/button'
-import DailyList from 'src/containers/dailyList'
+import Border from 'src/components/border'
 import Dailys from 'src/components/dailys'
-import Spin from 'src/containers/spin'
 
-
-@connect
 @reactStateData
-@observer
-class ViewHome extends Component {
+class MyDailyHeader extends Component {
 	constructor(props) {
 		super(props)
+
 		this.setData({
-			loading: false,
 			dateVisible: false,
 			dateX: 0,
 			dateY: 0,
 			somedayVisible: false,
 		})
 	}
-
-	shouldComponentUpdate(nProps, nState) {
-		return this.props !== nProps || this.state !== nState
-	}
-
-	componentDidMount() {
-		this.init()
-	}
-
-	async init() {
-		this.data.loading = true
-
-		try {
-			await this.props.$user.fetchInfo()
-			await this.props.$group.fetchList()
-		} catch(e) {
-			console.error(e)
-		}
-
-		this.data.loading = false
-	}
-
+	
 	gridMouseOver(e) {
 		const {x,y} = e.target.dataset
 		if (x !== undefined && y !== undefined) {
@@ -126,9 +94,9 @@ class ViewHome extends Component {
 		)
 	}
 
-	renderHomePage() {
+	render() {
 		return (
-			<div className="homepage">
+			<div className="my-daily-header">
 				<UserHeader colorful name="babyface" uid={1} className="header" />
 				<Border className="main">
 					<h1>Eason.Chiu<span>FE Department</span></h1>
@@ -148,37 +116,6 @@ class ViewHome extends Component {
 			</div>
 		)
 	}
-
-	render() {
-
-		const group = this.props.$group.list
-		
-		return (
-			<div className="view-home">
-				
-				<Header {...this.props} />
-
-				<div className="app-main">
-					
-					<div className="app-body">
-						
-						{this.renderHomePage()}
-
-						<DailyList className="list" />
-
-					</div>
-
-					<Spin className="aside-loading" height={200} loading={this.data.loading}>
-						<GroupList resource={group} current={this.props.match.params.gid} />
-					</Spin>
-
-				</div>
-
-				<Footer />
-
-			</div>
-		)
-	}
 }
 
-export default ViewHome
+export default MyDailyHeader

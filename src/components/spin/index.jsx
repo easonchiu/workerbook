@@ -30,7 +30,10 @@ const Spin = ({children, loading, className, height = 500}) => {
 	if (loading) {
 		return <div className={css} style={{height:loading?height+'px':''}}>{load}</div>
 	}
-
+	
+	if (children === undefined) {
+		return null
+	}
 	return children
 }
 

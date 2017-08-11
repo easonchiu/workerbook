@@ -2,7 +2,7 @@ import 'src/assets/css/reset'
 import 'src/assets/css/base'
 
 import React, { Component } from 'react'
-import { HashRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import { render } from 'react-dom'
 
 // view
@@ -14,10 +14,7 @@ const Routes = e => (
 	<Router>
 		<Switch>
 			<Route exact path="/login" component={ ViewLogin } />
-			
-			<Route path="/" component={ ViewIndex } />
-			
-			<Redirect from="*" to="/" />
+			<Route component={ ViewIndex } />
 		</Switch>
 	</Router>
 )

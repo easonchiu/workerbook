@@ -1,89 +1,18 @@
 @charset "utf-8";
 
-.view-index {
-	
-	.writer {
+.view {
+	.app-main {
+		width: 1040px;
+		margin: 0 auto;
 		display: -webkit-box;
-		margin-bottom: 20px;
-		.icon {
+		-webkit-box-align: start;
+		.app-body {
+			width: 760px;
 			margin-right: 15px;
-			display: block;
-			width: 60px;
-			height: 60px;
-			background: #5081ff + 20 url('../../assets/imgs/icon-write.png') center center no-repeat;
-			background-size: 30px 30px;
-			border-radius: 50%;
+			min-height: 800px;
 		}
-		.con {
+		.app-aside {
 			-webkit-box-flex: 1;
-			padding: 15px;
-		}
-		.my-daily {
-			padding-bottom: 10px;
-			margin-bottom: 10px;
-			border-bottom: 1px dashed #dee3e8;
-		}
-		.newrecord {
-			// pointer-events: none;
-			// opacity: 0.3;
 		}
 	}
-
-	.date-bar {
-		margin-left: 75px;
-		margin-bottom: 15px;
-		width: 360px;
-		display: -webkit-box;
-		overflow: hidden;
-		a {
-			display: block;
-			width: 120px;
-			font-size: 12px;
-			height: 40px;
-			line-height: 40px;
-			color: #8a929b;
-			text-align: center;
-			border-right: 1px solid #dee3e8;
-			&:last-child {
-				border-right: none;
-			}
-			&:hover {
-				color: #5081ff;
-			}
-			&.active {
-				color: #5081ff;
-				background: #f7f9fc;
-				font-weight: bold;
-				font-size: 14px;
-			}
-		}
-	}
-	
-	.list {
-		margin-bottom: 20px;
-	}
-
-	.aside-loading {
-		-webkit-box-flex: 1;
-	}
-	
-	.users {
-		margin-left: 75px;
-		padding: 15px 0 5px 15px;
-		> h1 {
-			font-size: 16px;
-			line-height: 20px;
-			display: block;
-			margin-bottom: 15px;
-			clear: both;
-			span {
-				font-weight: bold;
-			}
-		}
-		.header {
-			margin: 0 14px 10px 0;
-			float: left;
-		}
-	}
-
 }

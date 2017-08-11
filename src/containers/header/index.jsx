@@ -1,14 +1,19 @@
 import './style'
 import React, { Component } from 'react'
 
+import connect from 'src/mobx'
 import reactStateData from 'react-state-data'
+import {observer} from 'mobx-react'
+
 import Input from 'src/components/input'
 import Button from 'src/components/button'
 import Dialog from 'src/components/dialog'
 import UserHeader from 'src/components/userHeader'
-import Border from 'src/containers/border'
+import Border from 'src/components/border'
 
+@connect
 @reactStateData
+@observer
 class Header extends Component {
 	constructor(props) {
 		super(props)
