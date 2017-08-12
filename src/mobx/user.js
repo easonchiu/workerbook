@@ -14,7 +14,6 @@ class Store {
 	@observable search = []
 
 
-
 	@action('登录')
 	async login(payload) {
 		const res = await http.request({

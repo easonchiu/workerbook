@@ -1,11 +1,8 @@
 import './style'
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
-import qs from 'qs'
 
-import connect from 'src/mobx'
 import reactStateData from 'react-state-data'
-import {observer} from 'mobx-react'
+import {injectStore} from 'src/mobx'
 
 import Border from 'src/components/border'
 import Dialog from 'src/components/dialog'
@@ -13,34 +10,33 @@ import Input from 'src/components/input'
 import Button from 'src/components/button'
 import Spin from 'src/components/spin'
 
-@connect
-@reactStateData
-@observer
+@injectStore
 class GroupList extends Component {
 	
 	constructor(props) {
 		super(props)
 
-		this.setData({
-			loading: true
-		})
+		Object.assign(this, {...this.props.store})
+	}
+
+	shouldComponentUpdate(nProps, nState) {
+		return this.props !== nProps || this.state !== nState
 	}
 
 	componentDidMount() {
-		this.fetchData()
+		this.$group.fetchList()
 	}
 
-	async fetchData() {
-		this.data.loading = true
-		await this.props.$group.fetchList()
-		this.data.loading = false
+	onClick(gid) {
+		this.props.history.push('/daily/' + gid)
+		this.$daily.updateList()
 	}
 
 	render() {
 		
-		const group = this.props.$group.list
+		const group = this.$group.list
 
-		const {gid} = qs.parse(this.props.location.search, {ignoreQueryPrefix:true})
+		const {gid} = this.props.match.params
 
 		return (
 			<Border className="app-group-list">
@@ -49,13 +45,13 @@ class GroupList extends Component {
 					<a href="javascript:;">+ User</a>
 					<a href="javascript:;">+ Group</a>
 				</div>
-				<Spin loading={this.data.loading} height={200}>
+				<Spin loading={this.$group.listFetching} height={200}>
 					<ul>
-						<li className={gid===undefined?'active':''}>
+						<li className={gid==='all'?'active':''}>
 							{
-								gid===undefined ?
+								gid==='all' ?
 								<p><i />All</p> :
-								<Link to="/daily"><i />All</Link>
+								<a href="javascript:;" onClick={this.onClick.bind(this, 'all')}><i />All</a>
 							}
 						</li>
 						{
@@ -65,7 +61,7 @@ class GroupList extends Component {
 										{
 											gid==res.gid ?
 											<p><i />{res.groupName}</p> :
-											<Link to={'/daily?gid='+res.gid}><i />{res.groupName}</Link>
+											<a href="javascript:;" onClick={this.onClick.bind(this, res.gid)}><i />{res.groupName}</a>
 										}
 									</li>
 								)

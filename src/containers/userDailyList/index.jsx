@@ -2,50 +2,37 @@ import './style'
 import React, {Component} from 'react'
 import cn from 'classnames'
 import {Link} from 'react-router-dom'
-import qs from 'qs'
 
-import connect from 'src/mobx'
 import reactStateData from 'react-state-data'
-import {observer} from 'mobx-react'
+import {injectStore} from 'src/mobx'
 
 import Border from 'src/components/border'
 import Dailys from 'src/components/dailys'
 import UserHeader from 'src/components/userHeader'
 import Spin from 'src/components/spin'
 
-@connect
-@reactStateData
-@observer
+
+@injectStore
 class UserDailyList extends Component {
 	constructor(props) {
 		super(props)
 
-		this.setData({
-			loading: true
-		})
+		Object.assign(this, {...this.props.store})
+	}
+
+	shouldComponentUpdate(nProps, nState) {
+		return this.props !== nProps || this.state !== nState
 	}
 
 	componentDidMount() {
-		const {gid} = qs.parse(this.props.location.search, {ignoreQueryPrefix:true})
-		this.fetchData(gid, true)
+		// this.props.$daily.fetchList()
 	}
 
-	componentWillReceiveProps(nextProps) {
-		const {gid:ogid} = qs.parse(this.props.location.search, {ignoreQueryPrefix:true})
-		const {gid:ngid} = qs.parse(nextProps.location.search, {ignoreQueryPrefix:true})
+	changeDate(val) {
+		const {gid, date} = this.props.match.params
 		
-		if (ogid !== ngid) {
-			this.fetchData(ngid)
-		}
-	}
-
-	async fetchData(gid, loading = false) {
-		if (loading) {
-			this.data.loading = loading
-			await this.props.$daily.fetchList()
-			this.data.loading = false
-		} else {
-			this.props.$daily.fetchList()
+		if (date != val) {
+			this.props.history.push(`/daily/${gid}/${val}`)
 		}
 	}
 
@@ -53,15 +40,17 @@ class UserDailyList extends Component {
 
 		const css = cn('user-daily-list', this.props.className)
 
-		const list = this.props.$daily.list
+		const list = [] // this.props.$daily.list
+
+		return null
 
 		return (
-			<Spin loading={this.data.loading}>
+			<Spin loading={this.props.$daily.listFetching}>
 				<div className={css}>
 					<Border className="date-bar">
-						<a href="javascript:;" className="active">Today</a>
-						<a href="javascript:;">Aug 8, 2017</a>
-						<a href="javascript:;">Aug 7, 2017</a>
+						<a href="javascript:;" className="active" onClick={this.changeDate.bind(this, '')}>Today</a>
+						<a href="javascript:;" onClick={this.changeDate.bind(this, -1)}>Aug 8, 2017</a>
+						<a href="javascript:;" onClick={this.changeDate.bind(this, -2)}>Aug 7, 2017</a>
 					</Border>
 					{
 						list.map((res,i) => (

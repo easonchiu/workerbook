@@ -1,24 +1,25 @@
 import './style'
 import React, {Component} from 'react'
 
-import connect from 'src/mobx'
 import reactStateData from 'react-state-data'
-import {observer} from 'mobx-react'
+import {injectStore} from 'src/mobx'
 
 import Border from 'src/components/border'
 import Dailys from 'src/components/dailys'
 import RecordInput from 'src/components/recordInput'
 
-@connect
-@reactStateData
-@observer
+@injectStore
 class WriterBox extends Component {
 	constructor(props) {
 		super(props)
 	}
 
+	shouldComponentUpdate(nProps, nState) {
+		return this.props !== nProps || this.state !== nState
+	}
+
 	click() {
-		this.props.$daily.fetchList()
+		this.props.$daily.updateList()
 	}
 
 	render() {

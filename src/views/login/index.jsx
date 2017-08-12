@@ -1,8 +1,8 @@
 import styles from './style'
 import React, { Component } from 'react'
-import connect from 'src/mobx'
+
 import reactStateData from 'react-state-data'
-import {observer} from 'mobx-react'
+import {injectStore} from 'src/mobx'
 
 import {setToken} from 'src/assets/libs/token'
 
@@ -11,18 +11,19 @@ import Input from 'src/components/input'
 import Button from 'src/components/button'
 
 
-@connect
-@reactStateData
-@observer
+@injectStore
+// @reactStateData
 class ViewLogin extends Component {
 	constructor(props) {
 		super(props)
 
-		this.setData({
-			loading: false,
-			username: '',
-			password: '',
-		})
+		Object.assign(this, {...this.props.store})
+
+		// this.setData({
+		// 	loading: false,
+		// 	username: '',
+		// 	password: '',
+		// })
 	}
 
 	shouldComponentUpdate(nProps, nState) {

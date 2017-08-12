@@ -1,9 +1,9 @@
 import './style'
 import React, { Component } from 'react'
 import { HashRouter as Router, Route } from 'react-router-dom'
-import connect from 'src/mobx'
+
 import reactStateData from 'react-state-data'
-import {observer} from 'mobx-react'
+import {injectStore} from 'src/mobx'
 
 import Header from 'src/containers/header'
 import Footer from 'src/containers/footer'
@@ -15,17 +15,10 @@ import MyDailyList from 'src/containers/myDailyList'
 import MyDailyHeader from 'src/containers/myDailyHeader'
 
 
-@connect
-@reactStateData
-@observer
+@injectStore
 class ViewIndex extends Component {
 	constructor(props) {
 		super(props)
-
-		this.setData({
-			loading: false,
-			key: 0
-		})
 	}
 
 	shouldComponentUpdate(nProps, nState) {
@@ -37,24 +30,18 @@ class ViewIndex extends Component {
 	}
 
 	async init() {
-		// this.data.loading = true
 
 		try {
-			await this.props.$user.fetchInfo()
+			await this.$user.fetchInfo()
 		} catch(e) {
 			console.error(e)
 		}
 
-		// this.data.loading = false
-	}
-
-	update() {
-		this.data.key++
 	}
 
 	render() {
-		
-		const group = this.props.$group.list
+
+		const group = this.$group.list
 
 		return (
 			<div className="view">
@@ -68,16 +55,17 @@ class ViewIndex extends Component {
 						<Route exact path="/home" component={MyDailyHeader} />
 						<Route exact path="/home" component={MyDailyList} />
 
-						<Route exact path="/daily" component={WriterBox} />
+						<Route strict path="/daily/:gid" component={WriterBox} />
 
-						<Route exact path="/daily" component={UserDailyList} />
+						<Route exact path="/daily/:gid" component={UserDailyList} />
+						<Route exact path="/daily/:gid/:date" component={UserDailyList} />
 
-						<Route exact path="/daily" component={UserList} />
+						<Route strict path="/daily/:gid" component={UserList} />
 
 					</div>
 					
 					<div className="app-aside">
-						<Route exact path="/daily" component={GroupList} />
+						<Route strict path="/daily/:gid" component={GroupList} />
 					</div>
 
 				</div>

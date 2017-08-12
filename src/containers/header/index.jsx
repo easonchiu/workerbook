@@ -1,9 +1,8 @@
 import './style'
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 
-import connect from 'src/mobx'
-import reactStateData from 'react-state-data'
-import {observer} from 'mobx-react'
+import reactStateData from 'src/react-state-data'
+import {injectStore} from 'src/mobx'
 
 import Input from 'src/components/input'
 import Button from 'src/components/button'
@@ -11,9 +10,8 @@ import Dialog from 'src/components/dialog'
 import UserHeader from 'src/components/userHeader'
 import Border from 'src/components/border'
 
-@connect
+@injectStore
 @reactStateData
-@observer
 class Header extends Component {
 	constructor(props) {
 		super(props)
@@ -22,6 +20,14 @@ class Header extends Component {
 			modifyPw: false,
 			resultVisible: false,
 		})
+	}
+
+	shouldComponentUpdate(nProps, nState) {
+		return this.props !== nProps || this.state !== nState
+	}
+
+	componentDidMount() {
+		console.log(this, 123)
 	}
 
 	logoutClick() {
@@ -38,7 +44,7 @@ class Header extends Component {
 
 	render() {
 
-		const store = this.props.$user.info || {}
+		const store = this.$user.info || {}
 
 		return (
 			<div className="app-header">

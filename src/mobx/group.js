@@ -8,12 +8,15 @@ useStrict(true)
 class Store {
 
 	@observable list = [] // 组列表
+	@observable listFetching = false
 
 	@action('获取组数据')
 	async fetchList() {
 		if (this.list.length > 0) {
 			return this.list
 		}
+
+		this.listFetching = true
 
 		const res = await http.request({
 			method: 'get',
@@ -22,9 +25,8 @@ class Store {
 
 		runInAction(() => {
 			this.list = res.data
+			this.listFetching = false
 		})
-
-		return res
 	}
 
 }
