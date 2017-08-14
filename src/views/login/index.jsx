@@ -17,11 +17,11 @@ class ViewLogin extends Component {
 	constructor(props) {
 		super(props)
 
-		// this.setData({
-		// 	loading: false,
-		// 	username: '',
-		// 	password: '',
-		// })
+		this.setData({
+			loading: false,
+			username: '',
+			password: '',
+		})
 	}
 
 	shouldComponentUpdate(nProps, nState) {
@@ -32,12 +32,12 @@ class ViewLogin extends Component {
 		this.data.loading = true
 
 		try {
-			const res = await this.props.$user.login({
+			const res = await this.$user.login({
 				username: this.data.username,
 				password: this.data.password
 			})
 			setToken(res.data.token)
-			await this.props.$user.fetchInfo()
+			await this.$user.fetchInfo()
 
 			this.data.loading = false
 			this.props.history.push('/')

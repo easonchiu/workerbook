@@ -19,19 +19,20 @@ class WriterBox extends Component {
 	}
 
 	componentDidMount() {
-		console.log(this)
+		this.fetch()
 	}
 
-	click() {
-		this.$daily.updateList()
+	async fetch() {
+		this.$user.fetchTodayDaily()
 	}
 
 	render() {
+		console.log(this.$user.today)
 		return (
 			<div className="writer-box">
-				<i className="icon" onClick={::this.click} />
+				<i className="icon" />
 				<Border className="con">
-					<Dailys className="my-daily" rewriteabled />
+					<Dailys className="my-daily" large rewriteabled resource={this.$user.today} />
 					<RecordInput className="newrecord" loading={false} />
 				</Border>
 			</div>

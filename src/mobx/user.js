@@ -9,8 +9,12 @@ class Store {
 
 	@observable info = null // 用户信息
 	@observable chart = [] // 我的日报统计
+	@observable chartFetching = false // 我的日报统计loading
+
 	@observable daily = [] // 我的日报列表
+
 	@observable today = [] // 我今天的日报
+	@observable todayFetching = false // 我今天的日报loading
 	@observable search = [] // 用户搜索
 
 	@action('登录')
@@ -45,7 +49,32 @@ class Store {
 
 	@action('获取今天的日报')
 	async fetchTodayDaily() {
-		
+		this.todayFetching = true
+
+		const res = await http.request({
+			method: 'get',
+	        url: `/user/daily/today`,
+		})
+
+		runInAction(() => {
+			this.today = res.data
+			this.todayFetching = false
+		})
+	}
+
+	@action('获取我的日报分析')
+	async fetchChart() {
+		this.chartFetching = true
+
+		const res = await http.request({
+			method: 'get',
+	        url: `/user/daily/chart`,
+		})
+
+		runInAction(() => {
+			this.chart = res.data
+			this.chartFetching = false
+		})
 	}
 
 }

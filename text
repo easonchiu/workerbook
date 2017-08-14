@@ -13,7 +13,7 @@
  某个用户的某天日报
  GET /user/:uid/daily/:date
  某个用户的日报分析
- GET /user/daily/today/chart
+ GET /user/daily/chart
  自己当天的提交
  GET /user/daily/today
 

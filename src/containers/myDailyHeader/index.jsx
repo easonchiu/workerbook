@@ -7,27 +7,40 @@ import {injectStore} from 'src/mobx'
 import UserHeader from 'src/components/userHeader'
 import Border from 'src/components/border'
 import Dailys from 'src/components/dailys'
+import Spin from 'src/components/spin'
 
 @injectStore
-// @reactStateData
+@reactStateData
 class MyDailyHeader extends Component {
 	constructor(props) {
 		super(props)
 
-		// this.setData({
-		// 	dateVisible: false,
-		// 	dateX: 0,
-		// 	dateY: 0,
-		// 	somedayVisible: false,
-		// })
+		this.setData({
+			dateVisible: false,
+			dateX: 0,
+			dateY: 0,
+			dateC: 0,
+			dateT: 0,
+			somedayVisible: false,
+		})
+	}
+
+	componentDidMount() {
+		this.fetch()
+	}
+
+	fetch() {
+		this.$user.fetchChart()
 	}
 	
 	gridMouseOver(e) {
-		const {x,y} = e.target.dataset
+		const {x,y,c,t} = e.target.dataset
 		if (x !== undefined && y !== undefined) {
 			this.data.dateVisible = true
 			this.data.dateX = 12 * x
 			this.data.dateY = 12 * y
+			this.data.dateC = c
+			this.data.dateT = t
 		}
 	}
 
@@ -35,8 +48,8 @@ class MyDailyHeader extends Component {
 		this.data.somedayVisible = true
 	}
 
-	renderGrid() {
-		const total = 365
+	renderGrid(chart) {
+		const total = chart.length
 		const col = Math.ceil(total / 7)
 		const grid = []
 		for (let i = 0; i < col; i++) {
@@ -44,8 +57,24 @@ class MyDailyHeader extends Component {
 				<div key={i} className="col">
 					{
 						[0,1,2,3,4,5,6].map((res, j) => {
-							const r = Math.floor(Math.random() * 4)
-							return <i key={i+'-'+j} data-x={i} data-y={j} className={'i'+r} />
+							const index = i * 7 + j
+							if (index < total) {
+								const c = chart[index].recordCount
+								let cn = 0
+								if (c > 4) {
+									cn = 3
+								} else if (c > 2) {
+									cn = 2
+								} else if (c > 0) {
+									cn = 1
+								}
+								return <i key={i+'-'+j}
+										data-x={i}
+										data-y={j}
+										data-c={c}
+										data-t={chart[index].date}
+										className={'i'+cn} />
+							}
 						})
 					}
 				</div>
@@ -78,7 +107,13 @@ class MyDailyHeader extends Component {
 						{
 							this.data.dateVisible ?
 							<p className="date" style={{left:this.data.dateX+'px',top:this.data.dateY+'px'}}>
-								4 records <span>on 2017-5-12</span>
+								{
+									this.data.dateC > 1 ?
+									this.data.dateC + ' records ' :
+									this.data.dateC == 0 ?
+									'No records ' :
+									this.data.dateC + ' record '
+								}<span>on {this.data.dateT}</span>
 							</p> :
 							null
 						}
@@ -99,7 +134,7 @@ class MyDailyHeader extends Component {
 
 	render() {
 		
-		const user = this.props.$user
+		const user = this.$user
 
 		return (
 			<div className="my-daily-header">
@@ -116,7 +151,13 @@ class MyDailyHeader extends Component {
 						<h1 style={{opacity:0.1}}>Loading...</h1>
 					}
 					
-					{this.renderGrid()}
+					{
+						user.chartFetching ?
+						<Spin loading={true} height={138} /> :
+						user.chart.length > 0 ?
+						this.renderGrid(user.chart) :
+						null
+					}
 
 					{
 						this.data.somedayVisible ?

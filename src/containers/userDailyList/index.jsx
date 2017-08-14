@@ -49,7 +49,7 @@ class UserDailyList extends Component {
 
 		const {date = 0} = this.props.match.params
 
-		const dateStr = ['今天', '昨天', '前天']
+		const dateStr = ['Today', 'Yesterday', 'Two days ago']
 
 		return (
 			<Spin loading={this.$daily.listFetching}>
@@ -77,7 +77,7 @@ class UserDailyList extends Component {
 								<Border className="daily-bd">
 									<h1>
 										<time>{res.updateTime}</time>
-										<Link to="/home/1">{res.username}</Link>
+										<Link to="/daily/user/1">{res.username}</Link>
 									</h1>
 
 									<Dailys resource={res.daily} />
