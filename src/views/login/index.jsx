@@ -12,12 +12,10 @@ import Button from 'src/components/button'
 
 
 @injectStore
-// @reactStateData
+@reactStateData
 class ViewLogin extends Component {
 	constructor(props) {
 		super(props)
-
-		Object.assign(this, {...this.props.store})
 
 		// this.setData({
 		// 	loading: false,

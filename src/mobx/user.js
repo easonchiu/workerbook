@@ -8,11 +8,10 @@ useStrict(true)
 class Store {
 
 	@observable info = null // 用户信息
-	@observable chart = []
-	@observable daily = {}
-	@observable today = []
-	@observable search = []
-
+	@observable chart = [] // 我的日报统计
+	@observable daily = [] // 我的日报列表
+	@observable today = [] // 我今天的日报
+	@observable search = [] // 用户搜索
 
 	@action('登录')
 	async login(payload) {
@@ -42,6 +41,11 @@ class Store {
 		})
 
 		return res
+	}
+
+	@action('获取今天的日报')
+	async fetchTodayDaily() {
+		
 	}
 
 }

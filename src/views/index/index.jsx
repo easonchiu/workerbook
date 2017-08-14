@@ -16,6 +16,7 @@ import MyDailyHeader from 'src/containers/myDailyHeader'
 
 
 @injectStore
+@reactStateData
 class ViewIndex extends Component {
 	constructor(props) {
 		super(props)
@@ -55,17 +56,16 @@ class ViewIndex extends Component {
 						<Route exact path="/home" component={MyDailyHeader} />
 						<Route exact path="/home" component={MyDailyList} />
 
-						<Route strict path="/daily/:gid" component={WriterBox} />
+						<Route strict path="/daily/:gid?/:date?" component={WriterBox} />
+						
+						<Route strict path="/daily/:gid?/:date?" component={UserDailyList} />
 
-						<Route exact path="/daily/:gid" component={UserDailyList} />
-						<Route exact path="/daily/:gid/:date" component={UserDailyList} />
-
-						<Route strict path="/daily/:gid" component={UserList} />
+						<Route strict path="/daily/:gid?/:date?" component={UserList} />
 
 					</div>
 					
 					<div className="app-aside">
-						<Route strict path="/daily/:gid" component={GroupList} />
+						<Route strict path="/daily/:gid?/:date?" component={GroupList} />
 					</div>
 
 				</div>
@@ -76,5 +76,6 @@ class ViewIndex extends Component {
 		)
 	}
 }
+
 
 export default ViewIndex

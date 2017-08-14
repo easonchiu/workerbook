@@ -18,8 +18,12 @@ class WriterBox extends Component {
 		return this.props !== nProps || this.state !== nState
 	}
 
+	componentDidMount() {
+		console.log(this)
+	}
+
 	click() {
-		this.props.$daily.updateList()
+		this.$daily.updateList()
 	}
 
 	render() {

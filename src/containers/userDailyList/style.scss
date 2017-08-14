@@ -22,12 +22,18 @@
 			&:hover {
 				color: #5081ff;
 			}
-			&.active {
-				color: #5081ff;
-				background: #f7f9fc;
-				font-weight: bold;
-				font-size: 14px;
-			}
+		}
+		p {
+			display: block;
+			width: 120px;
+			height: 40px;
+			line-height: 40px;
+			color: #5081ff;
+			background: #f7f9fc;
+			font-weight: bold;
+			font-size: 14px;
+			text-align: center;
+			border-right: 1px solid #dee3e8;
 		}
 	}
 	.daily-item {

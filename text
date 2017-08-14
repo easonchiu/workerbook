@@ -2,18 +2,18 @@
  GET /user/info
 
  日报列表
- GET /daily/list
+ GET /daily/list/:gid/:date
  分组信息
  GET /group
  组的全部用户
- GET /group/user
+ GET /group/:gid/user
 
  某个用户的日报列表
- GET /user/daily/list
+ GET /user/:uid/daily/list
  某个用户的某天日报
- GET /user/daily
+ GET /user/:uid/daily/:date
  某个用户的日报分析
- GET /user/daily/chart
+ GET /user/daily/today/chart
  自己当天的提交
  GET /user/daily/today
 

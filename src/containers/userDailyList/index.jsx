@@ -13,11 +13,10 @@ import Spin from 'src/components/spin'
 
 
 @injectStore
+@reactStateData
 class UserDailyList extends Component {
 	constructor(props) {
 		super(props)
-
-		Object.assign(this, {...this.props.store})
 	}
 
 	shouldComponentUpdate(nProps, nState) {
@@ -25,32 +24,51 @@ class UserDailyList extends Component {
 	}
 
 	componentDidMount() {
-		// this.props.$daily.fetchList()
+		this.$daily.fetchList()
 	}
 
 	changeDate(val) {
-		const {gid, date} = this.props.match.params
-		
+		const {gid = 'all', date = 0} = this.props.match.params
+
 		if (date != val) {
-			this.props.history.push(`/daily/${gid}/${val}`)
+			if (val) {
+				this.props.history.push(`/daily/${gid}/${val}`)
+			} else {
+				this.props.history.push(`/daily/${gid}`)
+			}
+			this.$daily.updateList()
 		}
+
 	}
 
 	render() {
 
 		const css = cn('user-daily-list', this.props.className)
 
-		const list = [] // this.props.$daily.list
+		const list = this.$daily.list
 
-		return null
+		const {date = 0} = this.props.match.params
+
+		const dateStr = ['今天', '昨天', '前天']
 
 		return (
-			<Spin loading={this.props.$daily.listFetching}>
+			<Spin loading={this.$daily.listFetching}>
 				<div className={css}>
 					<Border className="date-bar">
-						<a href="javascript:;" className="active" onClick={this.changeDate.bind(this, '')}>Today</a>
-						<a href="javascript:;" onClick={this.changeDate.bind(this, -1)}>Aug 8, 2017</a>
-						<a href="javascript:;" onClick={this.changeDate.bind(this, -2)}>Aug 7, 2017</a>
+						{
+							[0,1,2].map(res => {
+								if (res == date) {
+									return <p key={res}>{dateStr[res]}</p>
+								}
+								return (
+									<a key={res}
+										href="javascript:;"
+										onClick={this.changeDate.bind(this, res)}>
+										{dateStr[res]}
+									</a>
+								)
+							})
+						}
 					</Border>
 					{
 						list.map((res,i) => (

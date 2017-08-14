@@ -15,8 +15,6 @@ class GroupList extends Component {
 	
 	constructor(props) {
 		super(props)
-
-		Object.assign(this, {...this.props.store})
 	}
 
 	shouldComponentUpdate(nProps, nState) {
@@ -28,7 +26,11 @@ class GroupList extends Component {
 	}
 
 	onClick(gid) {
-		this.props.history.push('/daily/' + gid)
+		if (gid) {
+			this.props.history.push('/daily/' + gid)
+		} else {
+			this.props.history.push('/daily')
+		}
 		this.$daily.updateList()
 	}
 
@@ -36,7 +38,7 @@ class GroupList extends Component {
 		
 		const group = this.$group.list
 
-		const {gid} = this.props.match.params
+		const {gid = 'all', date} = this.props.match.params
 
 		return (
 			<Border className="app-group-list">
@@ -51,7 +53,7 @@ class GroupList extends Component {
 							{
 								gid==='all' ?
 								<p><i />All</p> :
-								<a href="javascript:;" onClick={this.onClick.bind(this, 'all')}><i />All</a>
+								<a href="javascript:;" onClick={this.onClick.bind(this, '')}><i />All</a>
 							}
 						</li>
 						{

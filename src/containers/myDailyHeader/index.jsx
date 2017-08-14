@@ -14,8 +14,6 @@ class MyDailyHeader extends Component {
 	constructor(props) {
 		super(props)
 
-		Object.assign(this, {...this.props.store})
-
 		// this.setData({
 		// 	dateVisible: false,
 		// 	dateX: 0,

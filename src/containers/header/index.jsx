@@ -1,7 +1,7 @@
 import './style'
 import React, {Component} from 'react'
 
-import reactStateData from 'src/react-state-data'
+import reactStateData from 'react-state-data'
 import {injectStore} from 'src/mobx'
 
 import Input from 'src/components/input'
@@ -24,10 +24,6 @@ class Header extends Component {
 
 	shouldComponentUpdate(nProps, nState) {
 		return this.props !== nProps || this.state !== nState
-	}
-
-	componentDidMount() {
-		console.log(this, 123)
 	}
 
 	logoutClick() {

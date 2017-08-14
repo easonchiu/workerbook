@@ -140,6 +140,7 @@ const webpackConfig = {
 			'src': resolve('src'),
 			'auto$': resolve('src/auto'),
 			'mass$': resolve('src/assets/libs/mass'),
+			'react-state-data$': resolve('src/assets/libs/react-state-data')
 		}
 	}
 }
