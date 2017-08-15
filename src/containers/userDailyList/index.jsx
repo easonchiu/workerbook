@@ -49,7 +49,7 @@ class UserDailyList extends Component {
 
 		const {date = 0} = this.props.match.params
 
-		const dateStr = ['Today', 'Yesterday', 'Two days ago']
+		const dateStr = ['今天', '昨天', '前天']
 
 		return (
 			<Spin loading={this.$daily.listFetching}>

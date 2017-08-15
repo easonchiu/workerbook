@@ -62,6 +62,23 @@ class Store {
 		})
 	}
 
+	@action('修改今天的日报')
+	async updateTodayDaily(payload) {
+		await http.request({
+			method: 'put',
+	        url: `/user/daily/1`,
+		})
+
+		runInAction(() => {
+			this.today.map(res => {
+				if (res.id === payload.id) {
+					res.record = payload.record
+					res.progress = payload.progress
+				}
+			})
+		})
+	}
+
 	@action('获取我的日报分析')
 	async fetchChart() {
 		this.chartFetching = true

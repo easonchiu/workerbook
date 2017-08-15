@@ -121,12 +121,11 @@ class MyDailyHeader extends Component {
 					</div>
 				</div>
 				<div className="tips">
-					<p>Less</p>
+					<p>提交量</p>
 					<i className="i0" />
 					<i className="i1" />
 					<i className="i2" />
 					<i className="i3" />
-					<p>More</p>
 				</div>
 			</div>
 		)
@@ -148,7 +147,7 @@ class MyDailyHeader extends Component {
 					{
 						user.info ?
 						<h1>{user.info.userName}<span>{user.info.groupName}</span></h1> :
-						<h1 style={{opacity:0.1}}>Loading...</h1>
+						<h1 style={{opacity:0.1}}>加载中...</h1>
 					}
 					
 					{
@@ -165,7 +164,7 @@ class MyDailyHeader extends Component {
 							<h1>2017 5-12</h1>
 							<a href="javascript:;"
 								className="close"
-								onClick={e => this.data.somedayVisible = false}>Close</a>
+								onClick={e => this.data.somedayVisible = false}>关闭</a>
 							<Dailys />
 						</div> :
 						null

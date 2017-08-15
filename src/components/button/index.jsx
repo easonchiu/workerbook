@@ -5,7 +5,8 @@ import cn from 'classnames'
 
 const Button = props => {
 	const css = cn('app-button', props.className, {
-		'app-button--loading': props.loading
+		'app-button--loading': props.loading,
+		'app-button--disabled': props.disabled
 	})
 
 	const load = (

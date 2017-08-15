@@ -4,7 +4,7 @@ import cn from 'classnames'
 
 
 const Circle = props => {
-	
+
 	var percent = (props.progress || 0) / 100, perimeter = Math.PI * 2 * 35
     const css = perimeter * percent + " " + perimeter * (1- percent)
 

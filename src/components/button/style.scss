@@ -24,6 +24,11 @@
 		color: #fff;
 	}
 
+	&--disabled {
+		opacity: 0.7;
+		pointer-events: none;
+	}
+
 	.x-loading__spin {
 		width: 14px;
 		height: 14px;

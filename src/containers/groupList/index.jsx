@@ -42,18 +42,18 @@ class GroupList extends Component {
 
 		return (
 			<Border className="app-group-list">
-				<h1>Groups</h1>
+				<h1>用户分组</h1>
 				<div className="tools">
-					<a href="javascript:;">+ User</a>
-					<a href="javascript:;">+ Group</a>
+					<a href="javascript:;">添加用户</a>
+					<a href="javascript:;">添加组</a>
 				</div>
 				<Spin loading={this.$group.listFetching} height={200}>
 					<ul>
 						<li className={gid==='all'?'active':''}>
 							{
 								gid==='all' ?
-								<p><i />All</p> :
-								<a href="javascript:;" onClick={this.onClick.bind(this, '')}><i />All</a>
+								<p><i />全部用户</p> :
+								<a href="javascript:;" onClick={this.onClick.bind(this, '')}><i />全部用户</a>
 							}
 						</li>
 						{
@@ -73,41 +73,41 @@ class GroupList extends Component {
 				</Spin>
 				
 				<Dialog className="dailog-add-user" visible={false}>
-					<h1>Add user</h1>
+					<h1>添加用户</h1>
 
 					<div className="row">
-						<label>Username</label>
+						<label>用户名</label>
 						<Input type="text" />
 					</div>
 
 					<div className="row">
-						<label>Password</label>
+						<label>初始密码</label>
 						<Input type="text" />
 					</div>
 
 					<div className="row">
-						<label>Group</label>
+						<label>所在分组</label>
 						<Input type="text" />
 					</div>
 
 					<div className="row">
 						<label></label>
-						<Button>Add</Button>
+						<Button>添加</Button>
 					</div>
 
 				</Dialog>
 
 				<Dialog className="dailog-add-group" visible={false}>
-					<h1>Add group</h1>
+					<h1>添加分组</h1>
 
 					<div className="row">
-						<label>Group name</label>
+						<label>分组名</label>
 						<Input type="text" />
 					</div>
 
 					<div className="row">
 						<label></label>
-						<Button>Add</Button>
+						<Button>添加</Button>
 					</div>
 
 				</Dialog>

@@ -6,7 +6,6 @@
 	-webkit-box-flex: 1;
 	.input {
 		display: -webkit-box;
-		margin-right: 10px;
 		-webkit-user-select: none;
 		-webkit-box-flex: 1;
 		.in {
@@ -15,7 +14,7 @@
 			border-top-left-radius: 0 !important;
 			border-bottom-left-radius: 0 !important;
 		}
-		.process {
+		.progress {
 			display: -webkit-box;
 			-webkit-box-align: center;
 			padding: 0 10px;
@@ -69,7 +68,7 @@
 			}
 		}
 	}
-	.process-title {
+	.progress-title {
 		display: block;
 		border: 1px solid #d4d9de + 10;
 		border-right: none;
@@ -81,7 +80,7 @@
 		font-size: 12px;
 		color: #586069;
 		background: #ebedf0 + 12;
-		width: 100px;
+		width: 110px;
 		text-align: center;
 		cursor: pointer;
 		span {
@@ -93,8 +92,20 @@
 			background: #ebedf0 + 5;
 		}
 	}
+	.btn {
+		margin-left: 10px;
+	}
 	&--loading {
-		.process-title {
+		.progress-title {
+			pointer-events: none;
+			color: #586069 + 30;
+			span {
+				color: #586069 + 50 + 30;
+			}
+		}
+	}
+	&--disabled {
+		.progress-title {
 			pointer-events: none;
 			color: #586069 + 30;
 			span {

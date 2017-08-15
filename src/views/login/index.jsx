@@ -66,16 +66,16 @@ class ViewLogin extends Component {
 					<h1 className="logo"></h1>
 
 					<div className="row">
-						<label>Username</label>
-						<Input placeholder="your name"
+						<label>用户名</label>
+						<Input placeholder="请输入用户名"
 							value={this.data.username}
 							onChange={::this.usernameChange} />
 					</div>
 
 					<div className="row">
-						<label>Password</label>
+						<label>密码</label>
 						<Input type="password"
-							placeholder="your password"
+							placeholder="请输入密码"
 							value={this.data.password}
 							onChange={::this.passwordChange}
 							autoComplete="new-password" />
@@ -83,7 +83,7 @@ class ViewLogin extends Component {
 
 					<div className="row">
 						<label></label>
-						<Button onClick={::this.onSubmit} loading={this.data.loading}>Login</Button>
+						<Button onClick={::this.onSubmit} loading={this.data.loading}>登录</Button>
 						<p className="tips">user name is empty</p>
 					</div>
 					

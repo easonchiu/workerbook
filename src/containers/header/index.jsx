@@ -54,7 +54,7 @@ class Header extends Component {
 					</nav>
 					
 					<div className="searchbar">
-						<Input placeholder="keyword" onFocus={::this.searchFocus} onBlur={::this.searchBlur} />
+						<Input placeholder="查找用户" onFocus={::this.searchFocus} onBlur={::this.searchBlur} />
 						{
 							this.data.resultVisible ?
 							<Border className="result">
@@ -68,36 +68,41 @@ class Header extends Component {
 							null
 						}
 					</div>
-
-					<div className="user">
-						<h6>Hello: {store.userName}</h6>
-						<p>{store.groupName}</p>
-						<span>
-							<a href="javascript:;" onClick={e => this.data.modifyPw = true}>Modify Pw</a>
-							<a href="javascript:;" onClick={::this.logoutClick}>Logout</a>
-						</span>
-					</div>
+					
+					{
+						store.userName ?
+						<div className="user">
+							<h6>你好: {store.userName}</h6>
+							<p>{store.groupName}</p>
+							<span>
+								<a href="javascript:;" onClick={e => this.data.modifyPw = true}>修改密码</a>
+								<a href="javascript:;" onClick={::this.logoutClick}>退出帐号</a>
+							</span>
+						</div> :
+						null
+					}
+					
 
 				</div>
 
 				<Dialog className="dailog-modifyPw" visible={this.data.modifyPw} onBgClick={e => this.data.modifyPw = false}>
 					<UserHeader className="header" name={store.userName} uid={store.uid} />
-					<h1>Modify password</h1>
+					<h1>修改密码</h1>
 					<div className="row">
-						<label>Old password</label>
+						<label>旧密码</label>
 						<Input placeholder="******" />
 					</div>
 					<div className="row">
-						<label>New password</label>
+						<label>新密码</label>
 						<Input placeholder="******" />
 					</div>
 					<div className="row">
-						<label>Again</label>
+						<label>再次输入</label>
 						<Input placeholder="******" />
 					</div>
 					<div className="row">
 						<label></label>
-						<Button>Modify</Button>
+						<Button>修改</Button>
 					</div>
 				</Dialog>
 

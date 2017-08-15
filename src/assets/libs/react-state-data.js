@@ -4,7 +4,7 @@ const reactStateData = Comp => {
 
     class ComponentWithReactStateData extends Comp {
 
-        setData(obj) {
+        setData(obj, watch) {
             // watch
             let watchs = {}
             if (typeof watch === 'function') {

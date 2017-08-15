@@ -32,6 +32,6 @@
  添加记录
  POST /user/daily
  修改记录
- PUT /user/daily
+ PUT /user/daily/:id
  删除记录
  DELETE /user/daily
