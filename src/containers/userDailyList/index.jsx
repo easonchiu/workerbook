@@ -24,6 +24,10 @@ class UserDailyList extends Component {
 	}
 
 	componentDidMount() {
+		this.fetch()
+	}
+
+	async fetch() {
 		this.$daily.fetchList()
 	}
 
@@ -73,11 +77,11 @@ class UserDailyList extends Component {
 					{
 						list.map((res,i) => (
 							<div className="daily-item" key={res.uid}>
-								<UserHeader name={res.username} className="header" uid={res.uid} link />
+								<UserHeader name={res.username} className="header" uid={res.uid} link={'/user/'+res.uid} />
 								<Border className="daily-bd">
 									<h1>
 										<time>{res.updateTime}</time>
-										<Link to="/daily/user/1">{res.username}</Link>
+										<Link to={'/user/'+res.uid}>{res.username}</Link>
 									</h1>
 
 									<Dailys resource={res.daily} />

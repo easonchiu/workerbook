@@ -26,6 +26,11 @@
 			font-size: 14px;
 		}
 	}
+	&--success {
+		p {
+			color: #5081ff;
+		}
+	}
 	&--show {
 		.x-toast__inner {
 			-webkit-transform: translate(0, 0);

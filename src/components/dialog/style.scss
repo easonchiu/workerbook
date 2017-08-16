@@ -7,6 +7,20 @@
 		height: 100%;
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
+		position: relative;
+	}
+	&__close {
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 50px;
+		height: 50px;
+		background: url('../../assets/imgs/icon-close.png') center center no-repeat;
+		background-size: 40%;
+		opacity: 0.7;
+		&:hover {
+			opacity: 0.4;
+		}
 	}
 	.x-modal__inner {
 		display: -webkit-box;

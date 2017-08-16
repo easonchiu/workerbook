@@ -36,9 +36,9 @@ const UserHeader = props => {
 		'user-header--big-font': big
 	})
 
-	if (props.link && uid !== 0) {
+	if (typeof props.link === 'string' && uid !== 0) {
 		return (
-			<Link className={css} to={'/home/'+uid}>
+			<Link className={css} to={props.link}>
 				<p><span /><em>{props.name}</em></p>
 				{name}
 			</Link>

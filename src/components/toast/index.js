@@ -1,11 +1,14 @@
 import './style'
 
 class Toast {
-	static show(val, duration = 2000) {
+	static show(val, duration = 2000, css) {
 		this.hide(false);
 
 		let toast = document.createElement('div');
 		toast.classList.add('x-toast');
+		if (css) {
+			toast.classList.add('x-toast--' + css);
+		}
 		toast.id = 'j-x-toast';
 		toast.innerHTML = `<div class="x-toast__inner"><p>${val}</p></div>`;
 
@@ -23,6 +26,9 @@ class Toast {
 		if (focusdom) {
 			focusdom.blur()
 		}
+	}
+	static success(val, duration) {
+		this.show(val, duration, 'success')
 	}
 	static hide(animate = true) {
 		let toast = document.getElementById('j-x-toast');

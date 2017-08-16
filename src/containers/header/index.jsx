@@ -1,5 +1,6 @@
 import './style'
 import React, {Component} from 'react'
+import cn from 'classnames'
 
 import reactStateData from 'react-state-data'
 import {injectStore} from 'src/mobx'
@@ -19,7 +20,28 @@ class Header extends Component {
 		this.setData({
 			modifyPw: false,
 			resultVisible: false,
+			headerVisible: true,
 		})
+
+		this.onScroll = this.onScroll.bind(this)
+	}
+
+	componentDidMount() {
+		window.addEventListener('scroll', this.onScroll)
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('scroll', this.onScroll)
+	}
+
+	onScroll(e) {
+		const y = document.body.scrollTop
+		this.pageY = this.pageY === undefined ? y : this.pageY
+		if (Math.abs(this.pageY - y) > 100) {
+			const show = this.pageY - y > 0 ? true : false
+			this.data.headerVisible = show
+			this.pageY = y
+		}
 	}
 
 	shouldComponentUpdate(nProps, nState) {
@@ -40,10 +62,14 @@ class Header extends Component {
 
 	render() {
 
-		const store = this.$user.info || {}
+		const userInfo = this.$user.info || {}
+
+		const css = cn('app-header', {
+			'app-header--visible': this.data.headerVisible
+		})
 
 		return (
-			<div className="app-header">
+			<div className={css}>
 				<div className="inner">
 					
 					<h1 className="logo"></h1>
@@ -70,10 +96,14 @@ class Header extends Component {
 					</div>
 					
 					{
-						store.userName ?
+						userInfo.nickname ?
 						<div className="user">
-							<h6>你好: {store.userName}</h6>
-							<p>{store.groupName}</p>
+							<h6>你好: {userInfo.nickname}</h6>
+							{
+								userInfo.groupName ?
+								<p>{userInfo.groupName}</p> :
+								null
+							}
 							<span>
 								<a href="javascript:;" onClick={e => this.data.modifyPw = true}>修改密码</a>
 								<a href="javascript:;" onClick={::this.logoutClick}>退出帐号</a>
@@ -85,8 +115,12 @@ class Header extends Component {
 
 				</div>
 
-				<Dialog className="dailog-modifyPw" visible={this.data.modifyPw} onBgClick={e => this.data.modifyPw = false}>
-					<UserHeader className="header" name={store.userName} uid={store.uid} />
+				<Dialog className="dailog-modifyPw" visible={this.data.modifyPw} onClose={e => this.data.modifyPw = false}>
+					{
+						userInfo.role !== 1 ?
+						<UserHeader className="header" name={userInfo.nickname} uid={userInfo.uid} /> :
+						null
+					}
 					<h1>修改密码</h1>
 					<div className="row">
 						<label>旧密码</label>

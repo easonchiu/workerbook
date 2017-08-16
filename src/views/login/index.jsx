@@ -9,6 +9,7 @@ import {setToken} from 'src/assets/libs/token'
 import Footer from 'src/containers/footer'
 import Input from 'src/components/input'
 import Button from 'src/components/button'
+import Toast from 'src/components/toast'
 
 
 @injectStore
@@ -21,6 +22,7 @@ class ViewLogin extends Component {
 			loading: false,
 			username: '',
 			password: '',
+			errorInfo: ''
 		})
 	}
 
@@ -29,32 +31,42 @@ class ViewLogin extends Component {
 	}
 
 	async onSubmit() {
-		this.data.loading = true
 
-		try {
-			const res = await this.$user.login({
-				username: this.data.username,
-				password: this.data.password
-			})
-			setToken(res.data.token)
-			await this.$user.fetchInfo()
+		if (this.data.username == '') {
+			this.data.errorInfo = '请输入用户名'
+		} else if (this.data.password == '') {
+			this.data.errorInfo = '请输入密码'
+		} else {
+			this.data.loading = true
 
-			this.data.loading = false
-			this.props.history.push('/')
-		} catch(e) {
-			console.error(e)
-			this.data.loading = false
+			try {
+				const res = await this.$user.login({
+					username: this.data.username,
+					password: this.data.password
+				})
+
+				await this.$user.fetchInfo(true)
+
+				this.data.loading = false
+				this.data.errorInfo = ''
+				this.props.history.push('/')
+			} catch(e) {
+				this.data.errorInfo = e.msg
+				this.data.loading = false
+			}
 		}
 	}
 
 	usernameChange(e) {
 		const val = e.target.value.trim()
 		this.data.username = val
+		this.data.errorInfo = ''
 	}
 
 	passwordChange(e) {
 		const val = e.target.value.trim()
 		this.data.password = val
+		this.data.errorInfo = ''
 	}
 
 	render() {
@@ -84,7 +96,11 @@ class ViewLogin extends Component {
 					<div className="row">
 						<label></label>
 						<Button onClick={::this.onSubmit} loading={this.data.loading}>登录</Button>
-						<p className="tips">user name is empty</p>
+						{
+							this.data.errorInfo ?
+							<p className="tips">{this.data.errorInfo}</p> :
+							null
+						}
 					</div>
 					
 				</div>

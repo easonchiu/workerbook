@@ -32,6 +32,11 @@ class Dialog extends Component {
 		return (
 			<Modal visible={this.props.visible} height={this.props.height} onBgClick={this.props.onBgClick} className={css}>
 				<div className="x-dialog__inner">
+					{
+						this.props.onClose ?
+						<a href="javascript:;" className="x-dialog__close" onClick={this.props.onClose}><span /></a> :
+						null
+					}
 					{this.props.children}
 				</div>
 			</Modal>

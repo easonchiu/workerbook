@@ -16,7 +16,7 @@ const Routes = e => (
 		<Switch>
 			<Route exact path="/login" component={ ViewLogin } />
 			
-			<Route strict path="/daily" component={ ViewIndex } />
+			<Route strict path="/(daily|user)" component={ ViewIndex } />
 
 			<Redirect exact from="/" to="/daily" />
 			<Redirect to="/404" />

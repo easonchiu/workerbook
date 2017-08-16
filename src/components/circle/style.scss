@@ -10,4 +10,13 @@
 	circle {
 		-webkit-transition: stroke-dasharray 0.25s;
 	}
+	&--finished {
+		width: 16px;
+		height: 16px;
+		overflow: hidden;
+		background-image: url('../../assets/imgs/icon-finished.png');
+		background-repeat: no-repeat;
+		background-position: center center;
+		background-size: 80% 80%;
+	}
 }

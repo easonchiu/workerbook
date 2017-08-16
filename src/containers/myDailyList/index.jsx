@@ -1,33 +1,53 @@
 import './style'
-import React from 'react'
+import React, {Component} from 'react'
 import cn from 'classnames'
 import {Link} from 'react-router-dom'
+
+import reactStateData from 'react-state-data'
+import {injectStore} from 'src/mobx'
 
 import Border from 'src/components/border'
 import Dailys from 'src/components/dailys'
 
+@injectStore
+@reactStateData
+class MyDailyList extends Component {
+	constructor(props) {
+		super(props)
+	}
 
-const DailyList = props => {
-	const arr = [3,4,5,6,7,8]
-	const css = cn('my-daily-list', props.className)
-	return (
-		<div className={css}>
-			{
-				arr.map((res,i) => (
-					<div className="daily-item" key={i}>
-						<Border className="daily-bd">
-							<h1>
-								<time>12:30</time>
-							</h1>
+	componentDidMount() {
+		this.fetch()
+	}
 
-							<Dailys />
+	fetch() {
+		this.$user.fetchMyDaily()
+	}
 
-						</Border>
-					</div>
-				))
-			}
-		</div>
-	)
+	render() {
+		const list = this.$user.daily
+
+		const css = cn('my-daily-list', this.props.className)
+
+		return (
+			<div className={css}>
+				{
+					list.map(res => (
+						<div className="daily-item" key={res.updateTime}>
+							<Border className="daily-bd">
+								<h1>
+									<time>{res.updateTime}</time>
+								</h1>
+
+								<Dailys resource={res.daily} />
+
+							</Border>
+						</div>
+					))
+				}
+			</div>
+		)
+	}
 }
 
-export default DailyList
+export default MyDailyList

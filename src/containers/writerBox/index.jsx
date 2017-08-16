@@ -25,10 +25,6 @@ class WriterBox extends Component {
 		return this.props !== nProps || this.state !== nState
 	}
 
-	componentDidMount() {
-		this.fetch()
-	}
-
 	async fetch() {
 		this.$user.fetchTodayDaily()
 	}
@@ -43,6 +39,14 @@ class WriterBox extends Component {
 	}
 
 	render() {
+		
+		// 管理员身份无法写日报，也不获取本人日报数据
+		if (this.$user.info && this.$user.info.role === 1) {
+			return null
+		}
+
+		this.fetch()
+
 		return (
 			<div className="writer-box">
 				<i className="icon" />

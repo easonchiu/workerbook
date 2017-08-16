@@ -32,6 +32,17 @@ http.interceptors.request.use(config => {
 })
 
 http.interceptors.response.use(config => {
+	
+	if (!config.data) {
+		return Promise.reject({
+			msg: '系统错误'
+		})
+	} else if (config.data.code === 0) {
+		return Promise.reject({
+			msg: config.data.msg
+		})
+	}
+
 	return Promise.resolve({
 		...config.data
 	})

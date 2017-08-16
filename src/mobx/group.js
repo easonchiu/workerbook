@@ -24,8 +24,31 @@ class Store {
 		})
 
 		runInAction(() => {
-			this.list = res.data
+			this.list = res.data.group
 			this.listFetching = false
+		})
+	}
+
+	@action('更新组数据')
+	async updateList() {
+		const res = await http.request({
+			method: 'get',
+	        url: `/group`,
+		})
+
+		runInAction(() => {
+			this.list = res.data.group
+		})
+	}
+
+	@action('添加组')
+	add(payload) {
+		return http.request({
+			method: 'post',
+	        url: `/group/add`,
+	        data: {
+	        	...payload
+	        }
 		})
 	}
 
