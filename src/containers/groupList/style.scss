@@ -37,6 +37,7 @@
 			-webkit-box-align: center;
 			height: 40px;
 			line-height: 40px;
+			overflow: hidden;
 			padding: 0 15px;
 			font-size: 14px;
 			color: #586069;
@@ -44,6 +45,16 @@
 				background: #ebedf0 + 12;
 				color: #5081ff;
 			}
+		}
+		span {
+			display: block;
+			width: 100%;
+			-webkit-box-flex: 1;
+			margin-right: 10px;
+		}
+		em {
+			opacity: 0.5;
+			font-size: 12px;
 		}
 		i {
 			display: block;

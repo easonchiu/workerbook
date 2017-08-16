@@ -10,6 +10,7 @@ import Button from 'src/components/button'
 import Dialog from 'src/components/dialog'
 import UserHeader from 'src/components/userHeader'
 import Border from 'src/components/border'
+import Toast from 'src/components/toast'
 
 @injectStore
 @reactStateData
@@ -21,6 +22,10 @@ class Header extends Component {
 			modifyPw: false,
 			resultVisible: false,
 			headerVisible: true,
+
+			pwold: '',
+			pwnew: '',
+			pwnew2: '',
 		})
 
 		this.onScroll = this.onScroll.bind(this)
@@ -58,6 +63,31 @@ class Header extends Component {
 
 	searchBlur() {
 		this.data.resultVisible = false
+	}
+
+	midifyPwSubmit() {
+		const {pwold, pwnew, pwnew2} = this.data
+
+		if (pwold == '') {
+			Toast.show('请输入旧密码')
+		} else if (pwnew == '') {
+			Toast.show('请输入新密码')
+		} else if (pwnew.length < 6) {
+			Toast.show('密码不得小于6位')
+		} else if (pwnew2 == '') {
+			Toast.show('请确认新密码')
+		} else if (pwnew !== pwnew2) {
+			Toast.show('两次密码输入不一致')
+		} else {
+			alert(1123)
+		}
+	}
+
+	closeModifyPwPop() {
+		this.data.modifyPw = false
+		this.data.pwold = ''
+		this.data.pwnew = ''
+		this.data.pwnew2 = ''
 	}
 
 	render() {
@@ -115,7 +145,9 @@ class Header extends Component {
 
 				</div>
 
-				<Dialog className="dailog-modifyPw" visible={this.data.modifyPw} onClose={e => this.data.modifyPw = false}>
+				<Dialog className="dailog-modifyPw"
+					visible={this.data.modifyPw}
+					onClose={::this.closeModifyPwPop}>
 					{
 						userInfo.role !== 1 ?
 						<UserHeader className="header" name={userInfo.nickname} uid={userInfo.uid} /> :
@@ -124,19 +156,31 @@ class Header extends Component {
 					<h1>修改密码</h1>
 					<div className="row">
 						<label>旧密码</label>
-						<Input placeholder="******" />
+						<Input placeholder="******"
+							value={this.data.pwold}
+							type="password"
+							autoComplete="new-password"
+							onChange={e => this.data.pwold = e.target.value.trim().substr(0, 20)} />
 					</div>
 					<div className="row">
 						<label>新密码</label>
-						<Input placeholder="******" />
+						<Input placeholder="******"
+							value={this.data.pwnew}
+							type="password"
+							autoComplete="new-password"
+							onChange={e => this.data.pwnew = e.target.value.trim().substr(0, 20)} />
 					</div>
 					<div className="row">
 						<label>再次输入</label>
-						<Input placeholder="******" />
+						<Input placeholder="******"
+							value={this.data.pwnew2}
+							type="password"
+							autoComplete="new-password"
+							onChange={e => this.data.pwnew2 = e.target.value.trim().substr(0, 20)} />
 					</div>
 					<div className="row">
 						<label></label>
-						<Button>修改</Button>
+						<Button onClick={::this.midifyPwSubmit}>修改</Button>
 					</div>
 				</Dialog>
 

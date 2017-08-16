@@ -164,8 +164,16 @@ class GroupList extends Component {
 									<li key={res._id} className={page==='daily'&&id==res._id?'active':''}>
 										{
 											page==='daily'&&id==res._id ?
-											<p><i />{res.name}</p> :
-											<a href="javascript:;" onClick={this.onClick.bind(this, res._id, res.name)}><i />{res.name}</a>
+											<p>
+												<i />
+												<span>{res.name}</span>
+												<em>{res.count}人</em>
+											</p> :
+											<a href="javascript:;" onClick={this.onClick.bind(this, res._id, res.name)}>
+												<i />
+												<span>{res.name}</span>
+												<em>{res.count}人</em>
+											</a>
 										}
 									</li>
 								)
