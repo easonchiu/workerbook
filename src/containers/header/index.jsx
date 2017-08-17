@@ -1,6 +1,7 @@
 import './style'
 import React, {Component} from 'react'
 import cn from 'classnames'
+import {Link} from 'react-router-dom'
 
 import reactStateData from 'react-state-data'
 import {injectStore} from 'src/mobx'
@@ -11,6 +12,9 @@ import Dialog from 'src/components/dialog'
 import UserHeader from 'src/components/userHeader'
 import Border from 'src/components/border'
 import Toast from 'src/components/toast'
+import Spin from 'src/components/spin'
+
+import {clearToken} from 'src/assets/libs/token'
 
 @injectStore
 @reactStateData
@@ -26,6 +30,10 @@ class Header extends Component {
 			pwold: '',
 			pwnew: '',
 			pwnew2: '',
+			modifying: false,
+
+			searchKey: '',
+			searchLoading: false,
 		})
 
 		this.onScroll = this.onScroll.bind(this)
@@ -37,6 +45,8 @@ class Header extends Component {
 
 	componentWillUnmount() {
 		window.removeEventListener('scroll', this.onScroll)
+		clearTimeout(this.searchBlurTimer)
+		clearTimeout(this.searchTimer)
 	}
 
 	onScroll(e) {
@@ -54,18 +64,51 @@ class Header extends Component {
 	}
 
 	logoutClick() {
+		clearToken()
 		this.props.history.push('/login')
 	}
 
-	searchFocus() {
-		this.data.resultVisible = true
+	searchFocus(e) {
+		if (e.target.value.trim() != '') {
+			this.searchChange(e)
+		}
+		clearTimeout(this.searchBlurTimer)
 	}
 
 	searchBlur() {
-		this.data.resultVisible = false
+		this.searchBlurTimer = setTimeout(e => {
+			this.data.resultVisible = false
+			this.data.searchLoading = false
+			this.data.searchKey = ''
+		}, 100)
 	}
 
-	midifyPwSubmit() {
+	searchChange(e) {
+		const value = e.target.value
+		this.data.searchKey = value
+		if (value.trim() != '') {
+			this.data.resultVisible = true
+			this.data.searchLoading = true
+			clearTimeout(this.searchTimer)
+			this.searchTimer = setTimeout(this.fetchSearch.bind(this), 300)
+		} else {
+			this.data.resultVisible = false
+			this.data.searchLoading = false
+		}
+	}
+
+	async fetchSearch() {
+		try {
+			const res = await this.$user.searchUser({
+				keyword: this.data.searchKey
+			})
+		} catch(e) {
+			console.log(e.msg)
+		}
+		this.data.searchLoading = false
+	}
+
+	async midifyPwSubmit() {
 		const {pwold, pwnew, pwnew2} = this.data
 
 		if (pwold == '') {
@@ -78,12 +121,32 @@ class Header extends Component {
 			Toast.show('请确认新密码')
 		} else if (pwnew !== pwnew2) {
 			Toast.show('两次密码输入不一致')
+		} else if (pwold === pwnew) {
+			Toast.show('新密码不能与原始密码一致')
 		} else {
-			alert(1123)
+			this.data.modifying = true
+			try {
+				await this.$user.midifyPw({
+					oldPassword: pwold,
+					newPassword: pwnew,
+				})
+				// 关闭弹框
+				this.closeModifyPwPop()
+
+				// 清除token
+				clearToken()
+
+				// 跳回到登录页面
+				this.props.history.push('/login')
+			} catch(e) {
+				Toast.show(e.msg)
+			}
+			this.data.modifying = false
 		}
 	}
 
 	closeModifyPwPop() {
+		this.data.modifying = false
 		this.data.modifyPw = false
 		this.data.pwold = ''
 		this.data.pwnew = ''
@@ -110,16 +173,27 @@ class Header extends Component {
 					</nav>
 					
 					<div className="searchbar">
-						<Input placeholder="查找用户" onFocus={::this.searchFocus} onBlur={::this.searchBlur} />
+						<Input placeholder="查找用户"
+							onFocus={::this.searchFocus}
+							onBlur={::this.searchBlur}
+							value={this.data.searchKey}
+							onChange={::this.searchChange} />
 						{
 							this.data.resultVisible ?
+							this.data.searchLoading ?
 							<Border className="result">
-								<div className="item">
-									Eason.Chiu <span>EF Department</span>
-								</div>
-								<div className="item">
-									Eason.Chiu <span>EF Department</span>
-								</div>
+								<Spin loading height={80} />
+							</Border> :
+							<Border className="result">
+								{
+									this.$user.search && this.$user.search.length > 0 ?
+									this.$user.search.map(res => (
+										<Link to={'/user/'+res._id} key={res._id} className="item">
+											{res.nickname} <span>{res.gid.name}</span>
+										</Link>
+									)) :
+									<p className="empty">找不到该用户</p>
+								}
 							</Border> :
 							null
 						}
@@ -160,6 +234,7 @@ class Header extends Component {
 							value={this.data.pwold}
 							type="password"
 							autoComplete="new-password"
+							disabled={this.data.modifying}
 							onChange={e => this.data.pwold = e.target.value.trim().substr(0, 20)} />
 					</div>
 					<div className="row">
@@ -168,6 +243,7 @@ class Header extends Component {
 							value={this.data.pwnew}
 							type="password"
 							autoComplete="new-password"
+							disabled={this.data.modifying}
 							onChange={e => this.data.pwnew = e.target.value.trim().substr(0, 20)} />
 					</div>
 					<div className="row">
@@ -176,11 +252,12 @@ class Header extends Component {
 							value={this.data.pwnew2}
 							type="password"
 							autoComplete="new-password"
+							disabled={this.data.modifying}
 							onChange={e => this.data.pwnew2 = e.target.value.trim().substr(0, 20)} />
 					</div>
 					<div className="row">
 						<label></label>
-						<Button onClick={::this.midifyPwSubmit}>修改</Button>
+						<Button loading={this.data.modifying} onClick={::this.midifyPwSubmit}>修改</Button>
 					</div>
 				</Dialog>
 

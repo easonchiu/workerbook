@@ -30,7 +30,7 @@ class MyDailyHeader extends Component {
 	}
 
 	fetch() {
-		this.$user.fetchChart()
+		this.$daily.fetchMyDailyDashboard()
 	}
 	
 	gridMouseOver(e) {
@@ -133,28 +133,30 @@ class MyDailyHeader extends Component {
 
 	render() {
 		
-		const user = this.$user
+		const userInfo = this.$user.info || {}
+
+		const chart = this.$daily.myDashboard
 
 		return (
 			<div className="my-daily-header">
 				{
-					user.info ?
-					<UserHeader colorful name={user.info.userName} uid={user.info.uid} className="header" /> :
-					<UserHeader name="" className="header" />
+					userInfo.uid ?
+					<UserHeader name={userInfo.nickname} uid={userInfo.uid} className="header" /> :
+					<UserHeader className="header" />
 				}
 				<Border className="main">
 					
 					{
-						user.info ?
-						<h1>{user.info.userName}<span>{user.info.groupName}</span></h1> :
+						userInfo.uid ?
+						<h1>{userInfo.nickname}<span>{userInfo.groupName}</span></h1> :
 						<h1 style={{opacity:0.1}}>加载中...</h1>
 					}
 					
 					{
-						user.chartFetching ?
+						this.$daily.myDashboardFetching ?
 						<Spin loading={true} height={138} /> :
-						user.chart.length > 0 ?
-						this.renderGrid(user.chart) :
+						chart.length > 0 ?
+						this.renderGrid(chart) :
 						null
 					}
 

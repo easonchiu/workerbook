@@ -46,6 +46,11 @@ class RecordInput extends Component {
 		}
 	}
 
+	reset() {
+		this.data.record = ''
+		this.data.progress = 100
+	}
+
 	processLineMouseDown(e) {
 		this.progressLineLock = false
 		this.changeProgress(e)

@@ -20,6 +20,7 @@ const injectStore = Comp => {
 		}
 
 	}
+	ComponentWithStore.displayName = `WithStore(${Comp.displayName || Comp.name})`
 	return ComponentWithStore
 }
 

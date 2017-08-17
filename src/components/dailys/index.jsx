@@ -28,6 +28,10 @@ class Dailys extends Component {
 		this.props.onRewrite && this.props.onRewrite()
 	}
 
+	delete(id) {
+		this.props.onDelete && this.props.onDelete(id)
+	}
+
 	async rewriteSubmit(res) {
 		this.data.loading = true
 		this.props.onRewriteSubmit && await this.props.onRewriteSubmit({
@@ -48,13 +52,14 @@ class Dailys extends Component {
 			'app-dailys--rewrite': this.data.rewrite
 		})
 		const list = this.props.resource || []
+		console.log(list)
 
 		return (
 			<ul className={css}>
 				{
 					list.map(res => (
-						this.data.rewrite === res.id ?
-						<li key={res.id} className="rewrite">
+						this.data.rewrite === res._id ?
+						<li key={res._id} className="rewrite">
 							<div className="box">
 								<Circle progress={this.data.rewriteProgress} />
 								{
@@ -72,14 +77,14 @@ class Dailys extends Component {
 								btnText="修改"
 								onSubmit={::this.rewriteSubmit} />
 						</li> :
-						<li key={res.id}>
+						<li key={res._id}>
 							<Circle progress={res.progress} />
 							<p className="record">{res.record}</p>
 							{
 								this.props.rewriteabled && !this.data.rewrite ?
 								<div className="tools">
-									<a href="javascript:;" onClick={this.rewrite.bind(this, res.id, res.progress, res.record)}>修改</a>
-									<a href="javascript:;">删除</a>
+									<a href="javascript:;" onClick={this.rewrite.bind(this, res._id, res.progress, res.record)}>修改</a>
+									<a href="javascript:;" onClick={this.delete.bind(this, res._id)}>删除</a>
 								</div> :
 								null
 							}

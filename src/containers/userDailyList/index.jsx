@@ -2,6 +2,8 @@ import './style'
 import React, {Component} from 'react'
 import cn from 'classnames'
 import {Link} from 'react-router-dom'
+import timeago from 'timeago.js'
+const timeagoInstance = timeago()
 
 import reactStateData from 'react-state-data'
 import {injectStore} from 'src/mobx'
@@ -10,7 +12,6 @@ import Border from 'src/components/border'
 import Dailys from 'src/components/dailys'
 import UserHeader from 'src/components/userHeader'
 import Spin from 'src/components/spin'
-
 
 @injectStore
 @reactStateData
@@ -24,15 +25,20 @@ class UserDailyList extends Component {
 	}
 
 	componentDidMount() {
-		this.fetch()
+		const {gid, date = 0} = this.props.match.params
+		this.fetch(gid,date)
 	}
 
-	async fetch() {
-		this.$daily.fetchList()
+	async fetch(gid, date) {
+		try {
+			await this.$daily.fetchDailyListWithGroupAndDate(gid, date)
+		} catch(e) {
+			console.log(e.msg)
+		}
 	}
 
 	changeDate(val) {
-		const {gid = 'all', date = 0} = this.props.match.params
+		const {gid = 'all', date} = this.props.match.params
 
 		if (date != val) {
 			if (val) {
@@ -40,7 +46,7 @@ class UserDailyList extends Component {
 			} else {
 				this.props.history.push(`/daily/${gid}`)
 			}
-			this.$daily.updateList()
+			this.fetch(gid, val)
 		}
 
 	}
@@ -49,46 +55,55 @@ class UserDailyList extends Component {
 
 		const css = cn('user-daily-list', this.props.className)
 
-		const list = this.$daily.list
+		const list = this.$daily.list || []
 
 		const {date = 0} = this.props.match.params
 
-		const dateStr = ['今天', '昨天', '前天']
+		
 
 		return (
 			<Spin loading={this.$daily.listFetching}>
 				<div className={css}>
 					<Border className="date-bar">
 						{
-							[0,1,2].map(res => {
-								if (res == date) {
-									return <p key={res}>{dateStr[res]}</p>
+							['今天', '昨天', '前天'].map((res, i) => {
+								if (i == date) {
+									return <p key={i}>{res}</p>
 								}
 								return (
-									<a key={res}
+									<a key={i}
 										href="javascript:;"
-										onClick={this.changeDate.bind(this, res)}>
-										{dateStr[res]}
+										onClick={this.changeDate.bind(this, i)}>
+										{res}
 									</a>
 								)
 							})
 						}
 					</Border>
 					{
-						list.map((res,i) => (
-							<div className="daily-item" key={res.uid}>
-								<UserHeader name={res.username} className="header" uid={res.uid} link={'/user/'+res.uid} />
-								<Border className="daily-bd">
-									<h1>
-										<time>{res.updateTime}</time>
-										<Link to={'/user/'+res.uid}>{res.username}</Link>
-									</h1>
+						list.length > 0 ?
+						list.map((res,i) => {
 
-									<Dailys resource={res.daily} />
+							const time = new Date(res.updateTime).Format('hh:mm:ss')
 
-								</Border>
-							</div>
-						))
+							// const time = timeagoInstance.format(res.updateTime, 'zh_CN')
+
+							return (
+								<div className="daily-item" key={res._id||i}>
+									<UserHeader name={res.nickname} className="header" uid={res.uid} link={'/user/'+res.uid} />
+									<Border className="daily-bd">
+										<h1>
+											<Link to={'/user/'+res.uid}>{res.nickname}</Link>
+											<time>更新于 {time}</time>
+										</h1>
+
+										<Dailys resource={res.dailyList} />
+
+									</Border>
+								</div>
+							)
+						}) :
+						<p className="daily-item--empty">还没有人提交日报哦~</p>
 					}
 				</div>
 			</Spin>

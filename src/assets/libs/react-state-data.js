@@ -53,6 +53,7 @@ const reactStateData = Comp => {
         }
 
     }
+    ComponentWithReactStateData.displayName = `WithStateData(${Comp.displayName || Comp.name || 'Component'})`
     return ComponentWithReactStateData
 }
 

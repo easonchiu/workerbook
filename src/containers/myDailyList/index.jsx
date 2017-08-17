@@ -21,29 +21,32 @@ class MyDailyList extends Component {
 	}
 
 	fetch() {
-		this.$user.fetchMyDaily()
+		this.$daily.fetchMyHistoryDailyList()
 	}
 
 	render() {
-		const list = this.$user.daily
+		const list = this.$daily.myHistory || []
 
 		const css = cn('my-daily-list', this.props.className)
 
 		return (
 			<div className={css}>
 				{
-					list.map(res => (
-						<div className="daily-item" key={res.updateTime}>
-							<Border className="daily-bd">
-								<h1>
-									<time>{res.updateTime}</time>
-								</h1>
+					list.map(res => {
+						const time = new Date(res.updateTime).Format('yyyy年M月d hh:mm:ss')
+						return (
+							<div className="daily-item" key={res._id}>
+								<Border className="daily-bd">
+									<h1>
+										<time>{time}</time>
+									</h1>
 
-								<Dailys resource={res.daily} />
+									<Dailys resource={res.dailyList} />
 
-							</Border>
-						</div>
-					))
+								</Border>
+							</div>
+						)
+					})
 				}
 			</div>
 		)

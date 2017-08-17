@@ -46,10 +46,6 @@ class GroupList extends Component {
 		this.$group.updateList()
 	}
 
-	async updateDaily() {
-		this.$daily.updateList()
-	}
-
 	async addGroup(res) {
 		try {
 			await this.$group.add(res)
@@ -74,13 +70,13 @@ class GroupList extends Component {
 		this.onPopClose()
 	}
 
-	onClick(gid, gname) {
+	onClick(gid) {
 		if (gid) {
 			this.props.history.push('/daily/' + gid)
 		} else {
 			this.props.history.push('/daily')
 		}
-		this.updateDaily()
+		this.$daily.fetchDailyListWithGroupAndDate(gid)
 	}
 
 	onPopClose() {
@@ -132,6 +128,10 @@ class GroupList extends Component {
 
 	render() {
 
+		if (!this.$user.info) {
+			return null
+		}
+
 		const group = this.$group.list || []
 
 		const {page, id = 'all'} = this.props.match.params
@@ -155,7 +155,7 @@ class GroupList extends Component {
 							{
 								page==='daily'&&id==='all' ?
 								<p><i />全部</p> :
-								<a href="javascript:;" onClick={this.onClick.bind(this, '', '')}><i />全部</a>
+								<a href="javascript:;" onClick={this.onClick.bind(this, undefined)}><i />全部</a>
 							}
 						</li>
 						{
@@ -169,7 +169,7 @@ class GroupList extends Component {
 												<span>{res.name}</span>
 												<em>{res.count}人</em>
 											</p> :
-											<a href="javascript:;" onClick={this.onClick.bind(this, res._id, res.name)}>
+											<a href="javascript:;" onClick={this.onClick.bind(this, res._id)}>
 												<i />
 												<span>{res.name}</span>
 												<em>{res.count}人</em>

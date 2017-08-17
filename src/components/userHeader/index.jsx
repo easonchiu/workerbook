@@ -5,8 +5,9 @@ import cn from 'classnames'
 import {Link} from 'react-router-dom'
 
 const UserHeader = props => {
-	const uid = props.uid ? props.uid : 0
-	
+	const cuid = props.uid ? +props.uid.replace(/\D/g, '') : 0
+
+
 	let name = props.name || ''
 	let big = false
 
@@ -30,13 +31,13 @@ const UserHeader = props => {
 		}
 	}
 
-	const color = 'c' + uid % 6
+	const color = 'c' + cuid % 6
 
 	const css = cn('user-header', props.className, color, {
 		'user-header--big-font': big
 	})
 
-	if (typeof props.link === 'string' && uid !== 0) {
+	if (typeof props.link === 'string' && cuid !== 0) {
 		return (
 			<Link className={css} to={props.link}>
 				<p><span /><em>{props.name}</em></p>
