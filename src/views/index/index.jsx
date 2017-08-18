@@ -63,6 +63,7 @@ class ViewIndex extends Component {
 					<div className="app-body">
 
 						<Route exact path="/user/:uid(\w+)" component={MyDailyHeader} />
+						
 						<Route exact path="/user/:uid(\w+)" component={MyDailyList} />
 
 						<Route exact path="/daily/:gid(\w+|all)?/:date?" component={WriterBox} />
