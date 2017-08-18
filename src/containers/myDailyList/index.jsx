@@ -17,11 +17,11 @@ class MyDailyList extends Component {
 	}
 
 	componentDidMount() {
-		this.fetch()
+		this.fetch(this.props.match.params.uid)
 	}
 
-	fetch() {
-		this.$daily.fetchMyHistoryDailyList()
+	fetch(uid) {
+		this.$daily.fetchHistoryDailyWithUid(uid)
 	}
 
 	render() {

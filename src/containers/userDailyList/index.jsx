@@ -12,6 +12,7 @@ import Border from 'src/components/border'
 import Dailys from 'src/components/dailys'
 import UserHeader from 'src/components/userHeader'
 import Spin from 'src/components/spin'
+import Toast from 'src/components/toast'
 
 @injectStore
 @reactStateData
@@ -33,7 +34,7 @@ class UserDailyList extends Component {
 		try {
 			await this.$daily.fetchDailyListWithGroupAndDate(gid, date)
 		} catch(e) {
-			console.log(e.msg)
+			Toast.show(e.msg)
 		}
 	}
 
@@ -58,8 +59,6 @@ class UserDailyList extends Component {
 		const list = this.$daily.list || []
 
 		const {date = 0} = this.props.match.params
-
-		
 
 		return (
 			<Spin loading={this.$daily.listFetching}>
@@ -90,10 +89,10 @@ class UserDailyList extends Component {
 
 							return (
 								<div className="daily-item" key={res._id||i}>
-									<UserHeader name={res.nickname} className="header" uid={res.uid} link={'/user/'+res.uid} />
+									<UserHeader name={res.uid.nickname} className="header" uid={res.uid._id} link={'/user/'+res.uid._id} />
 									<Border className="daily-bd">
 										<h1>
-											<Link to={'/user/'+res.uid}>{res.nickname}</Link>
+											<Link to={'/user/'+res.uid._id}>{res.uid.nickname}</Link>
 											<time>更新于 {time}</time>
 										</h1>
 

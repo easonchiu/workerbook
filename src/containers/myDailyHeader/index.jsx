@@ -26,11 +26,11 @@ class MyDailyHeader extends Component {
 	}
 
 	componentDidMount() {
-		this.fetch()
+		this.fetch(this.props.match.params.uid)
 	}
 
-	fetch() {
-		this.$daily.fetchMyDailyDashboard()
+	fetch(uid) {
+		this.$daily.fetchDailyDashboardByUid(uid)
 	}
 	
 	gridMouseOver(e) {
@@ -49,6 +49,7 @@ class MyDailyHeader extends Component {
 	}
 
 	renderGrid(chart) {
+
 		const total = chart.length
 		const col = Math.ceil(total / 7)
 		const grid = []
@@ -59,7 +60,7 @@ class MyDailyHeader extends Component {
 						[0,1,2,3,4,5,6].map((res, j) => {
 							const index = i * 7 + j
 							if (index < total) {
-								const c = chart[index].recordCount
+								const c = chart[index].count
 								let cn = 0
 								if (c > 4) {
 									cn = 3
@@ -72,7 +73,7 @@ class MyDailyHeader extends Component {
 										data-x={i}
 										data-y={j}
 										data-c={c}
-										data-t={chart[index].date}
+										data-t={chart[index].day}
 										className={'i'+cn} />
 							}
 						})
@@ -133,27 +134,29 @@ class MyDailyHeader extends Component {
 
 	render() {
 		
-		const userInfo = this.$user.info || {}
+		const info = this.$daily.dashboard || { dayList: [], userInfo: {} }
 
-		const chart = this.$daily.myDashboard
+		const userInfo = info.userInfo || {}
+
+		const chart = info.dayList || {}
 
 		return (
 			<div className="my-daily-header">
 				{
-					userInfo.uid ?
-					<UserHeader name={userInfo.nickname} uid={userInfo.uid} className="header" /> :
+					userInfo._id ?
+					<UserHeader name={userInfo.nickname} uid={userInfo._id} className="header" /> :
 					<UserHeader className="header" />
 				}
 				<Border className="main">
 					
 					{
-						userInfo.uid ?
-						<h1>{userInfo.nickname}<span>{userInfo.groupName}</span></h1> :
+						userInfo._id ?
+						<h1>{userInfo.nickname}<span>{userInfo.gid.name}</span></h1> :
 						<h1 style={{opacity:0.1}}>加载中...</h1>
 					}
 					
 					{
-						this.$daily.myDashboardFetching ?
+						this.$daily.dashboardFetching ?
 						<Spin loading={true} height={138} /> :
 						chart.length > 0 ?
 						this.renderGrid(chart) :

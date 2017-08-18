@@ -15,7 +15,6 @@ import ViewIndex from 'src/views/index'
 // need login
 import NeedLogin from 'src/assets/libs/needLogin'
 
-
 // routes
 const Routes = e => (
 	<Router>

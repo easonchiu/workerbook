@@ -5,7 +5,9 @@ import cn from 'classnames'
 import {Link} from 'react-router-dom'
 
 const UserHeader = props => {
-	const cuid = props.uid ? +props.uid.replace(/\D/g, '') : 0
+
+	let cuid = props.uid ? props.uid.toString().replace(/\D/g, '') : 0
+	cuid = cuid ? cuid : 0
 
 
 	let name = props.name || ''

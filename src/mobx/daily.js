@@ -13,11 +13,11 @@ class Store {
 	@observable myToday = {} // 我今天的日报
 	@observable myTodayFetching = false // 我今天的日报loading
 
-	@observable myDashboard = [] // 我的日报统计
-	@observable myDashboardFetching = false // 我的日报统计loading
+	@observable dashboard = {} // 成员日报统计
+	@observable dashboardFetching = false // 成员日报统计loading
 
-	@observable myHistory = [] // 我的日报历史
-	@observable myHistoryFetching = false // 我的日报历史loading
+	@observable myHistory = [] // 成员日报历史
+	@observable myHistoryFetching = false // 成员日报历史loading
 
 
 	@action('获取用户组的日报列表数据')
@@ -77,13 +77,13 @@ class Store {
 	}
 
 
-	@action('获取我的日报历史')
-	async fetchMyHistoryDailyList() {
+	@action('获取某人的日报历史')
+	async fetchHistoryDailyWithUid(uid) {
 		this.myHistoryFetching = true
 
 		const res = await http.request({
 			method: 'get',
-	        url: `/daily/user/1`,
+	        url: `/daily/user/1/${uid}`,
 		})
 
 		runInAction(() => {
@@ -92,18 +92,18 @@ class Store {
 		})
 	}
 
-	@action('获取我的日报报表')
-	async fetchMyDailyDashboard() {
-		this.myDashboardFetching = true
+	@action('获取某人的日报报表')
+	async fetchDailyDashboardByUid(uid) {
+		this.dashboardFetching = true
 
 		const res = await http.request({
 			method: 'get',
-	        url: `/daily/dashboard`,
+	        url: `/daily/dashboard/${uid}`,
 		})
 
 		runInAction(() => {
-			this.myDashboard = res.data
-			this.myDashboardFetching = false
+			this.dashboard = res.data
+			this.dashboardFetching = false
 		})
 	}
 
