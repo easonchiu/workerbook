@@ -8,6 +8,7 @@ import UserHeader from 'src/components/userHeader'
 import Border from 'src/components/border'
 import Dailys from 'src/components/dailys'
 import Spin from 'src/components/spin'
+import Toast from 'src/components/toast'
 
 @injectStore
 @reactStateData
@@ -22,15 +23,35 @@ class MyDailyHeader extends Component {
 			dateC: 0,
 			dateT: 0,
 			somedayVisible: false,
+			somedayTime: '',
+			somedayLoading: false,
 		})
+
+		this.hashChange = this.hashChange.bind(this)
 	}
 
 	componentDidMount() {
 		this.fetch(this.props.match.params.uid)
+		
+		this.listen = this.props.history.listen(this.hashChange)
 	}
 
-	fetch(uid) {
-		this.$daily.fetchDailyDashboardByUid(uid)
+	hashChange(e) {
+		setTimeout(e => {
+			this.fetch(this.props.match.params.uid)
+		})
+	}
+
+	componentWillUnmount() {
+		this.listen()
+	}
+
+	async fetch(uid) {
+		try {
+			await this.$daily.fetchDailyDashboardByUid(uid)
+		} catch(e) {
+
+		}
 	}
 	
 	gridMouseOver(e) {
@@ -44,8 +65,20 @@ class MyDailyHeader extends Component {
 		}
 	}
 
-	showSomeDay() {
-		this.data.somedayVisible = true
+	async showSomeDay(e) {
+		try {
+			const {dt,t,c} = e.target.dataset
+			if (c > 0) {
+				this.data.somedayTime = t
+				this.data.somedayVisible = true
+				this.data.somedayLoading = true
+				
+				await this.$daily.fetchDayDailyWithDateAndUid(dt, this.props.match.params.uid)
+			}
+		} catch(e) {
+			Toast.show(e.msg)
+		}
+		this.data.somedayLoading = false
 	}
 
 	renderGrid(chart) {
@@ -53,6 +86,10 @@ class MyDailyHeader extends Component {
 		const total = chart.length
 		const col = Math.ceil(total / 7)
 		const grid = []
+
+		const header = []
+		let currentM
+
 		for (let i = 0; i < col; i++) {
 			let comp = (
 				<div key={i} className="col">
@@ -60,7 +97,18 @@ class MyDailyHeader extends Component {
 						[0,1,2,3,4,5,6].map((res, j) => {
 							const index = i * 7 + j
 							if (index < total) {
+								const date = new Date(chart[index].day)
+								const t = date.Format('yyyy年M月d日')
 								const c = chart[index].count
+								
+								if (j == 0) {
+									const m = date.Format('M')
+									if (m !== currentM) {
+										currentM = m
+										header.push(<li style={{left:i*12+'px'}} key={i}>{m}月</li>)
+									}
+								}
+
 								let cn = 0
 								if (c > 4) {
 									cn = 3
@@ -73,7 +121,8 @@ class MyDailyHeader extends Component {
 										data-x={i}
 										data-y={j}
 										data-c={c}
-										data-t={chart[index].day}
+										data-t={t}
+										data-dt={chart[index].day}
 										className={'i'+cn} />
 							}
 						})
@@ -86,21 +135,14 @@ class MyDailyHeader extends Component {
 		return (
 			<div className="grid">
 				<ul className="hd">
-					<li>Aug</li>
-					<li>Sep</li>
-					<li>Oct</li>
-					<li>Nov</li>
-					<li>Dec</li>
-					<li>Jan</li>
-					<li>Feb</li>
-					<li>Mar</li>
-					<li>Apr</li>
-					<li>May</li>
-					<li>Jun</li>
-					<li>Jul</li>
-					<li></li>
+					{header}
 				</ul>
 				<div className="bd">
+					<div className="aside">
+						<span>周一</span>
+						<span>周三</span>
+						<span>周五</span>
+					</div>
 					<div className="gridchart"
 						onMouseOver={::this.gridMouseOver}
 						onClick={::this.showSomeDay}
@@ -109,12 +151,10 @@ class MyDailyHeader extends Component {
 							this.data.dateVisible ?
 							<p className="date" style={{left:this.data.dateX+'px',top:this.data.dateY+'px'}}>
 								{
-									this.data.dateC > 1 ?
-									this.data.dateC + ' records ' :
-									this.data.dateC == 0 ?
-									'No records ' :
-									this.data.dateC + ' record '
-								}<span>on {this.data.dateT}</span>
+									this.data.dateC > 0 ?
+									this.data.dateC + '条日报 ' :
+									'没有日报 '
+								}<span>{this.data.dateT}</span>
 							</p> :
 							null
 						}
@@ -145,7 +185,7 @@ class MyDailyHeader extends Component {
 				{
 					userInfo._id ?
 					<UserHeader name={userInfo.nickname} uid={userInfo._id} className="header" /> :
-					<UserHeader className="header" />
+					<UserHeader className="header" hidden />
 				}
 				<Border className="main">
 					
@@ -157,7 +197,7 @@ class MyDailyHeader extends Component {
 					
 					{
 						this.$daily.dashboardFetching ?
-						<Spin loading={true} height={138} /> :
+						<Spin loading={true} height={123} /> :
 						chart.length > 0 ?
 						this.renderGrid(chart) :
 						null
@@ -166,11 +206,15 @@ class MyDailyHeader extends Component {
 					{
 						this.data.somedayVisible ?
 						<div className="someday">
-							<h1>2017 5-12</h1>
+							<h1>{this.data.somedayTime}</h1>
 							<a href="javascript:;"
 								className="close"
 								onClick={e => this.data.somedayVisible = false}>关闭</a>
-							<Dailys />
+							{
+								this.data.somedayLoading ?
+								<Spin loading height={120} /> :
+								<Dailys resource={this.$daily.someday.dailyList} />
+							}
 						</div> :
 						null
 					}

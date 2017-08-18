@@ -57,6 +57,12 @@
 				border-bottom: 1px dashed #dee3e8;
 			}
 		}
+		&.empty {
+			color: #ddd;
+			font-size: 12px;
+			line-height: 80px;
+			-webkit-box-pack: center;
+		}
 	}
 	&--rewrite {
 		li {

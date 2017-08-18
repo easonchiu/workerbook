@@ -52,11 +52,11 @@ class Dailys extends Component {
 			'app-dailys--rewrite': this.data.rewrite
 		})
 		const list = this.props.resource || []
-		console.log(list)
 
 		return (
 			<ul className={css}>
 				{
+					list.length > 0 ?
 					list.map(res => (
 						this.data.rewrite === res._id ?
 						<li key={res._id} className="rewrite">
@@ -89,7 +89,8 @@ class Dailys extends Component {
 								null
 							}
 						</li>
-					))
+					)) :
+					<li className="empty">暂无数据</li>
 				}
 			</ul>
 		)

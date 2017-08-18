@@ -2,13 +2,13 @@ import axios from 'axios'
 import {getToken} from 'src/assets/libs/token'
 
 const config = {
-	production: '/autowebgateway',
+	production: '/api',
 	develop: 'proxy',
-	test1: '/autowebgateway',
-	test2: '/autowebgateway',
-	test3: '/autowebgateway',
-	test4: '/autowebgateway',
-	test5: '/autowebgateway',
+	test1: '/api',
+	test2: '/api',
+	test3: '/api',
+	test4: '/api',
+	test5: '/api',
 }
 
 const baseUrl = config[process.env.ENV_NAME] || config['develop']

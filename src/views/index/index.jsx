@@ -1,6 +1,6 @@
 import './style'
 import React, { Component } from 'react'
-import { HashRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import reactStateData from 'react-state-data'
 import {injectStore} from 'src/mobx'
@@ -70,12 +70,12 @@ class ViewIndex extends Component {
 						
 						<Route exact path="/daily/:gid(\w+|all)?/:date?" component={UserDailyList} />
 
-						<Route exact path="/daily/:gid(\w+|all)?/:date?" component={UserList} />
-
 					</div>
 					
 					<div className="app-aside">
 						<Route strict path="/:page(daily|user)/:id(\w+|all)?" component={GroupList} />
+
+						<Route exact path="/daily/:gid(\w+|all)?/:date?" component={UserList} />
 					</div>
 
 				</div>

@@ -61,51 +61,53 @@ class UserDailyList extends Component {
 		const {date = 0} = this.props.match.params
 
 		return (
-			<Spin loading={this.$daily.listFetching}>
-				<div className={css}>
-					<Border className="date-bar">
+			<div className={css}>
+				<Border className="date-bar">
+					{
+						['今天', '昨天', '前天'].map((res, i) => {
+							if (i == date) {
+								return <p key={i}>{res}</p>
+							}
+							return (
+								<a key={i}
+									href="javascript:;"
+									onClick={this.changeDate.bind(this, i)}>
+									{res}
+								</a>
+							)
+						})
+					}
+				</Border>
+				<Spin loading={this.$daily.listFetching} height={200}>
+					{
+						list.length > 0 ?
+						<div className="daily-list">
 						{
-							['今天', '昨天', '前天'].map((res, i) => {
-								if (i == date) {
-									return <p key={i}>{res}</p>
-								}
+							list.map((res,i) => {
+
+								const time = new Date(res.updateTime).Format('hh:mm:ss')
+
 								return (
-									<a key={i}
-										href="javascript:;"
-										onClick={this.changeDate.bind(this, i)}>
-										{res}
-									</a>
+									<div className="daily-item" key={res._id||i}>
+										<UserHeader name={res.uid.nickname} className="header" uid={res.uid._id} link={'/user/'+res.uid._id} />
+										<Border className="daily-bd">
+											<h1>
+												<Link to={'/user/'+res.uid._id}>{res.uid.nickname}</Link>
+												<time>更新于 {time}</time>
+											</h1>
+
+											<Dailys resource={res.dailyList} />
+
+										</Border>
+									</div>
 								)
 							})
 						}
-					</Border>
-					{
-						list.length > 0 ?
-						list.map((res,i) => {
-
-							const time = new Date(res.updateTime).Format('hh:mm:ss')
-
-							// const time = timeagoInstance.format(res.updateTime, 'zh_CN')
-
-							return (
-								<div className="daily-item" key={res._id||i}>
-									<UserHeader name={res.uid.nickname} className="header" uid={res.uid._id} link={'/user/'+res.uid._id} />
-									<Border className="daily-bd">
-										<h1>
-											<Link to={'/user/'+res.uid._id}>{res.uid.nickname}</Link>
-											<time>更新于 {time}</time>
-										</h1>
-
-										<Dailys resource={res.dailyList} />
-
-									</Border>
-								</div>
-							)
-						}) :
+						</div> :
 						<p className="daily-item--empty">还没有人提交日报哦~</p>
 					}
-				</div>
-			</Spin>
+				</Spin>
+			</div>
 		)
 	}
 }

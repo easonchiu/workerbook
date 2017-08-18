@@ -19,12 +19,12 @@ class Store {
 	@observable myHistory = [] // 成员日报历史
 	@observable myHistoryFetching = false // 成员日报历史loading
 
+	@observable someday = {} // 某一天的日报
+
 
 	@action('获取用户组的日报列表数据')
 	async fetchDailyListWithGroupAndDate(gid = 'all', date = 0) {
-		if (this.list.length == 0) {
-			this.listFetching = true
-		}
+		this.listFetching = true
 
 		const res = await http.request({
 			method: 'get',
@@ -62,7 +62,7 @@ class Store {
 
 	@action('获取某人某天的日报')
 	async fetchDayDailyWithDateAndUid(date, uid) {
-		// this.myTodayFetching = true
+		this.someday = {}
 
 		const res = await http.request({
 			method: 'get',
@@ -70,9 +70,7 @@ class Store {
 		})
 
 		runInAction(() => {
-			// this.myToday = res.data.dailyInfo
-			// this.myToday = []
-			// this.myTodayFetching = false
+			this.someday = res.data.dailyInfo
 		})
 	}
 
@@ -80,6 +78,7 @@ class Store {
 	@action('获取某人的日报历史')
 	async fetchHistoryDailyWithUid(uid) {
 		this.myHistoryFetching = true
+		this.myHistory = []
 
 		const res = await http.request({
 			method: 'get',
@@ -95,6 +94,7 @@ class Store {
 	@action('获取某人的日报报表')
 	async fetchDailyDashboardByUid(uid) {
 		this.dashboardFetching = true
+		this.dashboard = {}
 
 		const res = await http.request({
 			method: 'get',

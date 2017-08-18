@@ -28,7 +28,7 @@ class UserList extends Component {
 
 	render() {
 
-		if (this.$daily.listFetching) {
+		if (!this.$user.info) {
 			return null
 		}
 		

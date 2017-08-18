@@ -36,7 +36,8 @@ const UserHeader = props => {
 	const color = 'c' + cuid % 6
 
 	const css = cn('user-header', props.className, color, {
-		'user-header--big-font': big
+		'user-header--big-font': big,
+		'user-header--hidden': props.hidden
 	})
 
 	if (typeof props.link === 'string' && cuid !== 0) {

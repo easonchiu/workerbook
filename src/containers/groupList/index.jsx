@@ -10,6 +10,7 @@ import Input from 'src/components/input'
 import Button from 'src/components/button'
 import Spin from 'src/components/spin'
 import Toast from 'src/components/toast'
+import Select from 'src/components/select'
 
 @injectStore
 @reactStateData
@@ -20,7 +21,7 @@ class GroupList extends Component {
 
 		this.setData({
 			addGroupPopVisible: false,
-			addUserPopVisible: false,
+			addUserPopVisible: true,
 			groupName: '',
 
 			userName: '',
@@ -217,6 +218,10 @@ class GroupList extends Component {
 								group.map(res => <option key={res._id} value={res._id}>{res.name}</option>)
 							}
 						</select>
+						<Select value="1" onChange={e => {console.log(e)}}>
+							<Select.Option value="1" text='请选择请选择请选择请选择请选择请选择请选择请选择' />
+							<Select.Option value="2" text='bb' />
+						</Select>
 					</div>
 
 					<div className="row">

@@ -12,6 +12,10 @@
 	border-radius: 50%;
 	position: relative;
 	
+	&--hidden {
+		visibility: hidden;
+	}
+
 	&--big-font {
 		font-size: 20px;
 	}

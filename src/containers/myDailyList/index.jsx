@@ -14,14 +14,28 @@ import Dailys from 'src/components/dailys'
 class MyDailyList extends Component {
 	constructor(props) {
 		super(props)
+
+		this.hashChange = this.hashChange.bind(this)
 	}
 
 	componentDidMount() {
 		this.fetch(this.props.match.params.uid)
+
+		this.listen = this.props.history.listen(this.hashChange)
 	}
 
 	fetch(uid) {
 		this.$daily.fetchHistoryDailyWithUid(uid)
+	}
+
+	hashChange(e) {
+		setTimeout(e => {
+			this.fetch(this.props.match.params.uid)
+		})
+	}
+
+	componentWillUnmount() {
+		this.listen()
 	}
 
 	render() {

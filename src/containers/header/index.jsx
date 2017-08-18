@@ -80,7 +80,7 @@ class Header extends Component {
 			this.data.resultVisible = false
 			this.data.searchLoading = false
 			this.data.searchKey = ''
-		}, 100)
+		}, 500)
 	}
 
 	searchChange(e) {
