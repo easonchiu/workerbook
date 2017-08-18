@@ -21,7 +21,7 @@ class GroupList extends Component {
 
 		this.setData({
 			addGroupPopVisible: false,
-			addUserPopVisible: true,
+			addUserPopVisible: false,
 			groupName: '',
 
 			userName: '',
@@ -211,16 +211,11 @@ class GroupList extends Component {
 
 					<div className="row">
 						<label>所在分组</label>
-						<select value={this.data.groupId}
-							onChange={e => this.data.groupId = e.target.value}>
-							<option value=''>请选择</option>
+						<Select value={this.data.groupId} onChange={e => this.data.groupId = e}>
+							<Select.Option value="" text="请选择" />
 							{
-								group.map(res => <option key={res._id} value={res._id}>{res.name}</option>)
+								group.map(res => <Select.Option key={res._id} value={res._id} text={res.name} />)
 							}
-						</select>
-						<Select value="1" onChange={e => {console.log(e)}}>
-							<Select.Option value="1" text='请选择请选择请选择请选择请选择请选择请选择请选择' />
-							<Select.Option value="2" text='bb' />
 						</Select>
 					</div>
 

@@ -168,8 +168,8 @@ class Header extends Component {
 					<h1 className="logo"></h1>
 
 					<nav>
-						<a className="active" href="javascript:;">Daily</a>
-						<a href="javascript:;">Wiki</a>
+						<Link className="active" to="/">Daily</Link>
+						<a href="javascript:;" onClick={e => Toast.success('Coming soon')}>Wiki</a>
 					</nav>
 					
 					<div className="searchbar">

@@ -1,9 +1,9 @@
 import axios from 'axios'
-import {getToken} from 'src/assets/libs/token'
+import {getToken,clearToken} from 'src/assets/libs/token'
 
 const config = {
 	production: '/api',
-	develop: 'proxy',
+	develop: '/proxy',
 	test1: '/api',
 	test2: '/api',
 	test3: '/api',
@@ -41,6 +41,16 @@ http.interceptors.response.use(config => {
 		return Promise.reject({
 			msg: config.data.msg
 		})
+	} else if (config.data.code === -1) {
+		clearToken()
+		const token = getToken()
+		if (!token) {
+			window.location.reload()
+		} else {
+			return Promise.reject({
+				msg: config.data.msg
+			})
+		}
 	}
 
 	return Promise.resolve({

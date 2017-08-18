@@ -4,36 +4,35 @@
 	.date-bar {
 		margin-left: 75px;
 		margin-bottom: 15px;
-		width: 360px;
 		display: -webkit-box;
 		overflow: hidden;
 		a {
 			display: block;
-			width: 120px;
-			font-size: 12px;
-			height: 40px;
-			line-height: 40px;
+			width: 80px;
+			font-size: 14px;
+			height: 50px;
+			line-height: 50px;
 			color: #8a929b;
 			text-align: center;
-			border-right: 1px solid #dee3e8;
-			&:last-child {
-				border-right: none;
-			}
+			// border-right: 1px solid #dee3e8;
+			// &:last-child {
+			// 	border-right: none;
+			// }
 			&:hover {
 				color: #5081ff;
 			}
 		}
 		p {
 			display: block;
-			width: 120px;
-			height: 40px;
-			line-height: 40px;
+			width: 80px;
+			height: 50px;
+			line-height: 50px;
 			color: #5081ff;
-			background: #f7f9fc;
+			// background: #f7f9fc;
 			font-weight: bold;
-			font-size: 12px;
+			font-size: 14px;
 			text-align: center;
-			border-right: 1px solid #dee3e8;
+			// border-right: 1px solid #dee3e8;
 		}
 	}
 	.daily-item {

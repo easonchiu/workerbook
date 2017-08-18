@@ -24,10 +24,26 @@ class ViewLogin extends Component {
 			password: '',
 			errorInfo: ''
 		})
+
+		this.handleKeyDown = this.handleKeyDown.bind(this)
 	}
 
 	shouldComponentUpdate(nProps, nState) {
 		return this.props !== nProps || this.state !== nState
+	}
+
+	componentDidMount() {
+		window.addEventListener('keydown', this.handleKeyDown)
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('keydown', this.handleKeyDown)
+	}
+
+	handleKeyDown(e) {
+		if (e.keyCode === 13) {
+			this.onSubmit()
+		}
 	}
 
 	async onSubmit() {
