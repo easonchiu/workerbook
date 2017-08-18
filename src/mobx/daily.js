@@ -86,8 +86,11 @@ class Store {
 		})
 
 		runInAction(() => {
-			this.myHistory = res.data.dailyList
-			this.myHistoryFetching = false
+			if (res.data) {
+				this.myHistory = res.data.dailyList
+				this.myHistoryFetching = false
+			} else {
+			}
 		})
 	}
 

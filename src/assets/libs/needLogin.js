@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { HashRouter as Router, Route, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { getToken } from 'src/assets/libs/token'
 
 

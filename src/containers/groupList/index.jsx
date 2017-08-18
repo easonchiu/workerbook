@@ -64,6 +64,7 @@ class GroupList extends Component {
 			await this.$user.add(res)
 			this.updateGruop()
 			Toast.success('添加成功')
+			this.$user.fetchAll()
 		} catch(e) {
 			Toast.show(e.msg)
 		}

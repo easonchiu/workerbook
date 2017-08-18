@@ -21,7 +21,6 @@ class Toast {
 		clearTimeout(this._t);
 		this._t = setTimeout(this.hide, duration);
 
-
 		const focusdom = document.querySelector(':focus')
 		if (focusdom) {
 			focusdom.blur()
