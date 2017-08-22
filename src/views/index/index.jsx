@@ -1,6 +1,6 @@
 import './style'
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
 import reactStateData from 'react-state-data'
 import {injectStore} from 'src/mobx'
