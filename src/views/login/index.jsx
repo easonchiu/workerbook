@@ -61,6 +61,8 @@ class ViewLogin extends Component {
 					password: this.data.password
 				})
 
+				setToken(res.data.token)
+
 				await this.$user.fetchInfo(true)
 
 				this.data.loading = false

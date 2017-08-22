@@ -4,7 +4,7 @@ import 'src/assets/css/base'
 import 'src/assets/libs/dateformat'
 
 import React, { Component } from 'react'
-import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { Provider } from "mobx-react"
 import { render } from 'react-dom'
 

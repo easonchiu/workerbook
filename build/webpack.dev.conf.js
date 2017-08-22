@@ -28,7 +28,7 @@ const webpackConfig = merge(baseWebpackConfig, {
 	    proxy: {
 	    	'/proxy': {
 	            // target: 'http://easy-mock.com/mock/598acde5a1d30433d85adfab/workerbook',
-	            target: 'http://10.0.3.21:3333/api',
+	            target: 'http://10.1.3.61:3333/api',
 	            pathRewrite: {
 	            	'/proxy': ''
 	            },
