@@ -20,7 +20,7 @@ module.exports = {
         port: 3344,
         srcRoot: path.resolve(__dirname, '../src'),
         assetsRoot: path.resolve(__dirname, '../' + prodPath),
-        assetsPublicPath: '/workerbook',
+        assetsPublicPath: './',
 		cssAssetsPath: '../',
 		assetsSubDirectory: './',
 		productionSourceMap: false,
@@ -28,7 +28,7 @@ module.exports = {
 	production: {
 		env: require('./prod.env'),
 		assetsRoot: path.resolve(__dirname, '../' + prodPath),
-		assetsPublicPath: '/',
+		assetsPublicPath: '/workerbook/',
 		cssAssetsPath: '../',
 		assetsSubDirectory: './',
 		productionSourceMap: false,
