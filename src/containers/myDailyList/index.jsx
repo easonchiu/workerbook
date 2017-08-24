@@ -46,21 +46,27 @@ class MyDailyList extends Component {
 		return (
 			<div className={css}>
 				{
-					list.map(res => {
-						const time = new Date(res.updateTime).Format('yyyy年M月d hh:mm:ss')
-						return (
-							<div className="daily-item" key={res._id}>
-								<Border className="daily-bd">
-									<h1>
-										<time>{time}</time>
-									</h1>
+					list.length > 0 ?
+					<div className="daily-list">
+					{
+						list.map(res => {
+							const time = new Date(res.updateTime).Format('yyyy年M月d hh:mm:ss')
+							return (
+								<div className="daily-item" key={res._id}>
+									<Border className="daily-bd">
+										<h1>
+											<time>{time}</time>
+										</h1>
 
-									<Dailys resource={res.dailyList} />
+										<Dailys resource={res.dailyList} />
 
-								</Border>
-							</div>
-						)
-					})
+									</Border>
+								</div>
+							)
+						})
+					}
+					</div> :
+					<p className="daily-item--empty">暂无日报数据</p>
 				}
 			</div>
 		)

@@ -1,102 +1,103 @@
 @charset "utf-8";
 
 .app-record-input {
-	display: -webkit-box;
-	-webkit-box-align: center;
-	-webkit-box-flex: 1;
 	.input {
-		display: -webkit-box;
-		-webkit-user-select: none;
-		-webkit-box-flex: 1;
+		margin-bottom: 10px;
 		.in {
 			width: 100%;
-			-webkit-box-flex: 1;
-			border-top-left-radius: 0 !important;
-			border-bottom-left-radius: 0 !important;
 		}
-		.progress {
+		
+	}
+
+	.b {
+		display: -webkit-box;
+	}
+
+	.progress {
+		-webkit-box-flex: 1;
+		position: relative;
+		.btn {
+			width: 115px;
 			display: -webkit-box;
 			-webkit-box-align: center;
-			padding: 0 10px;
-			-webkit-box-flex: 1;
+			-webkit-box-pack: center;
+			height: 40px;
+			color: #8a929b;
+			font-size: 12px;
+			border: 1px solid #dee3e8;
+			box-shadow: 0 0 0 1px rgba(255,255,255,0.6) inset;
+			cursor: pointer;
+			border-radius: 3px;
+			-webkit-user-select: none;
+			span {
+				color: #586069;
+				margin: 0 5px;
+			}
+			sub {
+				display: block;
+				width: 10px;
+				height: 10px;
+				background-image: url('../../assets/imgs/icon-down.png');
+				background-repeat: no-repeat;
+				background-position: center center;
+				background-size: 100% auto;
+			}
+			&:hover, &.active {
+				background: #f7f9fc;
+			}
+		}
+		.popup {
+			position: absolute;
+			left: 0;
+			top: 42px;
+			width: 322px;
+			box-shadow: 0 5px 35px rgba(0,39,61,0.05);
 			border: 1px solid #d4d9de + 10;
 			border-radius: 3px;
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-		}
-		.line {
-			width: 100%;
-			-webkit-box-flex: 1;
-			margin-right: 20px;
-			height: 34px;
-			position: relative;
-			cursor: pointer;
-			&:after {
-				content: "";
-				display: block;
-				background: #ebedf0 + 10;
-				border-radius: 2px;
-				width: 100%;
-				height: 12px;
-				position: absolute;
-				left: 0;
-				top: 11px;
+			z-index: 999;
+			background: #fff;
+			color: #586069 + 30;
+			padding: 10px;
+			ul {
+				overflow: hidden;
 			}
-			span {
-				display: block;
-				width: 50%;
-				height: 12px;
-				border-radius: 2px;
-				background: #b3ccff;
-				pointer-events: none;
-				margin-top: 11px;
-				position: relative;
-				z-index: 2;
+			li {
+				float: left;
+				padding: 5px;
+				&.active a {
+					background: #6495ff;
+					color: #fff;
+					span {
+						opacity: 1;
+					}
+				}
 			}
-			&:hover {
+			a {
+				display: block;
+				width: 50px;
+				height: 50px;
+				background: #f7f9fc;
+				border-radius: 50%;
+				text-align: center;
+				line-height: 50px;
+				color: #8a929b;
+				font-size: 12px;
+				cursor: pointer;
 				span {
-					background: #b3ccff - 10;
+					opacity: 0.5;
+				}
+				&:hover {
+					background: #f7f9fc - 5;
 				}
 			}
 		}
-		.done {
-			display: block;
-			font-size: 12px;
-			color: #5081ff;
-			&:hover {
-				color: #33b400;
-			}
-		}
 	}
-	.progress-title {
-		display: block;
-		border: 1px solid #d4d9de + 10;
-		border-right: none;
-		height: 40px;
-		line-height: 40px;
-		border-radius: 3px;
-		border-top-right-radius: 0;
-		border-bottom-right-radius: 0;
-		font-size: 12px;
-		color: #586069;
-		background: #ebedf0 + 12;
-		width: 110px;
-		text-align: center;
-		cursor: pointer;
-		span {
-			color: #586069 + 50;
-			padding-left: 5px;
-			font-weight: bold;
-		}
-		&:hover {
-			background: #ebedf0 + 5;
-		}
-	}
-	.btn {
-		margin-left: 10px;
-	}
+
+
+	
+	
 	&--loading {
-		.progress-title {
+		.progress .title {
 			pointer-events: none;
 			color: #586069 + 30;
 			span {
@@ -105,7 +106,7 @@
 		}
 	}
 	&--disabled {
-		.progress-title {
+		.progress .title {
 			pointer-events: none;
 			color: #586069 + 30;
 			span {

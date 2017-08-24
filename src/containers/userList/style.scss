@@ -2,6 +2,7 @@
 
 .user-list {
 	padding: 15px 0 5px 15px;
+	position: relative;
 	> h1 {
 		font-size: 16px;
 		line-height: 20px;
@@ -18,6 +19,38 @@
 		width: 48px;
 		height: 48px;
 		line-height: 48px;
+	}
+	.page {
+		display: -webkit-box;
+		position: absolute;
+		right: 10px;
+		top: 15px;
+		li {
+			display: block;
+			width: 20px;
+			height: 20px;
+			&:hover sub {
+				background-color: #8a929b + 70;
+			}
+			&.active sub {
+				background-color: #5081ff;
+			}
+		}
+		a {
+			display: block;
+			width: 20px;
+			height: 20px;
+			display: -webkit-box;
+			-webkit-box-align: center;
+			-webkit-box-pack: center;
+		}
+		sub {
+			display: block;
+			width: 8px;
+			height: 8px;
+			background-color: #8a929b + 80;
+			border-radius: 50%;
+		}
 	}
 	.empty {
 		color: #ddd;

@@ -19,6 +19,27 @@ import Toast from 'src/components/toast'
 class UserDailyList extends Component {
 	constructor(props) {
 		super(props)
+
+		this.setData({
+			showDatePopup: false
+		})
+		
+		this.dateList = this.getDateList(30)
+		this.bodyClick =  this.bodyClick.bind(this)
+	}
+
+	getDateList(length) {
+		const day = new Date()
+		day.setDate(day.getDate() - 2)
+		const list = []
+		for (let i = 0; i < length; i++) {
+			day.setDate(day.getDate() - 1)
+			list.push({
+				str: day.Format('M月d日'),
+				date: day.Format('yyyy-MM-dd')
+			})
+		}
+		return list
 	}
 
 	shouldComponentUpdate(nProps, nState) {
@@ -52,6 +73,23 @@ class UserDailyList extends Component {
 
 	}
 
+	componentWillUnmount() {
+		document.body.removeEventListener('click', this.bodyClick)
+	}
+
+	bodyClick(e) {
+		document.body.removeEventListener('click', this.bodyClick)
+		clearTimeout(this.timer)
+		this.timer = setTimeout(e => {
+			this.data.showDatePopup = false
+		})
+	}
+
+	openPopup() {
+		this.data.showDatePopup = true
+		document.body.addEventListener('click', this.bodyClick)
+	}
+
 	render() {
 
 		const css = cn('user-daily-list', this.props.className)
@@ -76,6 +114,24 @@ class UserDailyList extends Component {
 								</a>
 							)
 						})
+					}
+					<a href="javascript:;" className="more" onClick={::this.openPopup}>更多<sub /></a>
+					{
+						this.data.showDatePopup ?
+						<div className="popup">
+							<ul>
+								{
+									this.dateList.map((res, i) => (
+										<li key={i}
+											onClick={this.changeDate.bind(this, res.date)}
+											className={date == res.date ? 'active' : ''}>
+											<a href="javascript:;">{res.str}</a>
+										</li>
+									))
+								}
+							</ul>
+						</div> :
+						null
 					}
 				</Border>
 				<Spin loading={this.$daily.listFetching} height={200}>

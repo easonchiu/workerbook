@@ -79,6 +79,7 @@ class GroupList extends Component {
 			this.props.history.push('/daily')
 		}
 		this.$daily.fetchDailyListWithGroupAndDate(gid)
+		this.$group.setUserListActive(0)
 	}
 
 	onPopClose() {

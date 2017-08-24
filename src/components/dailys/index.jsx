@@ -78,7 +78,7 @@ class Dailys extends Component {
 								onSubmit={::this.rewriteSubmit} />
 						</li> :
 						<li key={res._id}>
-							<Circle progress={res.progress} />
+							<Circle progress={res.progress} tips={!this.props.rewriteabled} />
 							<p className="record">{res.record}</p>
 							{
 								this.props.rewriteabled && !this.data.rewrite ?

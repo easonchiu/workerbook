@@ -99,6 +99,7 @@ class ViewLogin extends Component {
 						<label>用户名</label>
 						<Input placeholder="请输入用户名"
 							value={this.data.username}
+							disabled={this.data.loading}
 							onChange={::this.usernameChange} />
 					</div>
 
@@ -107,6 +108,7 @@ class ViewLogin extends Component {
 						<Input type="password"
 							placeholder="请输入密码"
 							value={this.data.password}
+							disabled={this.data.loading}
 							onChange={::this.passwordChange}
 							autoComplete="new-password" />
 					</div>

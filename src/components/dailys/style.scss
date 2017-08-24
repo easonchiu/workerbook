@@ -8,9 +8,7 @@
 			padding-bottom: 0;
 		}
 		.icon-circle {
-			margin: 1px 5px 0 0;
-			width: 20px;
-			height: 20px;
+			margin: 4px 5px 0 0;
 		}
 		.record {
 			-webkit-box-flex: 1;
@@ -62,12 +60,6 @@
 			font-size: 12px;
 			line-height: 80px;
 			-webkit-box-pack: center;
-		}
-	}
-	&--rewrite {
-		li {
-			opacity: 0.2;
-			pointer-events: none;
 		}
 	}
 }
