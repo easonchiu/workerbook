@@ -13,7 +13,8 @@
 		display: -webkit-box;
 	}
 
-	.progress {
+	
+	.progress, .project {
 		-webkit-box-flex: 1;
 		position: relative;
 		.btn {
@@ -91,8 +92,46 @@
 				}
 			}
 		}
-	}
 
+	}
+	
+	.project {
+		-webkit-box-flex: 0;
+		margin-right: 10px;
+		.btn {
+			width: auto;
+			padding: 0 10px;
+		}
+		.popup {
+			width: 250px;
+			height: 34 * 7 + 20px;
+			overflow: auto;
+			ul li {
+				float: none;
+				padding: 0;
+				&.active a {
+					background: none;
+					color: #6495ff;
+				}
+			}
+			a {
+				width: auto;
+				height: auto;
+				background: none;
+				border-radius: 0;
+				line-height: 34px;
+				height: 34px;
+				overflow: hidden;
+				padding: 0 10px;
+				text-align: left;
+				&:hover {
+					background: none;
+					color: #586069;
+				}
+
+			}
+		}
+	}
 
 	
 	

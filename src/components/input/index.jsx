@@ -10,6 +10,7 @@ const Input = props => {
 	if (props.mulit) {
 		return (
 			<textarea
+				onKeyDown={props.onKeyDown}
 				placeholder={props.placeholder}
 				className={css}
 				disabled={props.disabled}

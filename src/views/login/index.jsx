@@ -33,11 +33,11 @@ class ViewLogin extends Component {
 	}
 
 	componentDidMount() {
-		window.addEventListener('keydown', this.handleKeyDown)
+		// window.addEventListener('keydown', this.handleKeyDown)
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener('keydown', this.handleKeyDown)
+		// window.removeEventListener('keydown', this.handleKeyDown)
 	}
 
 	handleKeyDown(e) {
@@ -106,6 +106,7 @@ class ViewLogin extends Component {
 					<div className="row">
 						<label>密码</label>
 						<Input type="password"
+							onKeyDown={this.handleKeyDown}
 							placeholder="请输入密码"
 							value={this.data.password}
 							disabled={this.data.loading}

@@ -73,8 +73,14 @@ class GroupList extends Component {
 	}
 
 	onClick(gid) {
-		if (gid) {
-			this.props.history.push('/daily/' + gid)
+		const date = this.props.match.params.date
+		if (gid || date) {
+			gid = gid ? gid : 'all'
+			if (date) {
+				this.props.history.push('/daily/' + gid + '/' + date)
+			} else {
+				this.props.history.push('/daily/' + gid)
+			}
 		} else {
 			this.props.history.push('/daily')
 		}

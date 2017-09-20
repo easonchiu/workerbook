@@ -8,6 +8,7 @@ import {injectStore} from 'src/mobx'
 import Header from 'src/containers/header'
 import Footer from 'src/containers/footer'
 import GroupList from 'src/containers/groupList'
+import ProjectList from 'src/containers/projectList'
 import UserDailyList from 'src/containers/userDailyList'
 import UserList from 'src/containers/userList'
 import WriterBox from 'src/containers/writerBox'
@@ -73,7 +74,9 @@ class ViewIndex extends Component {
 					</div>
 					
 					<div className="app-aside">
-						<Route strict path="/:page(daily|user)/:id(\w+|all)?" component={GroupList} />
+						<Route component={ProjectList} />
+
+						<Route strict path="/:page(daily|user)/:id(\w+|all)?/:date?" component={GroupList} />
 
 						<Route exact path="/daily/:gid(\w+|all)?/:date?" component={UserList} />
 					</div>

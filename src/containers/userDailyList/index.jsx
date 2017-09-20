@@ -78,11 +78,12 @@ class UserDailyList extends Component {
 	}
 
 	bodyClick(e) {
-		document.body.removeEventListener('click', this.bodyClick)
-		clearTimeout(this.timer)
-		this.timer = setTimeout(e => {
-			this.data.showDatePopup = false
-		})
+		if (this.data.showDatePopup) {
+			document.body.removeEventListener('click', this.bodyClick)
+			setTimeout(e => {
+				this.data.showDatePopup = false
+			})
+		}
 	}
 
 	openPopup() {
@@ -97,6 +98,8 @@ class UserDailyList extends Component {
 		const list = this.$daily.list || []
 
 		const {date = 0} = this.props.match.params
+
+		const strDate = this.dateList.filter(res => res.date == date)[0]
 
 		return (
 			<div className={css}>
@@ -115,6 +118,12 @@ class UserDailyList extends Component {
 							)
 						})
 					}
+					{
+						strDate ?
+						<p>{strDate.str}</p> :
+						null
+					}
+					
 					<a href="javascript:;" className="more" onClick={::this.openPopup}>更多<sub /></a>
 					{
 						this.data.showDatePopup ?

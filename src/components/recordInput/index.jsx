@@ -15,6 +15,7 @@ class RecordInput extends Component {
 
 		this.setData({
 			showProgressPopup: false,
+			showProjectPopup: false,
 			progress: props.progress || 100,
 			record: props.record || ''
 		}, this.watch)
@@ -27,11 +28,18 @@ class RecordInput extends Component {
 	}
 
 	bodyClick(e) {
-		document.body.removeEventListener('click', this.bodyClick)
-		clearTimeout(this.timer)
-		this.timer = setTimeout(e => {
-			this.data.showProgressPopup = false
-		})
+		if (this.data.showProjectPopup) {
+			document.body.removeEventListener('click', this.bodyClick)
+			setTimeout(e => {
+				this.data.showProjectPopup = false
+			})
+		}
+		if (this.data.showProgressPopup) {
+			document.body.removeEventListener('click', this.bodyClick)
+			setTimeout(e => {
+				this.data.showProgressPopup = false
+			})
+		}
 	}
 
 	watch() {
@@ -76,9 +84,41 @@ class RecordInput extends Component {
 		}
 	}
 
-	openPopup() {
-		this.data.showProgressPopup = true
+	openPopup(id) {
+		this.data[id] = true
 		document.body.addEventListener('click', this.bodyClick)
+	}
+
+	renderProjectBar() {
+		const css = cn('btn', {
+			'active': this.data.showProjectPopup
+		})
+		return (
+			<div className="project">
+				<a href="javascript:;" className={css} onClick={this.openPopup.bind(this, 'showProjectPopup')}>
+					<span>项目归属</span><sub />
+				</a>
+				{
+					this.data.showProjectPopup ?
+					<div className="popup">
+						<ul>
+							<li><a href="javascript:;">无归属</a></li>
+							{
+								[5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100]
+								.map(res => (
+									<li key={res}
+										onClick={e => this.data.progress = res}
+										className={this.data.progress == res ? 'active' : ''}>
+										<a href="javascript:;">项目归属{res}</a>
+									</li>
+								))
+							}
+						</ul>
+					</div> :
+					null
+				}
+			</div>
+		)
 	}
 
 	renderProgressBar() {
@@ -87,7 +127,7 @@ class RecordInput extends Component {
 		})
 		return (
 			<div className="progress">
-				<a href="javascript:;" className={css} onClick={::this.openPopup}>
+				<a href="javascript:;" className={css} onClick={this.openPopup.bind(this, 'showProgressPopup')}>
 					完成度<span>{this.data.progress}%</span><sub />
 				</a>
 				{
@@ -112,6 +152,13 @@ class RecordInput extends Component {
 		)
 	}
 
+	keydown = e => {
+		if (e.keyCode == 13) {
+			e.preventDefault()
+			this.submit()
+		}
+	}
+
 	render() {
 		const css = cn('app-record-input', this.props.className, {
 			'app-record-input--loading': this.props.loading,
@@ -121,6 +168,7 @@ class RecordInput extends Component {
 			<div className={css}>
 				<div className="input">
 					<Input className="in"
+						onKeyDown={this.keydown}
 						value={this.data.record}
 						onChange={::this.inputChange}
 						disabled={this.props.loading||this.props.disabled}
@@ -129,6 +177,7 @@ class RecordInput extends Component {
 				</div>
 				<div className="b">
 
+					{this.renderProjectBar()}
 					{this.renderProgressBar()}
 
 					<Button loading={this.props.loading}

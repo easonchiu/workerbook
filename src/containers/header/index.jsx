@@ -165,9 +165,9 @@ class Header extends Component {
 			<div className={css}>
 				<div className="inner">
 					
-					<h1 className="logo"></h1>
+					<h1 className="logo" style={{marginRight: '150px'}}></h1>
 
-					<nav>
+					<nav style={{display:'none'}}>
 						<Link className="active" to="/">Daily</Link>
 						<a href="javascript:;" onClick={e => Toast.success('Coming soon')}>Wiki</a>
 					</nav>
