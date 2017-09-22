@@ -16,6 +16,12 @@
 			font-size: 14px;
 			line-height: 24px;
 			color: #586069;
+			strong {
+				display: inline-block;
+				color: #eb7350;
+				line-height: 24px;
+				margin-right: 4px;
+			}
 			&.empty {
 				color: #e5e5e5;
 				text-align: left;

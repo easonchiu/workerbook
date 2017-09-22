@@ -23,9 +23,9 @@ const Routes = e => (
 		<Switch>
 			<Route exact path="/login" component={ NeedLogin(ViewLogin)(false) } />
 			
-			<Route strict path="/(daily|user)" component={ NeedLogin(ViewIndex)(true) } />
+			<Route exact path="/(index|user)" component={ NeedLogin(ViewIndex)(true) } />
 
-			<Redirect exact from="/" to="/daily" />
+			<Redirect exact from="/" to="/index" />
 			
 			<Redirect to="/404" />
 		</Switch>

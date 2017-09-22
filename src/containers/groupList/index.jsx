@@ -1,5 +1,6 @@
 import './style'
 import React, {Component} from 'react'
+import qs from 'qs'
 
 import reactStateData from 'react-state-data'
 import {injectStore} from 'src/mobx'
@@ -39,6 +40,15 @@ class GroupList extends Component {
 		this.fetch()
 	}
 
+	getSearch() {
+		let search = this.props.location.search
+		if (search) {
+			search = search.replace(/\?/, '')
+			return qs.parse(search)
+		}
+		return {}
+	}
+
 	async fetch() {
 		this.$group.fetchList()
 	}
@@ -73,19 +83,19 @@ class GroupList extends Component {
 	}
 
 	onClick(gid) {
-		const date = this.props.match.params.date
-		if (gid || date) {
-			gid = gid ? gid : 'all'
-			if (date) {
-				this.props.history.push('/daily/' + gid + '/' + date)
+		const search = this.getSearch()
+
+		const {date, pid} = search
+		if (gid != search.gid) {
+			if (gid || date) {
+				gid = gid ? gid : ''
+				search.gid = gid
 			} else {
-				this.props.history.push('/daily/' + gid)
+				delete search.gid
 			}
-		} else {
-			this.props.history.push('/daily')
+			this.props.history.push(`/index?${qs.stringify(search)}`)
+			this.$daily.fetchDailyListWithGroupAndDate(gid, date, pid)
 		}
-		this.$daily.fetchDailyListWithGroupAndDate(gid)
-		this.$group.setUserListActive(0)
 	}
 
 	onPopClose() {
@@ -143,26 +153,32 @@ class GroupList extends Component {
 
 		const group = this.$group.list || []
 
-		const {page, id = 'all'} = this.props.match.params
+		const {gid = ''} = this.getSearch()
+		const {page} = this.props.match.params
 
 		const userInfo = this.$user.info || {}
 
 		return (
 			<Border className="app-group-list">
-				<h1>成员分组</h1>
-				{
-					userInfo.role === 1 ?
-					<div className="tools">
-						<a href="javascript:;" onClick={e => this.data.addUserPopVisible = true}>添加成员</a>
-						<a href="javascript:;" onClick={e => this.data.addGroupPopVisible = true}>添加组</a>
-					</div> :
-					null
-				}
+				<h1>
+					成员分组
+					{
+						userInfo.role === 1 ?
+						<a href="javascript:;" onClick={e => this.data.addGroupPopVisible = true}>添加组</a> :
+						null
+					}
+					{
+						userInfo.role === 1 ?
+						<a href="javascript:;" onClick={e => this.data.addUserPopVisible = true}>添加成员</a> :
+						null
+					}
+				</h1>
+
 				<Spin loading={this.$group.listFetching} height={200}>
 					<ul>
-						<li className={page==='daily'&&id==='all'?'active':''}>
+						<li className={page==='index'&&gid===''?'active':''}>
 							{
-								page==='daily'&&id==='all' ?
+								page==='index'&&gid==='' ?
 								<p><i />全部</p> :
 								<a href="javascript:;" onClick={this.onClick.bind(this, undefined)}><i />全部</a>
 							}
@@ -170,9 +186,9 @@ class GroupList extends Component {
 						{
 							group.map(res => {
 								return (
-									<li key={res._id} className={page==='daily'&&id==res._id?'active':''}>
+									<li key={res._id} className={page==='index'&&gid==res._id?'active':''}>
 										{
-											page==='daily'&&id==res._id ?
+											page==='index'&&gid==res._id ?
 											<p>
 												<i />
 												<span>{res.name}</span>

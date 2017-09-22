@@ -1,5 +1,6 @@
 import './style'
 import React, {Component} from 'react'
+import qs from 'qs'
 
 import reactStateData from 'react-state-data'
 import {injectStore} from 'src/mobx'
@@ -27,23 +28,22 @@ class MyDailyHeader extends Component {
 			somedayLoading: false,
 		})
 
-		this.hashChange = this.hashChange.bind(this)
+	}
+
+	getSearch() {
+		let search = this.props.location.search
+		if (search) {
+			search = search.replace(/\?/, '')
+			return qs.parse(search)
+		}
+		return {}
 	}
 
 	componentDidMount() {
-		this.fetch(this.props.match.params.uid)
-		
-		this.listen = this.props.history.listen(this.hashChange)
-	}
-
-	hashChange(e) {
-		setTimeout(e => {
-			this.fetch(this.props.match.params.uid)
-		})
-	}
-
-	componentWillUnmount() {
-		this.listen()
+		const {uid} = this.getSearch()
+		if (uid) {
+			this.fetch(uid)
+		}
 	}
 
 	async fetch(uid) {
@@ -73,7 +73,7 @@ class MyDailyHeader extends Component {
 				this.data.somedayVisible = true
 				this.data.somedayLoading = true
 				
-				await this.$daily.fetchDayDailyWithDateAndUid(dt, this.props.match.params.uid)
+				await this.$daily.fetchDayDailyWithDateAndUid(dt, this.getSearch().uid)
 			}
 		} catch(e) {
 			Toast.show(e.msg)

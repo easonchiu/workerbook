@@ -10,8 +10,19 @@
 		font-size: 16px;
 		line-height: 20px;
 		font-weight: bold;
-		display: block;
+		display: -webkit-box;
 		margin-bottom: 10px;
+		a {
+			display: block;
+			font-weight: normal;
+			margin-left: 10px;
+			font-size: 12px;
+			color: #8a929b;
+			cursor: pointer;
+			&:hover {
+				opacity: 0.7;
+			}
+		}
 	}
 	.tools {
 		display: -webkit-box;

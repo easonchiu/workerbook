@@ -13,10 +13,17 @@ class RecordInput extends Component {
 	constructor(props) {
 		super(props)
 
+		const project = {}
+		if (props.project && props.projectId) {
+			project._id = props.projectId
+			project.name = props.project
+		} 
+
 		this.setData({
 			showProgressPopup: false,
 			showProjectPopup: false,
 			progress: props.progress || 100,
+			project: project,
 			record: props.record || ''
 		}, this.watch)
 		
@@ -47,13 +54,25 @@ class RecordInput extends Component {
 			progress(v) {
 				this.props.onChange && this.props.onChange({
 					progress: v,
-					record: this.data.record
+					record: this.data.record,
+					pname: this.data.project.name,
+					pid: this.data.project._id,
 				})
 			},
 			record(v) {
 				this.props.onChange && this.props.onChange({
 					progress: this.data.progress,
-					record: v
+					record: v,
+					pname: this.data.project.name,
+					pid: this.data.project._id,
+				})
+			},
+			project(v) {
+				this.props.onChange && this.props.onChange({
+					progress: this.data.progress,
+					record: this.data.record,
+					pname: v.name,
+					pid: v._id,
 				})
 			}
 		}
@@ -62,6 +81,7 @@ class RecordInput extends Component {
 	reset() {
 		this.data.record = ''
 		this.data.progress = 100
+		this.data.project = {}
 	}
 
 	inputChange(e) {
@@ -79,7 +99,9 @@ class RecordInput extends Component {
 		} else {
 			this.props.onSubmit && this.props.onSubmit({
 				record: record,
-				progress: this.data.progress
+				progress: this.data.progress,
+				pid: this.data.project._id,
+				pname: this.data.project.name,
 			})
 		}
 	}
@@ -93,23 +115,35 @@ class RecordInput extends Component {
 		const css = cn('btn', {
 			'active': this.data.showProjectPopup
 		})
+
+		const projects = this.props.projects || []
+
 		return (
 			<div className="project">
 				<a href="javascript:;" className={css} onClick={this.openPopup.bind(this, 'showProjectPopup')}>
-					<span>项目归属</span><sub />
+					<span>
+						{
+							this.data.project.name ?
+							this.data.project.name :
+							'项目归属'
+						}
+					</span><sub />
 				</a>
 				{
 					this.data.showProjectPopup ?
 					<div className="popup">
 						<ul>
-							<li><a href="javascript:;">无归属</a></li>
+							<li
+								className={!this.data.project._id ? 'active' : ''}
+								onClick={e => this.data.project = {}}>
+								<a href="javascript:;">无归属</a>
+							</li>
 							{
-								[5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100]
-								.map(res => (
-									<li key={res}
-										onClick={e => this.data.progress = res}
-										className={this.data.progress == res ? 'active' : ''}>
-										<a href="javascript:;">项目归属{res}</a>
+								projects.map(res => (
+									<li key={res._id}
+										onClick={e => this.data.project = res}
+										className={this.data.project._id == res._id ? 'active' : ''}>
+										<a href="javascript:;">{res.name}</a>
 									</li>
 								))
 							}
@@ -171,8 +205,8 @@ class RecordInput extends Component {
 						onKeyDown={this.keydown}
 						value={this.data.record}
 						onChange={::this.inputChange}
+						mulit
 						disabled={this.props.loading||this.props.disabled}
-						mulit={true}
 						placeholder="请输入日报内容" />
 				</div>
 				<div className="b">

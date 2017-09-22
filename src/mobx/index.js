@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import $group from './group'
 import $user from './user'
 import $daily from './daily'
+import $project from './project'
 
 import {inject, observer} from 'mobx-react'
 
@@ -31,5 +32,6 @@ export default {
 	$user,
 	$group,
 	$daily,
+	$project,
 }
 

@@ -1,5 +1,6 @@
 import './style'
 import React, {Component} from 'react'
+import qs from 'qs'
 
 import reactStateData from 'react-state-data'
 import {injectStore} from 'src/mobx'
@@ -20,6 +21,15 @@ class WriterBox extends Component {
 			rewriting: false,
 			addDailyLoading: false,
 		})
+	}
+
+	getSearch() {
+		let search = this.props.location.search
+		if (search) {
+			search = search.replace(/\?/, '')
+			return qs.parse(search)
+		}
+		return {}
 	}
 
 	shouldComponentUpdate(nProps, nState) {
@@ -55,7 +65,6 @@ class WriterBox extends Component {
 	}
 
 	async deleteDaily(id) {
-		console.log(id)
 		try {
 			await this.$daily.delete({
 				id
@@ -81,14 +90,15 @@ class WriterBox extends Component {
 			this.data.addDailyLoading = false
 			await this.updateDailyList()
 		} catch(e) {
+			console.log(e)
 			Toast.show(e.msg)
 			this.data.addDailyLoading = false
 		}
 	}
 
 	updateDailyList() {
-		const {gid, date} = this.props.match.params
-		return this.$daily.fetchDailyListWithGroupAndDate(gid, date)
+		const {gid = '', date = '', pid = ''} = this.getSearch()
+		return this.$daily.fetchDailyListWithGroupAndDate(gid, date, pid)
 	}
 
 	render() {
@@ -110,6 +120,7 @@ class WriterBox extends Component {
 						list && list.length > 0 ?
 						<Dailys className="my-daily"
 							rewriteabled
+							projects={this.$project.list}
 							onRewrite={::this.rewriteStart}
 							onRewriteSubmit={::this.rewriteSubmit}
 							onDelete={::this.deleteDaily}
@@ -121,6 +132,7 @@ class WriterBox extends Component {
 						null :
 						<RecordInput className="newrecord"
 							ref="recordInput"
+							projects={this.$project.list}
 							disabled={this.$daily.myTodayFetching}
 							loading={this.data.addDailyLoading}
 							onSubmit={::this.newRecrodSubmit} />

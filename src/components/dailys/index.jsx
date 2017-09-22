@@ -16,14 +16,18 @@ class Dailys extends Component {
 			rewrite: '',
 			rewriteRecord: '',
 			rewriteProgress: '',
+			rewriteProject: '',
+			rewriteProjectId: '',
 			loading: false,
 		})
 	}
 
-	rewrite(id, progress, record) {
-		this.data.rewrite = id
+	rewrite({_id, progress, record, pname, pid}) {
+		this.data.rewrite = _id
 		this.data.rewriteRecord = record
 		this.data.rewriteProgress = progress
+		this.data.rewriteProject = pname
+		this.data.rewriteProjectId = pid
 
 		this.props.onRewrite && this.props.onRewrite()
 	}
@@ -45,6 +49,8 @@ class Dailys extends Component {
 	onRecordInputChange(res) {
 		this.data.rewriteRecord = res.record
 		this.data.rewriteProgress = res.progress
+		this.data.rewriteProject = res.pname
+		this.data.rewriteProjectId = res.pid
 	}
 
 	render() {
@@ -64,26 +70,43 @@ class Dailys extends Component {
 								<Circle progress={this.data.rewriteProgress} />
 								{
 									this.data.rewriteRecord ?
-									<p className="record">{this.data.rewriteRecord}</p> :
+									<p className="record">
+										{
+											this.data.rewriteProject ?
+											<strong>{this.data.rewriteProject}</strong> :
+											null
+										}
+										{this.data.rewriteRecord}
+									</p> :
 									<p className="record empty">请输入...</p>
 								}
 							</div>
 							<RecordInput
+								projects={this.props.projects}
 								loading={this.data.loading}
 								record={this.data.rewriteRecord}
 								progress={this.data.rewriteProgress}
 								onChange={::this.onRecordInputChange}
+								project={this.data.rewriteProject}
+								projectId={this.data.rewriteProjectId}
 								className="rewriterecord"
 								btnText="修改"
 								onSubmit={::this.rewriteSubmit} />
 						</li> :
 						<li key={res._id}>
 							<Circle progress={res.progress} tips={!this.props.rewriteabled} />
-							<p className="record">{res.record}</p>
+							<p className="record">
+								{
+									res.pname ?
+									<strong>{res.pname}</strong> :
+									null
+								}
+								{res.record}
+							</p>
 							{
 								this.props.rewriteabled && !this.data.rewrite ?
 								<div className="tools">
-									<a href="javascript:;" onClick={this.rewrite.bind(this, res._id, res.progress, res.record)}>修改</a>
+									<a href="javascript:;" onClick={this.rewrite.bind(this, res)}>修改</a>
 									<a href="javascript:;" onClick={this.delete.bind(this, res._id)}>删除</a>
 								</div> :
 								null

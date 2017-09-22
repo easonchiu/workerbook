@@ -10,12 +10,6 @@ class Store {
 	@observable list = [] // 组列表
 	@observable listFetching = false
 
-	@observable userListActive = 0
-
-	@action('设置侧栏用户头像的当前')
-	setUserListActive(i) {
-		this.userListActive = i
-	}
 
 	@action('获取组数据')
 	async fetchList() {

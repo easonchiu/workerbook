@@ -4,16 +4,66 @@
 	overflow: hidden;
 	padding-bottom: 10px;
 	position: relative;
-	margin-bottom: 15px;
 	> h1 {
 		padding: 15px 15px 0 15px;
 		font-size: 16px;
 		line-height: 20px;
 		font-weight: bold;
-		display: block;
+		display: -webkit-box;
 		margin-bottom: 10px;
+		a {
+			display: block;
+			font-weight: normal;
+			margin-left: 10px;
+			font-size: 12px;
+			color: #8a929b;
+			cursor: pointer;
+			&:hover {
+				opacity: 0.7;
+			}
+		}
+	}
+	.page {
+		display: -webkit-box;
+		position: absolute;
+		right: 10px;
+		top: 15px;
+		li {
+			display: block;
+			width: 20px;
+			height: 20px;
+			&:hover sub {
+				background-color: #8a929b + 70;
+			}
+			&.active sub {
+				background-color: #5081ff;
+			}
+			&.active a {
+				background: none;
+			}
+		}
+		a {
+			display: block;
+			width: 20px;
+			height: 20px;
+			display: -webkit-box;
+			-webkit-box-align: center;
+			-webkit-box-pack: center;
+			padding: 0;
+			&:hover {
+				background: none;
+			}
+		}
+		sub {
+			display: block;
+			width: 8px;
+			height: 8px;
+			background-color: #8a929b + 80;
+			border-radius: 50%;
+		}
 	}
 	li {
+		position: relative;
 		a,p {
 			display: -webkit-box;
 			-webkit-box-align: center;
@@ -26,6 +76,29 @@
 			&:hover {
 				background: #ebedf0 + 12;
 				color: #5081ff;
+			}
+		}
+		.tools {
+			position: absolute;
+			right: 10px;
+			top: 8px;
+			display: none;
+			a {
+				display: inline-block;
+				padding: 0 5px;
+				height: 24px;
+				line-height: 24px;
+				font-size: 12px;
+				color: #8a929b;
+				background: none;
+				&:hover {
+					opacity: 0.7;
+				}
+			}
+		}
+		&:hover {
+			.tools {
+				display: block;
 			}
 		}
 		span {
@@ -68,6 +141,74 @@
 		}
 		&:nth-child(6n+6) i {
 			background: #feb5cc;
+		}
+	}
+}
+
+.dailog-add-project {
+	.x-dialog__inner {
+		padding: 30px 50px;
+	}
+	.header {
+		margin: 0 auto 15px auto;
+	}
+	h1 {
+		text-align: center;
+		font-weight: bold;
+		color: #000;
+		margin-bottom: 20px;
+	}
+	.row {
+		display: -webkit-box;
+		-webkit-box-align: center;
+		margin-bottom: 15px;
+		&:last-child {
+			margin-bottom: 10px;
+		}
+		label {
+			display: block;
+			width: 80px;
+			text-align: right;
+			margin-right: 10px;
+			font-size: 14px;
+			color: #586069 + 50;
+		}
+		input {
+			-webkit-box-flex: 1;
+		}
+	}
+}
+
+.dailog-file-project {
+	.x-dialog__inner {
+		padding: 30px 50px;
+	}
+	.header {
+		margin: 0 auto 15px auto;
+	}
+	h1 {
+		text-align: center;
+		font-weight: bold;
+		color: #000;
+		margin-bottom: 20px;
+	}
+	.row {
+		display: -webkit-box;
+		-webkit-box-align: center;
+		margin-bottom: 15px;
+		&:last-child {
+			margin-bottom: 10px;
+		}
+		label {
+			display: block;
+			width: 80px;
+			text-align: right;
+			margin-right: 10px;
+			font-size: 14px;
+			color: #586069 + 50;
+		}
+		input {
+			-webkit-box-flex: 1;
 		}
 	}
 }

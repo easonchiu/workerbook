@@ -188,7 +188,7 @@ class Header extends Component {
 								{
 									this.$user.search && this.$user.search.length > 0 ?
 									this.$user.search.map(res => (
-										<Link to={'/user/'+res._id} key={res._id} className="item">
+										<Link to={`/user?uid=${res._id}`} key={res._id} className="item">
 											{res.nickname} <span>{res.gid.name}</span>
 										</Link>
 									)) :

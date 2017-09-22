@@ -62,23 +62,21 @@ class ViewIndex extends Component {
 				<div className="app-main">
 					
 					<div className="app-body">
-
-						<Route exact path="/user/:uid(\w+)" component={MyDailyHeader} />
+						<Route exact path="/user" component={MyDailyHeader} />
 						
-						<Route exact path="/user/:uid(\w+)" component={MyDailyList} />
+						<Route exact path="/user" component={MyDailyList} />
 
-						<Route exact path="/daily/:gid(\w+|all)?/:date?" component={WriterBox} />
+						<Route exact path="/index" component={WriterBox} />
 						
-						<Route exact path="/daily/:gid(\w+|all)?/:date?" component={UserDailyList} />
-
+						<Route exact path="/index" component={UserDailyList} />
 					</div>
 					
 					<div className="app-aside">
-						<Route component={ProjectList} />
+						<Route strict path="/:page(index|user)" component={GroupList} />
 
-						<Route strict path="/:page(daily|user)/:id(\w+|all)?/:date?" component={GroupList} />
-
-						<Route exact path="/daily/:gid(\w+|all)?/:date?" component={UserList} />
+						<Route exact path="/index" component={UserList} />
+					
+						<Route exact path="/index" component={ProjectList} />
 					</div>
 
 				</div>

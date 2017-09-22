@@ -1,5 +1,6 @@
 import './style'
 import React, {Component} from 'react'
+import qs from 'qs'
 
 import reactStateData from 'react-state-data'
 import {injectStore} from 'src/mobx'
@@ -18,6 +19,15 @@ class UserList extends Component {
 
 	componentDidMount() {
 		this.fetch()
+	}
+
+	getSearch() {
+		let search = this.props.location.search
+		if (search) {
+			search = search.replace(/\?/, '')
+			return qs.parse(search)
+		}
+		return {}
 	}
 
 	async fetch() {
@@ -40,9 +50,9 @@ class UserList extends Component {
 
 		let users = this.$user.all || []
 
-		const {gid = 'all'} = this.props.match.params
+		const {gid = ''} = this.getSearch()
 
-		if (gid !== 'all') {
+		if (gid !== '') {
 			users = users.filter(res => {
 				return res.gid == gid
 			})
@@ -53,7 +63,7 @@ class UserList extends Component {
 		return (
 			<Border className="user-list clearfix">
 				{
-					gid == 'all' ?
+					gid == '' ?
 					<h1>全部成员</h1> :
 					<h1>组内成员</h1>
 				}
@@ -81,7 +91,14 @@ class UserList extends Component {
 						if (i >= (this.$group.userListActive + 1) * this.size) {
 							return null
 						}
-						return <UserHeader className="header" name={res.nickname} key={res._id} uid={res._id} link={'/user/' + res._id} />
+						return (
+							<UserHeader
+								className="header"
+								name={res.nickname}
+								key={res._id}
+								uid={res._id}
+								link={`/user?uid=${res._id}`} />
+						)
 					}) :
 					<p className="empty">暂无成员</p>
 				}

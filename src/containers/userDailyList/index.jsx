@@ -2,8 +2,7 @@ import './style'
 import React, {Component} from 'react'
 import cn from 'classnames'
 import {Link} from 'react-router-dom'
-import timeago from 'timeago.js'
-const timeagoInstance = timeago()
+import qs from 'qs'
 
 import reactStateData from 'react-state-data'
 import {injectStore} from 'src/mobx'
@@ -28,6 +27,15 @@ class UserDailyList extends Component {
 		this.bodyClick =  this.bodyClick.bind(this)
 	}
 
+	getSearch() {
+		let search = this.props.location.search
+		if (search) {
+			search = search.replace(/\?/, '')
+			return qs.parse(search)
+		}
+		return {}
+	}
+
 	getDateList(length) {
 		const day = new Date()
 		day.setDate(day.getDate() - 2)
@@ -47,30 +55,26 @@ class UserDailyList extends Component {
 	}
 
 	componentDidMount() {
-		const {gid, date = 0} = this.props.match.params
-		this.fetch(gid,date)
+		const {gid, date = 0, pid = ''} = this.getSearch()
+		this.fetch(gid, date, pid)
 	}
 
-	async fetch(gid, date) {
+	async fetch(gid, date, pid) {
 		try {
-			await this.$daily.fetchDailyListWithGroupAndDate(gid, date)
+			await this.$daily.fetchDailyListWithGroupAndDate(gid, date, pid)
 		} catch(e) {
 			Toast.show(e.msg)
 		}
 	}
 
-	changeDate(val) {
-		const {gid = 'all', date} = this.props.match.params
+	changeDate(val = '') {
+		const search = this.getSearch()
 
-		if (date != val) {
-			if (val) {
-				this.props.history.push(`/daily/${gid}/${val}`)
-			} else {
-				this.props.history.push(`/daily/${gid}`)
-			}
-			this.fetch(gid, val)
+		if (search.date != val) {
+			search.date = val
+			this.props.history.push(`/index?${qs.stringify(search)}`)
+			this.fetch(search.gid, val)
 		}
-
 	}
 
 	componentWillUnmount() {
@@ -97,13 +101,14 @@ class UserDailyList extends Component {
 
 		const list = this.$daily.list || []
 
-		const {date = 0} = this.props.match.params
+		const {date = 0} = this.getSearch()
 
 		const strDate = this.dateList.filter(res => res.date == date)[0]
 
 		return (
 			<div className={css}>
-				<Border className="date-bar">
+				<Border className="top-bar">
+					<div className="date-bar">
 					{
 						['今天', '昨天', '前天'].map((res, i) => {
 							if (i == date) {
@@ -142,7 +147,9 @@ class UserDailyList extends Component {
 						</div> :
 						null
 					}
+					</div>
 				</Border>
+
 				<Spin loading={this.$daily.listFetching} height={200}>
 					{
 						list.length > 0 ?
@@ -154,10 +161,14 @@ class UserDailyList extends Component {
 
 								return (
 									<div className="daily-item" key={res._id||i}>
-										<UserHeader name={res.uid.nickname} className="header" uid={res.uid._id} link={'/user/'+res.uid._id} />
+										<UserHeader
+											name={res.uid.nickname}
+											className="header"
+											uid={res.uid._id}
+											link={`/user?uid=${res.uid._id}`} />
 										<Border className="daily-bd">
 											<h1>
-												<Link to={'/user/'+res.uid._id}>{res.uid.nickname}</Link>
+												<Link to={`/user?uid=${res.uid._id}`}>{res.uid.nickname}</Link>
 												<time>更新于 {time}</time>
 											</h1>
 

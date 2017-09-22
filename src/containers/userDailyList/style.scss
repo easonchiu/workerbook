@@ -1,9 +1,11 @@
 @charset "utf-8";
 
 .user-daily-list {
-	.date-bar {
+	.top-bar {
 		margin-left: 75px;
 		margin-bottom: 15px;
+	}
+	.date-bar {
 		display: -webkit-box;
 		position: relative;
 		a {
@@ -81,6 +83,10 @@
 				}
 			}
 		}
+	}
+	.project-bar {
+		padding: 10px;
+		border-top: 1px dashed #dee3e8;
 	}
 	.daily-item {
 		display: -webkit-box;

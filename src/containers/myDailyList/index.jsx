@@ -2,6 +2,7 @@ import './style'
 import React, {Component} from 'react'
 import cn from 'classnames'
 import {Link} from 'react-router-dom'
+import qs from 'qs'
 
 import reactStateData from 'react-state-data'
 import {injectStore} from 'src/mobx'
@@ -15,27 +16,26 @@ class MyDailyList extends Component {
 	constructor(props) {
 		super(props)
 
-		this.hashChange = this.hashChange.bind(this)
+	}
+
+	getSearch() {
+		let search = this.props.location.search
+		if (search) {
+			search = search.replace(/\?/, '')
+			return qs.parse(search)
+		}
+		return {}
 	}
 
 	componentDidMount() {
-		this.fetch(this.props.match.params.uid)
-
-		this.listen = this.props.history.listen(this.hashChange)
+		const {uid} = this.getSearch()
+		if (uid) {
+			this.fetch(uid)
+		}
 	}
 
 	fetch(uid) {
 		this.$daily.fetchHistoryDailyWithUid(uid)
-	}
-
-	hashChange(e) {
-		setTimeout(e => {
-			this.fetch(this.props.match.params.uid)
-		})
-	}
-
-	componentWillUnmount() {
-		this.listen()
 	}
 
 	render() {

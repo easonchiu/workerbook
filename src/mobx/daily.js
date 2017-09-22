@@ -23,12 +23,17 @@ class Store {
 
 
 	@action('获取用户组的日报列表数据')
-	async fetchDailyListWithGroupAndDate(gid = 'all', date = 0) {
+	async fetchDailyListWithGroupAndDate(gid = 'all', date = 0, pid = '') {
 		this.listFetching = true
 
 		const res = await http.request({
 			method: 'get',
-	        url: `/daily/list/${gid}/${date}`,
+	        url: `/daily/list`,
+	        params: {
+	        	gid,
+	        	date,
+	        	pid
+	        }
 		})
 
 		runInAction(() => {
