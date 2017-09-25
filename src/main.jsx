@@ -9,6 +9,7 @@ import { Provider } from "mobx-react"
 import { render } from 'react-dom'
 
 const Router = process.env.ENV_NAME === 'develop' ? HashRouter : BrowserRouter
+const basename = process.env.ENV_NAME === 'test1' ? '/workerbook' : '/'
 
 // view
 import ViewLogin from 'src/views/login'
@@ -19,7 +20,7 @@ import NeedLogin from 'src/assets/libs/needLogin'
 
 // routes
 const Routes = e => (
-	<Router basename="/">
+	<Router basename={basename}>
 		<Switch>
 			<Route exact path="/login" component={ NeedLogin(ViewLogin)(false) } />
 			

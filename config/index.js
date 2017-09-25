@@ -34,9 +34,9 @@ module.exports = {
 		productionSourceMap: false,
 	},
 	test1: {
-		env: require('./test1.env'),
+		env: require('./prod.env'),
 		assetsRoot: path.resolve(__dirname, '../' + prodPath),
-		assetsPublicPath: './',
+		assetsPublicPath: '/workerbook/',
 		cssAssetsPath: '../',
 		assetsSubDirectory: './',
 		productionSourceMap: false,
