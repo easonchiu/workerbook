@@ -19,7 +19,7 @@ import NeedLogin from 'src/assets/libs/needLogin'
 
 // routes
 const Routes = e => (
-	<Router>
+	<Router basename="/">
 		<Switch>
 			<Route exact path="/login" component={ NeedLogin(ViewLogin)(false) } />
 			
