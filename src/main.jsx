@@ -9,9 +9,7 @@ import { Provider } from "mobx-react"
 import { render } from 'react-dom'
 
 const Router = process.env.ENV_NAME === 'develop' ? HashRouter : BrowserRouter
-const basename = process.env.ENV_NAME === 'test1' ? '/workerbook' : '/'
-console.log('basename >>> ', basename)
-console.log('process.env >>> ', process.env)
+const basename = window.location.href.indexOf('47.92') ? '/workerbook' : '/'
 
 // view
 import ViewLogin from 'src/views/login'
