@@ -28,7 +28,7 @@ module.exports = {
 	production: {
 		env: require('./prod.env'),
 		assetsRoot: path.resolve(__dirname, '../' + prodPath),
-		assetsPublicPath: '/workerbook/',
+		assetsPublicPath: '/',
 		cssAssetsPath: '../',
 		assetsSubDirectory: './',
 		productionSourceMap: false,
