@@ -59,8 +59,6 @@ function build(env, name) {
 
 				spin.stop()
 				console.log(chalk.cyan('  Build complete.\n'))
-
-				console.log(process.env)
 			})
 
 
