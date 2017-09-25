@@ -10,6 +10,8 @@ import { render } from 'react-dom'
 
 const Router = process.env.ENV_NAME === 'develop' ? HashRouter : BrowserRouter
 const basename = process.env.ENV_NAME === 'test1' ? '/workerbook' : '/'
+console.log('basename >>> ', basename)
+console.log('process.env.ENV_NAME >>> ', process.env.ENV_NAME)
 
 // view
 import ViewLogin from 'src/views/login'
