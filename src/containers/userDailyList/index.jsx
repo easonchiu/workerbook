@@ -152,7 +152,7 @@ class UserDailyList extends Component {
 
 				<Spin loading={this.$daily.listFetching} height={200}>
 					{
-						list.length > 0 ?
+						list.length ?
 						<div className="daily-list">
 						{
 							list.map((res,i) => {

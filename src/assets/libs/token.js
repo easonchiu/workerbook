@@ -4,7 +4,8 @@ const token = '_app_token_'
 
 const setToken = val => {
 	cookie.set(token, val, {
-		path: '/'
+		path: '/',
+		expires: 365
 	})
 }
 

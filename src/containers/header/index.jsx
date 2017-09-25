@@ -165,7 +165,7 @@ class Header extends Component {
 			<div className={css}>
 				<div className="inner">
 					
-					<h1 className="logo" style={{marginRight: '150px'}}></h1>
+					<Link to="/" className="logo" style={{marginRight: '150px'}}></Link>
 
 					<nav style={{display:'none'}}>
 						<Link className="active" to="/">Daily</Link>

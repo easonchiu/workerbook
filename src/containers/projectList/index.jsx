@@ -194,8 +194,8 @@ class ProjectList extends Component {
 		}]
 		for (let i = 0, len = this.size; i < len; i++) {
 			const j = i + this.size * this.data.active
-			const item = project[j]
-			if (item) {
+			if (j < project.length) {
+				const item = project[j]
 				currentList.push(project[j])
 			}
 		}

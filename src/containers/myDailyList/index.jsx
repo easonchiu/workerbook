@@ -32,6 +32,19 @@ class MyDailyList extends Component {
 		if (uid) {
 			this.fetch(uid)
 		}
+		
+		this.listen = this.props.history.listen(this.hashChange)
+	}
+
+	hashChange = e => {
+		setTimeout(e => {
+			const {uid} = this.getSearch()
+			this.fetch(uid)
+		})
+	}
+
+	componentWillUnmount() {
+		this.listen()
 	}
 
 	fetch(uid) {

@@ -105,7 +105,7 @@
 		}
 		.popup {
 			width: 250px;
-			height: 34 * 7 + 20px;
+			max-height: 34 * 7 + 20px;
 			overflow: auto;
 			ul li {
 				float: none;
