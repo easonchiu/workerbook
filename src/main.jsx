@@ -9,7 +9,7 @@ import { Provider } from "mobx-react"
 import { render } from 'react-dom'
 
 const Router = process.env.ENV_NAME === 'develop' ? HashRouter : BrowserRouter
-const basename = window.location.href.indexOf('47.92') ? '/workerbook' : '/'
+const basename = window.location.href.indexOf('47.92') > 0 ? '/workerbook' : '/'
 
 // view
 import ViewLogin from 'src/views/login'
