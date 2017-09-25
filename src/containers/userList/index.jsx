@@ -14,7 +14,7 @@ class UserList extends Component {
 	constructor(props) {
 		super(props)
 
-		this.size = 1
+		this.size = 12
 
 		this.state = {
 			active: 0
