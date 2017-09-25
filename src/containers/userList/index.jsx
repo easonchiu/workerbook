@@ -14,11 +14,34 @@ class UserList extends Component {
 	constructor(props) {
 		super(props)
 
-		this.size = 12
+		this.size = 1
+
+		this.state = {
+			active: 0
+		}
 	}
 
 	componentDidMount() {
+		this.gid = this.getSearch().gid
 		this.fetch()
+	
+		this.listen = this.props.history.listen(this.hashChange)
+	}
+
+	hashChange = e => {
+		setTimeout(e => {
+			const {gid = ''} = this.getSearch()
+			if (this.gid != gid) {
+				this.gid = gid
+				this.setState({
+					active: 0
+				})
+			}
+		})
+	}
+
+	componentWillUnmount() {
+		this.listen()
 	}
 
 	getSearch() {
@@ -39,7 +62,11 @@ class UserList extends Component {
 	}
 
 	pageClick(i) {
-		this.$group.setUserListActive(i)
+		if (this.state.active != i) {
+			this.setState({
+				active: i
+			})
+		}
 	}
 
 	render() {
@@ -74,7 +101,7 @@ class UserList extends Component {
 							Array.from({length:pageCount}).map((res, i) =>
 								<li key={i}
 									onClick={e => this.pageClick(i)}
-									className={this.$group.userListActive == i ? 'active': ''}>
+									className={this.state.active == i ? 'active': ''}>
 									<a href="javascript:;"><sub /></a>
 								</li>
 							)
@@ -85,10 +112,10 @@ class UserList extends Component {
 				{
 					users.length > 0 ?
 					users.map((res, i) => {
-						if (i < this.$group.userListActive * this.size) {
+						if (i < this.state.active * this.size) {
 							return null
 						}
-						if (i >= (this.$group.userListActive + 1) * this.size) {
+						if (i >= (this.state.active + 1) * this.size) {
 							return null
 						}
 						return (
