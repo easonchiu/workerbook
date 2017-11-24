@@ -63,9 +63,9 @@ class Dailys extends Component {
 			<ul className={css}>
 				{
 					list.length > 0 ?
-					list.map(res => (
+					list.map((res, i) => (
 						this.data.rewrite === res._id ?
-						<li key={res._id} className="rewrite">
+						<li key={i} className="rewrite">
 							<div className="box">
 								<Circle progress={this.data.rewriteProgress} />
 								{
@@ -93,7 +93,7 @@ class Dailys extends Component {
 								btnText="修改"
 								onSubmit={::this.rewriteSubmit} />
 						</li> :
-						<li key={res._id}>
+						<li key={i}>
 							<Circle progress={res.progress} tips={!this.props.rewriteabled} />
 							<p className="record">
 								{

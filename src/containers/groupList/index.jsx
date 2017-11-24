@@ -85,6 +85,7 @@ class GroupList extends Component {
 	onClick(gid) {
 
 		const search = this.getSearch()
+		search.uid = undefined
 
 		const {date, pid} = search
 		if (gid != search.gid || this.props.match.url == '/user') {

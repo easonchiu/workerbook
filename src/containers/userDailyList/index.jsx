@@ -105,6 +105,36 @@ class UserDailyList extends Component {
 
 		const strDate = this.dateList.filter(res => res.date == date)[0]
 
+		// 用户数据
+		let users = this.$user.all || []
+
+		const {gid = ''} = this.getSearch()
+
+		if (gid !== '') {
+			users = users.filter(res => {
+				return res.gid == gid
+			})
+		}
+
+		// 查找谁没写日报（今天不算）
+		const noWriteUsers = []
+		if (date != 0 &&
+			list.length > 0 &&
+			users.length > 0 &&
+			!this.$daily.listFetching) {
+			users.map(res => {
+				let hasWrite = false
+				list.map(lres => {
+					if (lres.uid._id === res._id) {
+						hasWrite = true
+					}
+				})
+				if (!hasWrite) {
+					noWriteUsers.push(res.nickname)
+				}
+			})
+		}
+
 		return (
 			<div className={css}>
 				<Border className="top-bar">
@@ -149,6 +179,18 @@ class UserDailyList extends Component {
 					}
 					</div>
 				</Border>
+				
+				{
+					noWriteUsers.length ?
+					<div className="tips-bar">
+						{
+							noWriteUsers.join('、')
+						}
+						&nbsp;未填写该天日报
+					</div> :
+					null
+				}
+				
 
 				<Spin loading={this.$daily.listFetching} height={200}>
 					{
