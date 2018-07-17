@@ -1,0 +1,66 @@
+@charset "utf-8";
+
+.my-daily-writer {
+  border: 1px solid #dee3e8;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  border-radius: 4px;
+  margin-bottom: 15px;
+  padding: 15px;
+  .daily-writer-box {
+    padding-top: 10px;
+    border-top: 1px dashed #dee3e8;
+  }
+  .writer-tools {
+    padding-top: 10px;
+    overflow: hidden;
+  }
+  .send-button {
+    float: right;
+  }
+  .my-daily-list {
+    li {
+      display: flex;
+      align-items: center;
+      padding-bottom: 10px;
+      .progress {
+        display: none;
+      }
+      .record {
+        flex: 1;
+        display: block;
+        font-size: 14px;
+        line-height: 24px;
+        color: #586069;
+        strong {
+          display: inline-block;
+          color: #eb7350;
+          line-height: 24px;
+          margin-right: 4px;
+        }
+      }
+      .tools {
+        height: 24px;
+        line-height: 24px;
+        visibility: hidden;
+        pointer-events: none;
+        display: flex;
+        align-items: center;
+        a {
+          display: block;
+          margin-left: 10px;
+          font-size: 12px;
+          color: #8a929b;
+          cursor: pointer;
+          &:hover {
+            opacity: 0.7;
+          }
+        }
+      }
+      &:hover .tools {
+        visibility: visible;
+        pointer-events: auto;
+      }
+    }
+  }
+}

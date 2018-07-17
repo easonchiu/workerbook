@@ -1,0 +1,49 @@
+@charset "utf-8";
+
+.daily-item {
+  border: 1px solid #dee3e8;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  border-radius: 4px;
+  margin-bottom: 15px;
+  padding: 15px;
+  > h2 {
+    display: flex;
+    font-weight: 400;
+    line-height: 20px;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #8a929b;
+    a {
+      font-size: 16px;
+      display: block;
+      color: #5081ff;
+      font-weight: 700;
+      margin-right: 10px;
+    }
+    time {
+      display: block;
+      margin-left: 10px;
+    }
+  }
+  > ul {
+    li {
+      margin-bottom: 10px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    strong {
+      display: inline-block;
+      color: #eb7350;
+      line-height: 24px;
+      margin-right: 4px;
+    }
+    p {
+      display: block;
+      font-size: 14px;
+      line-height: 24px;
+      color: #586069;
+    }
+  }
+}

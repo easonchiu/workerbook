@@ -1,0 +1,116 @@
+@charset "utf-8";
+
+.user-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  color: #fff;
+  font-size: 14px;
+  background-color: #d0d8e1;
+  border-radius: 50%;
+  position: relative;
+  transition: all 0.1s ease-out;
+
+  &--big-font {
+    font-size: 20px;
+  }
+
+  &--mini {
+    width: 34px;
+    height: 34px;
+    font-size: 12px;
+  }
+
+  p {
+    position: absolute;
+    left: 50%;
+    top: -10px;
+    transform: translate(-50%,-100%) scale(0.8);
+    transform-origin: center bottom;
+    z-index: 99;
+    pointer-events: none;
+    font-size: 12px;
+    line-height: 1.5;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.1s ease-out;
+    em {
+      display: block;
+      position: relative;
+      z-index: 2;
+      white-space: nowrap;
+      color: #fff;
+      font-size: 12px;
+      padding: 6px 10px;
+    }
+    span {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      border-radius: 4px;
+      opacity: 0.8;
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 50%;
+        margin-left: -2px;
+        bottom: -3px;
+        border: 4px solid #000;
+        transform: rotate(-45deg);
+        width: 0;
+        height: 0;
+      }
+    }
+  }
+  &:hover {
+    p {
+      opacity: 1;
+      transform: translate(-50%,-100%) scale(1);
+      visibility: visible;
+    }
+  }
+}
+
+div.user-header--color-0 {
+  background: #feb5cc;
+}
+div.user-header--color-1 {
+  background: #c7b3ff;
+}
+div.user-header--color-2 {
+  background: #68e4b1;
+}
+div.user-header--color-3 {
+  background: #a8e26f;
+}
+div.user-header--color-4 {
+  background: #82c6f1;
+}
+div.user-header--color-5 {
+  background: #f8b981;
+}
+
+a.user-header--color-0:hover {
+  background: #feb5cc;
+}
+a.user-header--color-1:hover {
+  background: #c7b3ff;
+}
+a.user-header--color-2:hover {
+  background: #68e4b1;
+}
+a.user-header--color-3:hover {
+  background: #a8e26f;
+}
+a.user-header--color-4:hover {
+  background: #82c6f1;
+}
+a.user-header--color-5:hover {
+  background: #f8b981;
+}

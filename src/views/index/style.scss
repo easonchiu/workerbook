@@ -1,0 +1,24 @@
+@charset "utf-8";
+
+.view-index {
+  .mission-bar {
+    header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      h1 {
+        font-size: 18px;
+        line-height: 20px;
+        font-weight: 700;
+        flex: 1;
+      }
+    }
+    .list {
+      margin-right: -10px;
+      display: flex;
+      > div {
+        margin-right: 10px;
+      }
+    }
+  }
+}

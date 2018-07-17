@@ -1,0 +1,50 @@
+@charset "utf-8";
+
+.mini-pager {
+  display: flex;
+  > a {
+    display: block;
+    border: 1px solid #dee3e8 + 10;
+    width: 26px;
+    height: 26px;
+    position: relative;
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.3;
+    }
+    &:first-child {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      svg {
+        transform: rotate(90deg);
+      }
+    }
+    &:last-child {
+      margin-left: -1px;
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      svg {
+        transform: rotate(-90deg);
+      }
+    }
+    &:hover {
+      z-index: 2;
+      border: 1px solid #5081ff;
+      box-shadow: 0 0 5px rgba(80,129,255,.3);
+      svg path {
+        fill: #5081ff;
+      }
+    }
+    svg {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin: -7px 0 0 -7px;
+      width: 14px;
+      height: 14px;
+      path {
+        fill: #586069 + 60;
+      }
+    }
+  }
+}

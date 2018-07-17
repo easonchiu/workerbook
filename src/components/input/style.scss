@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+.wb-input {
+  display: block;
+  width: 100%;
+  border: 1px solid #dee3e8 !important;
+  padding: 5px 10px;
+  height: 40px;
+  border-radius: 3px !important;
+  font-size: 14px;
+  color: #586069;
+  background: #fff !important;
+  outline: none;
+  resize: none;
+  &:focus {
+    border: 1px solid #5081ff !important;
+    box-shadow: 0 0 5px rgba(80,129,255,.3);
+  }
+  &::-webkit-input-placeholder {
+    color: #ddd;
+  }
+}
+
+textarea.wb-input {
+  height: 80px;
+  padding: 10px;
+}

@@ -1,0 +1,14 @@
+
+.aside-dialog__content {
+  background: #fff;
+  box-shadow: 0 0 35px rgba(0,39,61,.05);
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transform: translate(110%, 0);
+  transition: all 0.2s ease-out;
+  &.aside-dialog--in {
+    transform: translate(0, 0);
+  }
+}

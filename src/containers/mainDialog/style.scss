@@ -1,0 +1,53 @@
+
+.main-dialog__content {
+  background: #fff;
+  box-shadow: 0 20px 35px rgba(0,39,61,.05);
+  position: absolute;
+  left: 50%;
+  top: 200px;
+  transition: all 0.15s ease-out;
+  opacity: 0;
+  transform: scale(0.95);
+  border-radius: 5px;
+  width: 600px;
+  min-height: 200px;
+  margin-left: -300px;
+  &.main-dialog--in {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .main-dialog__header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ebedf0;
+    background: #f7f9fc + 2;
+    padding: 15px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    h1 {
+      flex: 1;
+      font-size: 18px;
+      line-height: 1.5;
+      color: #222;
+      font-weight: bold;
+    }
+    > a {
+      display: block;
+      width: 20px;
+      height: 20px;
+      padding: 3px;
+      svg {
+        display: block;
+        width: 14px;
+        height: 14px;
+        fill: #586069;
+      }
+      &:hover svg {
+        fill: #5081ff;
+      }
+    }
+  }
+  .main-dialog__body {
+    padding: 20px;
+  }
+}

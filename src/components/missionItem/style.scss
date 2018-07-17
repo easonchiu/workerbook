@@ -1,0 +1,164 @@
+
+.mission-item {
+  position: relative;
+  width: 340px;
+  height: 140px;
+  border-radius: 4px;
+  border: 1px solid #dee3e8;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  > h2 {
+    color: #586069;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.5;
+    margin-bottom: 5px;
+  }
+  > time, .project {
+    display: flex;
+    align-items: center;
+    color: #8a929b;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  > time strong {
+    display: block;
+    font-size: 12px;
+    line-height: 1;
+    padding: 4px;
+    color: #fff;
+    border-radius: 3px;
+    background: #eb7350;
+    transform: scale(0.8);
+  }
+  .progress {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 40px;
+    height: 40px;
+    background: #33b400;
+    border-radius: 50%;
+    padding: 3px;
+    span {
+      display: block;
+      width: 34px;
+      height: 34px;
+      background: #fff;
+      border-radius: 50%;
+      line-height: 34px;
+      text-align: center;
+      font-size: 12px;
+      color: #33b400;
+    }
+  }
+  > .tools {
+    display: flex;
+    flex-wrap: nowrap;
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    right: 10px;
+    .wb-button {
+      margin-right: 5px;
+    }
+  }
+  &.show-joined {
+    height: auto;
+    > time {
+      margin-bottom: 20px;
+    }
+    .tools {
+      position: static;
+      margin-bottom: 10px;
+    }
+    .joined-list {
+      padding-top: 10px;
+      border-top: 1px dashed #dee3e8;
+      display: flex;
+      align-items: center;
+      .user-header {
+        margin-right: 5px;
+      }
+      .more {
+        font-size: 12px;
+        color: #586069 + 100;
+        flex: 1;
+      }
+    }
+  }
+}
+
+.dialog-project-rule {
+  .info {
+    line-height: 1.5;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    color: #586069;
+    font-size: 14px;
+    border-bottom: 1px dashed #dee3e8;
+  }
+  .rule {
+    p {
+      background: #f7f9fc;
+      padding: 10px;
+      border-radius: 4px;
+      color: #586069;
+      font-size: 14px;
+      line-height: 1.5;
+      word-wrap: break-word;
+      max-height: 300px;
+      overflow: auto;
+    }
+  }
+  h3 {
+    color: #222;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.5;
+    margin-bottom: 5px;
+  }
+}
+
+.dialog-mission-rule {
+  .info {
+    line-height: 1.5;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    color: #586069;
+    font-size: 14px;
+    border-bottom: 1px dashed #dee3e8;
+  }
+  .rule {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #dee3e8;
+    p {
+      background: #f7f9fc;
+      padding: 10px;
+      border-radius: 4px;
+      color: #586069;
+      font-size: 14px;
+      line-height: 1.5;
+      word-wrap: break-word;
+      max-height: 300px;
+      overflow: auto;
+    }
+  }
+  h3 {
+    color: #222;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.5;
+    margin-bottom: 5px;
+  }
+  .all-users {
+    .list {
+      display: flex;
+      .user-header {
+        margin-right: 10px;
+      }
+    }
+  }
+}

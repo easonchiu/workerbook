@@ -1,0 +1,36 @@
+
+.wb-toast {
+  position: fixed;
+  left: 50%;
+  top: 20px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 35px rgba(0, 39, 61, 0.1);
+  z-index: 99999;
+  height: 50px;
+  min-width: 250px;
+  transform: translate(-50%, -60px);
+  opacity: 0;
+  transition: all 0.15s ease-out;
+  &__inner {
+    color: #5081ff;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    justify-content: center;
+  }
+  &--error {
+    .wb-toast__inner {
+      color: #ff3300;
+    }
+  }
+  &--show {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  &--hide {
+    transform: translate(-50%, 0) scale(0.9);
+    opacity: 0;
+  }
+}

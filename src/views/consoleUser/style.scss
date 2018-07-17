@@ -1,0 +1,48 @@
+
+.console-user {
+  > .console-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    h1 {
+      flex: 1;
+      font-size: 20px;
+      line-height: 1.5;
+      color: #222;
+      font-weight: bold;
+    }
+  }
+  table {
+    td:nth-child(1) {
+      width: 120px;
+      text-align: center;
+    }
+    td:nth-child(3) {
+      width: 200px;
+    }
+    td:nth-child(4) {
+      width: 150px;
+      text-align: center;
+    }
+    td:nth-child(5) {
+      width: 180px;
+      text-align: center;
+    }
+    td:nth-child(6) {
+      width: 100px;
+      text-align: center;
+    }
+    td:nth-child(7) {
+      width: 100px;
+      text-align: center;
+    }
+    td:nth-child(8) {
+      width: 150px;
+      text-align: center;
+    }
+    td:last-child {
+      width: 120px;
+      text-align: center;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+
+.console-project {
+  .console-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    h1 {
+      flex: 1;
+      font-size: 20px;
+      line-height: 1.5;
+      color: #222;
+      font-weight: bold;
+    }
+  }
+  .console-list {
+    overflow: hidden;
+    > .console-row {
+      display: flex;
+      margin-bottom: 10px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      > div {
+        flex: 1;
+        margin-right: 10px;
+        height: 500px;
+        &:last-child {
+          margin-right: 0;
+        }
+        &.space {
+          padding: 1px;
+        }
+      }
+    }
+  }
+}

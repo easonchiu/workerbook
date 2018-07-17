@@ -1,0 +1,213 @@
+
+.view-group-chart {
+  .app-body {
+    display: block;
+  }
+
+  .group-chart {
+    header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      h1 {
+        font-size: 18px;
+        line-height: 20px;
+        font-weight: 700;
+        flex: 1;
+      }
+    }
+    .chart {
+      display: flex;
+      > ul {
+        margin-right: 10px;
+        font-size: 12px;
+        color: #a8b0b9;
+        display: flex;
+        flex-direction: column;
+        li {
+          flex: 1;
+          display: flex;
+          align-items: flex-end;
+        }
+      }
+    }
+    .chart-pic {
+      position: relative;
+      ul {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        li {
+          flex: 1;
+          display: flex;
+          border-top: 1px dashed #dee3e8;
+        }
+      }
+      width: 100%;
+      height: 140px;
+      text-align: center;
+      line-height: 140px;
+      border-left: 1px solid #f7f9fc - 20;
+      border-bottom: 1px solid #f7f9fc - 20;
+      color: #d0d8e1;
+      font-size: 12px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      div {
+        position: relative;
+        z-index: 2;
+        width: 20px;
+        span {
+          display: block;
+          width: 100%;
+          height: 40px;
+          background: #5081ff;
+        }
+        sub {
+          display: block;
+          width: 100%;
+          height: 10px;
+          background: #ff9900;
+        }
+        sup {
+          display: block;
+          width: 100%;
+          height: 20px;
+          background: rgb(134, 218, 115);
+        }
+      }
+    }
+    .user {
+      padding-top: 10px;
+      display: flex;
+      width: 100%;
+      span {
+        flex: 1;
+        font-size: 10px;
+        color: #a8b0b9;
+        text-align: center;
+      }
+    }
+  }
+
+  .user-chart {
+    border: 1px solid #dee3e8;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    border-radius: 4px;
+    margin-bottom: 15px;
+    padding: 15px;
+    > header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #dee3e8;
+      h2 {
+        font-size: 18px;
+        line-height: 20px;
+        font-weight: 700;
+        margin-right: 10px;
+      }
+      > span {
+        color: #a8b0b9;
+        font-size: 14px;
+      }
+      .wait {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        p {
+          color: #a8b0b9;
+          font-size: 12px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+    > .missions {
+      display: flex;
+      margin-bottom: 15px;
+      padding-left: 5px;
+      sub {
+        width: 8px;
+        height: 8px;
+        display: block;
+        background: #5081ff;
+        border-radius: 50%;
+        margin: 6px 8px 0 0;
+      }
+      .mission {
+        margin-right: 20px;
+        display: flex;
+      }
+      p {
+        font-size: 14px;
+        margin-right: 5px;
+        line-height: 20px;
+      }
+      span {
+        display: block;
+        line-height: 1.5;
+        color: #a8b0b9;
+        font-size: 12px;
+        font-weight: normal;
+        margin-right: 5px;
+      }
+    }
+    > .chart {
+      width: 100%;
+      text-align: center;
+      border: 1px solid #dee3e8;
+      color: #d0d8e1;
+      font-size: 12px;
+      .row {
+        padding: 1px;
+        height: 21px;
+        display: flex;
+        align-items: center;
+        &:not(:first-child) {
+          border-top: 1px dashed #dee3e8;
+        }
+        span {
+          display: block;
+          height: 3px;
+          position: relative;
+        }
+        sup {
+          display: block;
+          position: absolute;
+          top: -3px;
+          height: 2px;
+          background: #feb5cc;
+          right: 0;
+        }
+        sub {
+          display: block;
+          position: absolute;
+          bottom: -3px;
+          height: 2px;
+          background: #eb7350;
+          right: 0;
+        }
+      }
+    }
+    > .date {
+      padding-top: 10px;
+      display: flex;
+      width: 100%;
+      span {
+        flex: 1;
+        font-size: 10px;
+        color: #a8b0b9;
+        text-align: center;
+      }
+    }
+  }
+
+}

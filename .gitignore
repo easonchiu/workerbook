@@ -1,8 +1,9 @@
+.idea
 .sass-cache
 *.bak
 *.log
 node_modules
 .DS_Store
-workerbook/
-psd/
-test/
+dist
+.vscode
+dist
