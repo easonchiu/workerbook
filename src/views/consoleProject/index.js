@@ -20,7 +20,6 @@ class ConsoleProject extends React.PureComponent {
       projectDialogVisible: false,
       delProjectDialogVisible: false,
       delProjectDialogData: null,
-
       missionDialogVisible: false,
     }
   }

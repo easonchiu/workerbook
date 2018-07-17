@@ -37,7 +37,6 @@ export default class Event {
 
   // 新增项目提交
   onAddProjectSubmit = async data => {
-    data.deadline = new Date(2018, 11, 20)
     try {
       Loading.show()
       await this.props.$project.c_create(data)
@@ -55,7 +54,6 @@ export default class Event {
 
   // 修改项目提交
   onEditProjectSubmit = async data => {
-    data.deadline = new Date(2018, 11, 20)
     try {
       Loading.show()
       await this.props.$project.c_update(data)
@@ -83,6 +81,7 @@ export default class Event {
       Loading.show()
       const res = await this.props.$project.c_fetchOneById(data.id)
       res.departments = res.departments ? res.departments.map(i => i.id) : []
+      res.deadline = res.deadline ? new Date(res.deadline) : new Date()
       this.projectDialog && this.projectDialog.$fill(res)
       this.onOpenProjectDialog()
     }
@@ -215,7 +214,6 @@ export default class Event {
 
   // 新增任务提交
   onAddMissionSubmit = async data => {
-    data.deadline = new Date(2018, 11, 20)
     try {
       Loading.show()
       await this.props.$mission.c_create(data)
@@ -233,7 +231,6 @@ export default class Event {
 
   // 修改任务提交
   onEditMissionSubmit = async data => {
-    data.deadline = new Date(2018, 11, 20)
     try {
       Loading.show()
       await this.props.$mission.c_update(data)

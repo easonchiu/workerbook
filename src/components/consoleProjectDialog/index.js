@@ -7,15 +7,17 @@ import Err from 'src/utils/errif'
 import Button from 'src/components/button'
 import Input from 'src/components/input'
 import Select from 'src/components/select'
+import DayPicker from 'src/components/dayPicker'
 import Form from 'src/containers/form'
 import MainDialog from 'src/containers/mainDialog'
+
 
 class ConsoleProjectDialog extends React.PureComponent {
   constructor(props) {
     super(props)
     this.nilForm = {
       name: '',
-      deadline: '',
+      deadline: new Date(),
       departments: [],
       description: '',
       weight: 1,
@@ -74,6 +76,12 @@ class ConsoleProjectDialog extends React.PureComponent {
     })
   }
 
+  onDeadlineChange = e => {
+    this.setState({
+      deadline: e
+    })
+  }
+
   onFormSubmit = () => {
     Err.IfEmpty(this.state.name, '项目名称不能为空')
     Err.IfEmpty(this.state.deadline, '截至时间不能为空')
@@ -113,10 +121,9 @@ class ConsoleProjectDialog extends React.PureComponent {
           </Form.Row>
 
           <Form.Row label="截至时间">
-            <Input
-              name="deadline"
+            <DayPicker
               value={this.state.deadline}
-              onChange={this.onFormChange}
+              onChange={this.onDeadlineChange}
             />
           </Form.Row>
 
