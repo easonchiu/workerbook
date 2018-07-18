@@ -8,6 +8,7 @@ import Wrapper from 'src/containers/wrapper'
 import ProjectItem from 'src/components/projectItem'
 import MissionItem from 'src/components/missionItem'
 import AsideDialog from 'src/containers/asideDialog'
+import IconClose from 'src/components/svg/close'
 
 @VIEW
 @ComponentEvent('evt', Event)
@@ -15,7 +16,7 @@ export default class View extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      showMission: false
+      showMission: true
     }
   }
 
@@ -43,7 +44,7 @@ export default class View extends PureComponent {
                   <ProjectItem
                     key={item.id}
                     source={item}
-                    onMissionClick={this.evt.click}
+                    onAssignClick={this.evt.click}
                   />
                 ))
               }
@@ -56,16 +57,17 @@ export default class View extends PureComponent {
 
         <AsideDialog className="view-project__mission-bar" visible={this.state.showMission}>
           <div className="inner">
-            <a
-              onClick={() => {
-                this.setState({
-                  showMission: false
-                })
-              }}
-            >
-              xxx
-            </a>
-            <header><h2>世界杯活动页面开发</h2></header>
+            <header className="header">
+              <h2><span className="weight-2">重要</span>世界杯活动页面开发</h2>
+              <IconClose.A
+                onClick={() => {
+                  this.setState({
+                    showMission: false
+                  })
+                }}
+              />
+            </header>
+            <MissionItem showJoined />
             <MissionItem showJoined />
             <MissionItem showJoined />
             <MissionItem showJoined />

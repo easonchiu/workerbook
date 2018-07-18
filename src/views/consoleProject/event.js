@@ -155,7 +155,7 @@ export default class Event {
   onAddMissionClick = project => {
     if (this.missionDialog) {
       this.missionDialog.$clear()
-      this.missionDialog.$projectId(project.id)
+      this.missionDialog.$project(project)
     }
     this.onOpenMissionDialog()
   }
@@ -166,27 +166,9 @@ export default class Event {
       Loading.show()
       const res = await this.props.$mission.c_fetchOneById(data.id)
       if (this.missionDialog) {
+        res.deadline = res.deadline ? new Date(res.deadline) : new Date()
         this.missionDialog.$fill(res)
-        this.missionDialog.$projectId(project.id)
-      }
-      this.onOpenMissionDialog()
-    }
-    catch (err) {
-      Toast.error(err.message)
-    }
-    finally {
-      Loading.hide()
-    }
-  }
-
-  // 编辑任务点击
-  onEditMissionClick = async (data, project) => {
-    try {
-      Loading.show()
-      const res = await this.props.$mission.c_fetchOneById(data.id)
-      if (this.missionDialog) {
-        this.missionDialog.$fill(res)
-        this.missionDialog.$projectId(project.id)
+        this.missionDialog.$project(project)
       }
       this.onOpenMissionDialog()
     }

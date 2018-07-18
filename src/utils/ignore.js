@@ -20,7 +20,7 @@ function ignore(target, rule) {
   }
 
   if (isType(rule, 'string')) {
-    rule = [rule]
+    rule = rule.split(' ')
   }
 
   const resObject = {}

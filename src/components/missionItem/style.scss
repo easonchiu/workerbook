@@ -1,5 +1,5 @@
 
-.mission-item {
+.wb-mission-item {
   position: relative;
   width: 340px;
   height: 140px;
@@ -7,84 +7,99 @@
   border: 1px solid #dee3e8;
   background: #fff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  padding: 10px;
   > h2 {
-    color: #586069;
+    padding: 10px 80px 0 10px;
+    color: #222;
     font-size: 16px;
     font-weight: bold;
     line-height: 1.5;
     margin-bottom: 5px;
   }
-  > time, .project {
-    display: flex;
-    align-items: center;
+  > .progress {
+    width: 60px;
+    height: 4px;
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    background: #33b40030;
+    border-radius: 3px;
+    overflow: hidden;
+    span {
+      display: block;
+      width: 50%;
+      height: 100%;
+      border-radius: 3px;
+      background: #33b400;
+    }
+  }
+  > ul {
+    padding: 0 10px;
     color: #8a929b;
     font-size: 12px;
     line-height: 1.5;
+    margin-bottom: 5px;
   }
-  > time strong {
-    display: block;
+  > .description {
+    padding: 0 10px;
+    margin-bottom: 5px;
+    color: #586069;
     font-size: 12px;
-    line-height: 1;
-    padding: 4px;
-    color: #fff;
-    border-radius: 3px;
-    background: #eb7350;
-    transform: scale(0.8);
-  }
-  .progress {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    width: 40px;
-    height: 40px;
-    background: #33b400;
-    border-radius: 50%;
-    padding: 3px;
-    span {
-      display: block;
-      width: 34px;
-      height: 34px;
-      background: #fff;
-      border-radius: 50%;
-      line-height: 34px;
-      text-align: center;
-      font-size: 12px;
-      color: #33b400;
-    }
+    line-height: 1.5;
   }
   > .tools {
-    display: flex;
-    flex-wrap: nowrap;
-    position: absolute;
-    left: 10px;
-    bottom: 10px;
-    right: 10px;
+    display: block;
+    padding: 0 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
     .wb-button {
       margin-right: 5px;
+      float: left;
     }
   }
   &.show-joined {
     height: auto;
-    > time {
-      margin-bottom: 20px;
+  }
+  > .joined-list {
+    padding: 10px;
+    border-top: 1px dashed #dee3e8 + 15;
+    display: flex;
+    align-items: center;
+    .user-header {
+      margin-right: 5px;
     }
-    .tools {
-      position: static;
-      margin-bottom: 10px;
+    .more {
+      font-size: 12px;
+      color: #586069 + 100;
+      flex: 1;
     }
-    .joined-list {
-      padding-top: 10px;
-      border-top: 1px dashed #dee3e8;
-      display: flex;
-      align-items: center;
-      .user-header {
-        margin-right: 5px;
-      }
-      .more {
-        font-size: 12px;
-        color: #586069 + 100;
-        flex: 1;
+  }
+  > .footer {
+    border-top: 1px solid #dee3e8;
+    background: #f7f9fc;
+    padding: 0 10px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    overflow: hidden;
+    span {
+      color: #8a929b;
+      font-size: 12px;
+      line-height: 36px;
+      padding-right: 4px;
+      float: left;
+    }
+    p {
+      float: left;
+      color: #a8b0b9;
+      font-size: 12px;
+      line-height: 36px;
+    }
+    a {
+      float: right;
+      color: #a8b0b9;
+      font-size: 12px;
+      line-height: 36px;
+      &:hover {
+        color: #5081ff;
       }
     }
   }

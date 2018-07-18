@@ -6,6 +6,7 @@ import Toast from 'src/components/toast'
 import Err from 'src/utils/errif'
 import Button from 'src/components/button'
 import Input from 'src/components/input'
+import DayPicker from 'src/components/dayPicker'
 import Form from 'src/containers/form'
 import MainDialog from 'src/containers/mainDialog'
 
@@ -15,11 +16,12 @@ class ConsoleMissionDialog extends React.PureComponent {
     this.nilForm = {
       name: '',
       description: '',
-      deadline: '',
+      deadline: new Date(),
       id: '',
     }
     this.state = {
-      ...this.nilForm
+      ...this.nilForm,
+      projectDeadline: new Date()
     }
   }
 
@@ -29,8 +31,16 @@ class ConsoleMissionDialog extends React.PureComponent {
     })
   }
 
-  $projectId(id) {
-    this.projectId = id
+  $project(data) {
+    this.projectId = data.id
+    if (data.deadline) {
+      if (typeof data.deadline === 'string') {
+        data.deadline = new Date(data.deadline)
+      }
+      this.setState({
+        projectDeadline: data.deadline || new Date()
+      })
+    }
   }
 
   $fill(data = {}) {
@@ -53,6 +63,13 @@ class ConsoleMissionDialog extends React.PureComponent {
     })
   }
 
+  // 日期修改
+  onDeadlineChange = e => {
+    this.setState({
+      deadline: e
+    })
+  }
+
   onFormSubmit = () => {
     if (!this.projectId) {
       Toast.error('找不到相关的项目')
@@ -64,7 +81,7 @@ class ConsoleMissionDialog extends React.PureComponent {
       this.props.onSubmit && this.props.onSubmit(ignore({
         ...this.state,
         projectId: this.projectId,
-      }, 'id'))
+      }, 'id projectDeadline'))
     }
   }
 
@@ -76,10 +93,10 @@ class ConsoleMissionDialog extends React.PureComponent {
     Err.IfEmpty(this.state.name, '任务名称不能为空')
 
     if (!Err.Handle()) {
-      this.props.onEditSubmit && this.props.onEditSubmit({
+      this.props.onEditSubmit && this.props.onEditSubmit(ignore({
         ...this.state,
         projectId: this.projectId,
-      })
+      }, 'projectDeadline'))
     }
   }
 
@@ -100,11 +117,10 @@ class ConsoleMissionDialog extends React.PureComponent {
             />
           </Form.Row>
           <Form.Row label="截至时间">
-            <input
-              type="time"
-              name="deadline"
+            <DayPicker
+              end={this.state.projectDeadline}
               value={this.state.deadline}
-              onChange={this.onFormChange}
+              onChange={this.onDeadlineChange}
             />
           </Form.Row>
           <Form.Row label="任务说明">

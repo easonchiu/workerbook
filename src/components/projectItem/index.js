@@ -7,18 +7,29 @@ const ProjectItem = props => {
     return (
       <div className="item" key={data.id}>
         <h6>{data.name}</h6>
+        <div className="progress">
+          <span style={{ width: data.progress + '%' }} />
+        </div>
         {
           data.description && <p>{data.description}</p>
         }
         <span className="info">
           <time>截至时间 {(new Date(data.deadline)).format('yyyy年MM月dd日')}</time>
-          <a href="javascript:;">5人参与</a>
+          <a
+            href="javascript:;"
+            onClick={() => {
+              props.onAssignClick &&
+              props.onAssignClick(data.id)
+            }}
+          >
+            5人参与
+          </a>
         </span>
       </div>
     )
   }
   return (
-    <div className="project-item">
+    <div className="wb-project-item">
       <h2>
         {
           source.weight === 2 ?
@@ -29,6 +40,9 @@ const ProjectItem = props => {
         }
         {source.name}
       </h2>
+      <div className="progress">
+        <span style={{ width: source.progress + '%' }} />
+      </div>
       <div className="departments">
         {
           source.departments ?
@@ -41,7 +55,15 @@ const ProjectItem = props => {
       <div className="missions">
         <header className="header">
           <h5>任务列表</h5>
-          <a href="javascript:;">分配任务</a>
+          <a
+            href="javascript:;"
+            onClick={() => {
+              props.onAssignClick &&
+              props.onAssignClick()
+            }}
+          >
+            分配任务
+          </a>
         </header>
         {
           source.missions && source.missions.length ?
@@ -54,7 +76,7 @@ const ProjectItem = props => {
             <p className="empty">暂无任务</p>
         }
       </div>
-      <footer>
+      <footer className="footer">
         <span>时间周期</span>
         {new Date(source.createTime).format('yyyy年MM月dd日')}
         {' ~ '}

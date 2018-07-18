@@ -99,6 +99,7 @@
     }
   }
   &__list {
+    user-select: none;
     position: absolute;
     z-index: 999999;
     left: -1px;
@@ -112,6 +113,7 @@
     overflow: auto;
     max-height: 41 * 5px;
     li a {
+      user-select: none;
       display: block;
       line-height: 1.5;
       font-size: 14px;

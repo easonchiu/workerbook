@@ -106,24 +106,18 @@ class MissionItem extends React.PureComponent {
   }
 
   render() {
-    const css = classNames('mission-item', {
+    const css = classNames('wb-mission-item', {
       'show-joined': this.props.showJoined
     })
     return (
       <div className={css}>
         <h2>前端页面开发</h2>
-        <p className="project">所属项目：世界杯活动页面开发</p>
-        {
-          !this.props.showJoined ?
-            <time>执行周期：3天<strong>剩余1天</strong></time> :
-            null
-        }
-        <time>截至时间：2018年 3月3日</time>
-        <div className="tools">
-          <Button mini light onClick={this.showProjectRule}>项目说明</Button>
-          <Button mini light onClick={this.showMissionRule}>任务说明</Button>
+        <div className="progress">
+          <span style={{ width: 40 + '%' }} />
         </div>
-        <div className="progress"><span>45</span></div>
+        <p className="description">
+          世界杯活动页面开发世界杯活动页面开发世界杯活动页面开发世界杯活动页面开发世界杯活动页面开发
+        </p>
         {
           this.props.showJoined ?
             <div className="joined-list">
@@ -141,6 +135,10 @@ class MissionItem extends React.PureComponent {
             </div> :
             null
         }
+        <footer className="footer">
+          <span>截至时间</span>
+          <p>2018年 3月3日</p>
+        </footer>
         {this.renderProjectRule()}
         {this.renderMissionRule()}
       </div>
