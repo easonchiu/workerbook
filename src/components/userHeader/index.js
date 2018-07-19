@@ -3,6 +3,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 
+import Tips from 'src/components/tips'
+
 const UserHeader = props => {
   let { name } = props
   let isBig = false
@@ -33,17 +35,18 @@ const UserHeader = props => {
 
   const colorful = props.colorful || props.to
 
-  const css = classNames('user-header', props.className, {
-    'user-header--mini': props.mini,
-    'user-header--big-font': isBig,
-    [`user-header--color-${color}`]: colorful
+  const css = classNames('wb-user-header', props.className, {
+    'mini': props.mini,
+    'big-font': isBig,
+    [`color-${color}`]: colorful
   })
 
   if (props.to) {
     return (
       <Link className={css} to={props.to}>
-        <p><span /><em>{props.name}</em></p>
-        {name}
+        <Tips tips={props.name}>
+          {name}
+        </Tips>
       </Link>
     )
   }

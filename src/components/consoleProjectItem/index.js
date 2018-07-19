@@ -52,7 +52,7 @@ const ProjectItem = props => {
             data.description && <p>{data.description}</p>
           }
           <span className="info">
-            <time>截至时间 {(new Date(data.deadline)).format('yyyy年MM月dd日')}</time>
+            <time>截至时间 {(new Date(data.deadline)).format('yyyy年 MM月dd日')}</time>
             {renderMisstionTools(data)}
           </span>
         </div>
@@ -71,7 +71,7 @@ const ProjectItem = props => {
         </header>
         {
           source.missions && source.missions.length ?
-            <div className="list">
+            <div className="list scroller">
               {
                 source.missions.map(item => <Item key={item.id} {...item} />)
               }

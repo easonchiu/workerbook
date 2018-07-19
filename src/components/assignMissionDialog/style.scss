@@ -1,0 +1,149 @@
+.wb-dialog-assign-mission {
+  .inner {
+    width: 418px;
+    height: 100%;
+    position: relative;
+    > .header {
+      padding: 15px;
+      display: block;
+      position: relative;
+      border-bottom: 1px solid #dee3e8;
+      background: #f7f9fc;
+      h2 {
+        font-size: 18px;
+        line-height: 30px;
+        font-weight: 700;
+        padding-right: 40px;
+        span {
+          display: block;
+          float: left;
+          border-radius: 50px;
+          margin: 5px 5px 0 0;
+          color: #fff;
+          font-size: 12px;
+          font-weight: normal;
+          line-height: 1;
+          padding: 4px 6px;
+          &.weight-2 {
+            background: #ff9900;
+          }
+          &.weight-3 {
+            background: #ff3300;
+          }
+        }
+      }
+      a {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        display: block;
+        width: 30px;
+        height: 30px;
+        overflow: hidden;
+        &:hover svg {
+          fill: #5081ff;
+        }
+      }
+      svg {
+        display: block;
+        width: 14px;
+        height: 14px;
+        margin: 8px 0 8px 16px;
+        fill: #586069;
+      }
+    }
+    .mission-info {
+      position: relative;
+      > h2 {
+        padding: 15px 80px 0 15px;
+        color: #222;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 1.5;
+        margin-bottom: 5px;
+      }
+      > .progress {
+        width: 60px;
+        height: 4px;
+        position: absolute;
+        right: 15px;
+        top: 20px;
+        background: #33b40030;
+        border-radius: 3px;
+        overflow: hidden;
+        span {
+          display: block;
+          width: 50%;
+          height: 100%;
+          border-radius: 3px;
+          background: #33b400;
+        }
+      }
+      > .description {
+        padding: 0 15px;
+        margin-bottom: 10px;
+        color: #586069;
+        font-size: 14px;
+        line-height: 1.5;
+        text-align: justify;
+      }
+      > .joined-list {
+        padding: 15px 7px 7px 15px;
+        border-top: 1px dashed #dee3e8 + 15;
+        .wb-user-header {
+          width: 36px;
+          height: 36px;
+          margin: 0 8px 8px 0;
+          float: left;
+        }
+        .assign {
+          width: 36px;
+          height: 36px;
+          background: #5081ff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 12px;
+          color: #fff;
+          border-radius: 50%;
+          float: left;
+          margin: 0 8px 8px 0;
+          &:hover {
+            background: #5081ff - 10;
+          }
+          svg {
+            width: 16px;
+            height: 16px;
+            fill: #fff;
+          }
+        }
+      }
+      > .footer {
+        border-top: 1px solid #f7f9fc - 8;
+        border-bottom: 1px solid #f7f9fc - 8;
+        background: #f7f9fc;
+        padding: 0 15px;
+        overflow: hidden;
+        p {
+          float: left;
+          color: #a8b0b9;
+          font-size: 12px;
+          line-height: 36px;
+          &:last-child {
+            float: right;
+          }
+          span {
+            color: #8a929b;
+            padding-right: 4px;
+          }
+        }
+      }
+    }
+    > .wb-user-select {
+      position: absolute;
+      left: 61px;
+      top: 220px;
+      z-index: 99;
+    }
+  }
+}

@@ -128,3 +128,16 @@ a {
     visibility: visible;
   }
 }
+
+.scroller {
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #dee3e8;
+  }
+  &::-webkit-scrollbar-track {
+    background: #fff;
+    border-left: 1px solid #dee3e8;
+  }
+}

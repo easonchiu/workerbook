@@ -1,73 +1,79 @@
 import './style'
 import React from 'react'
+import classNames from 'classnames'
 
-const ProjectItem = props => {
-  const source = props.source || {}
-  const Item = data => {
-    return (
-      <div className="item" key={data.id}>
-        <h6>{data.name}</h6>
-        <div className="progress">
-          <span style={{ width: data.progress + '%' }} />
-        </div>
-        {
-          data.description && <p>{data.description}</p>
-        }
-        <span className="info">
-          <time>截至时间 {(new Date(data.deadline)).format('yyyy年MM月dd日')}</time>
-          <a
-            href="javascript:;"
-            onClick={() => {
-              props.onAssignClick &&
-              props.onAssignClick(data.id)
-            }}
-          >
-            5人参与
-          </a>
-        </span>
-      </div>
-    )
+import IconDescription from 'src/components/svg/description'
+import IconClose from 'src/components/svg/close'
+
+class ProjectItem extends React.PureComponent {
+  constructor(props) {
+    super(props)
+    this.state = {
+      showDesc: false,
+      showDescAni: false,
+    }
   }
-  return (
-    <div className="wb-project-item">
-      <h2>
-        {
-          source.weight === 2 ?
-            <span className="weight-2">重要</span> :
-            source.weight === 3 ?
-              <span className="weight-3">紧急</span> :
-              null
-        }
-        {source.name}
-      </h2>
-      <div className="progress">
-        <span style={{ width: source.progress + '%' }} />
-      </div>
-      <div className="departments">
-        {
-          source.departments ?
-            source.departments.map(item => (
-              <em key={item.id}>{item.name}</em>
-            )) :
-            null
-        }
-      </div>
+
+  onToggleDescClick = () => {
+    clearTimeout(this.t)
+    if (!this.state.showDesc) {
+      this.setState({
+        showDesc: true,
+      })
+      this.t = setTimeout(() => {
+        this.setState({
+          showDescAni: true,
+        })
+      })
+    }
+    else {
+      this.setState({
+        showDescAni: false,
+      })
+      this.t = setTimeout(() => {
+        this.setState({
+          showDesc: false,
+        })
+      }, 300)
+    }
+  }
+
+  renderMissions() {
+    const { props } = this
+    const source = props.source || {}
+
+    const Item = data => {
+      return (
+        <div
+          className="item"
+          key={data.id}
+          onClick={() => {
+            props.onAssignClick &&
+            props.onAssignClick(data.id)
+          }}
+        >
+          <h6>{data.name}</h6>
+          <div className="progress">
+            <span style={{ width: data.progress + '%' }} />
+          </div>
+          {
+            data.description && <p>{data.description}</p>
+          }
+          <span className="info">
+            <time>截至时间 {(new Date(data.deadline)).format('yyyy年 MM月dd日')}</time>
+          </span>
+        </div>
+      )
+    }
+
+    return (
       <div className="missions">
         <header className="header">
           <h5>任务列表</h5>
-          <a
-            href="javascript:;"
-            onClick={() => {
-              props.onAssignClick &&
-              props.onAssignClick()
-            }}
-          >
-            分配任务
-          </a>
         </header>
         {
           source.missions && source.missions.length ?
-            <div className="list">
+            <div className="list scroller">
               {
                 source.missions.map(item => <Item key={item.id} {...item} />)
               }
@@ -76,13 +82,73 @@ const ProjectItem = props => {
             <p className="empty">暂无任务</p>
         }
       </div>
-      <footer className="footer">
-        <span>时间周期</span>
-        {new Date(source.createTime).format('yyyy年MM月dd日')}
-        {' ~ '}
-        {new Date(source.deadline).format('yyyy年MM月dd日')}
-      </footer>
-    </div>
-  )
+    )
+  }
+
+  render() {
+    const { props } = this
+    const source = props.source || {}
+
+    return (
+      <div className="wb-project-item">
+        <h2>
+          {
+            source.weight === 2 ?
+              <span className="weight-2">重要</span> :
+              source.weight === 3 ?
+                <span className="weight-3">紧急</span> :
+                null
+          }
+          {source.name}
+        </h2>
+        <div className="progress">
+          <span style={{ width: source.progress + '%' }} />
+        </div>
+        <div className="departments">
+          {
+            source.departments ?
+              source.departments.map(item => (
+                <em key={item.id}>{item.name}</em>
+              )) :
+              null
+          }
+        </div>
+
+        {this.renderMissions()}
+
+        {
+          this.state.showDesc ?
+            <div
+              className={classNames('description', {
+                'ani-in': this.state.showDescAni
+              })}
+            >
+              <div className="desc-inner">
+                <h3>项目说明</h3>
+                <IconClose.A onClick={this.onToggleDescClick} />
+                {
+                  source.description ?
+                    <p>{source.description}</p> :
+                    <p className="empty">暂无说明</p>
+                }
+              </div>
+              <div className="desc-bg" onClick={this.onToggleDescClick} />
+            </div> :
+            null
+        }
+
+        <footer className="footer">
+          <p>
+            <span>时间周期</span>
+            {new Date(source.createTime).format('yyyy年 MM月dd日')}
+            {' ~ '}
+            {new Date(source.deadline).format('yyyy年 MM月dd日')}
+          </p>
+          <IconDescription.A onClick={this.onToggleDescClick} />
+        </footer>
+      </div>
+    )
+  }
 }
+
 export default ProjectItem

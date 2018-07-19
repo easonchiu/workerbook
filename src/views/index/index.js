@@ -9,7 +9,7 @@ import Wrapper from 'src/containers/wrapper'
 import AsideDepartmentList from 'src/containers/asideDepartmentList'
 import AsideUserList from 'src/containers/asideUserList'
 
-import MissionItem from 'src/components/missionItem'
+import MissionItem from 'src/components/homeMissionItem'
 import MyDailyWriter from 'src/components/myDailyWriter'
 import MainDailyList from 'src/containers/mainDailyList'
 

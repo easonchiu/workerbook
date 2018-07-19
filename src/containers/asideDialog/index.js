@@ -33,6 +33,7 @@ class AsideDialog extends React.PureComponent {
       <Dialog
         visible={this.props.visible}
         className={this.props.className}
+        onBgClick={this.props.onBgClick}
         onStatusChange={this.onStatusChange}
       >
         <div className={innerCss}>

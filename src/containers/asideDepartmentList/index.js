@@ -19,7 +19,7 @@ const Item = props => {
 
 const AsideDepartmentList = props => {
   const { data = {}, active, itemClick = () => {} } = props
-  const { list, skip, limit, count } = data
+  const { list = [], skip = 0, limit = 0, count = 0 } = data
   return (
     <AsidePanel
       title="部门"

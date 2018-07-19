@@ -1,0 +1,112 @@
+
+.wb-user-select {
+  border-radius: 3px;
+  border: 1px solid #dee3e8;
+  background: #fff;
+  box-shadow: 0 10px 15px rgba(0, 39, 61, 0.05);
+  overflow: hidden;
+  width: 252px;
+  > .header {
+    padding: 10px 10px 0 10px;
+    display: flex;
+    align-items: center;
+    h2 {
+      flex: 1;
+      font-weight: bold;
+      font-size: 14px;
+      color: #222;
+      line-height: 1.5;
+    }
+    a {
+      display: block;
+      width: 19px;
+      height: 19px;
+      svg {
+        display: block;
+        width: 11px;
+        height: 11px;
+        margin: 4px;
+        fill: #a8b0b9;
+      }
+      &:hover svg {
+        fill: #5081ff;
+      }
+    }
+  }
+  > ul {
+    padding: 0 10px;
+    li {
+      display: flex;
+      user-select: none;
+      align-items: center;
+      position: relative;
+      cursor: pointer;
+      padding: 10px 0;
+      border-bottom: 1px dashed #edf2f7;
+      &:last-child {
+        border-bottom: none;
+      }
+      > sup {
+        display: block;
+        width: 16px;
+        height: 16px;
+        background: #dee3e8;
+        border-radius: 50%;
+        margin-right: 10px;
+        svg {
+          display: block;
+          width: 10px;
+          height: 10px;
+          fill: #fff;
+          margin: 3px;
+        }
+        &.checked {
+          background: #33b400;
+        }
+      }
+      > .wb-user-header {
+        margin-right: 10px;
+        width: 40px;
+        height: 40px;
+      }
+      > p {
+        font-size: 14px;
+        color: #586069;
+        line-height: 20px;
+        flex: 1;
+        span {
+          display: block;
+          font-size: 12px;
+          color: #a8b0b9;
+          line-height: 20px;
+        }
+      }
+      &:hover {
+        .wb-user-header, p {
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+  .footer {
+    border-top: 1px solid #dee3e8;
+    background: #f7f9fc;
+    padding: 5px 10px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    overflow: hidden;
+    p {
+      float: left;
+      color: #a8b0b9;
+      font-size: 12px;
+      line-height: 24px;
+      span {
+        color: #8a929b;
+        padding: 0 4px;
+      }
+    }
+    .wb-button {
+      float: right;
+    }
+  }
+}

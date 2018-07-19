@@ -16,13 +16,13 @@ export default class Event {
 
   click = () => {
     this.setState({
-      showMission: true
+      assignMissionDialogVisible: true
     })
   }
 
   hide = () => {
     this.setState({
-      showMission: false
+      assignMissionDialogVisible: false
     })
   }
 

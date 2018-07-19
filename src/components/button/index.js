@@ -7,6 +7,7 @@ const Button = props => {
     mini: props.mini,
     light: props.light && !props.danger,
     danger: props.danger,
+    disabled: props.disabled,
   }, props.className)
 
   return (
