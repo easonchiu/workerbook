@@ -76,20 +76,35 @@
     flex: 1;
     > .header {
       border-bottom: 1px solid #dee3e8 + 15;
-      padding: 8px 10px;
+      padding: 2px 10px;
       background: #f7f9fc;
       overflow: hidden;
       h5 {
         font-size: 12px;
         color: #8a929b;
         float: left;
+        line-height: 24px;
       }
       a {
         float: right;
+        display: flex;
+        align-items: center;
         font-size: 12px;
+        line-height: 1;
         color: #8a929b;
+        overflow: hidden;
+        height: 24px;
         &:hover {
           color: #5081ff;
+          svg {
+            fill: #5081ff;
+          }
+        }
+        svg {
+          width: 10px;
+          height: 10px;
+          fill: #a8b0b9;
+          margin-right: 3px;
         }
       }
     }
@@ -100,13 +115,31 @@
         border-bottom: 1px solid #dee3e8 + 15;
         padding: 10px;
         position: relative;
+        display: flex;
+        align-items: center;
+        user-select: none;
         cursor: pointer;
         &:hover {
           background: #f7f9fc;
-          .info a {
-            display: block;
-          }
         }
+      }
+      .progress {
+        width: 40px;
+        top: 19px;
+        background: #33b40030;
+        span {
+          background: #33b400;
+        }
+      }
+      .wb-user-header {
+        margin-right: 10px;
+        width: 40px;
+        height: 40px;
+      }
+      .info {
+        display: block;
+        overflow: hidden;
+        flex: 1;
         h6 {
           font-size: 14px;
           font-weight: bold;
@@ -116,51 +149,15 @@
           margin-bottom: 2px;
           padding-right: 50px;
         }
-        h6:before {
-          content: '';
-          display: inline-block;
-          width: 8px;
-          height: 8px;
-          margin-right: 5px;
-          position: relative;
-          top: -1px;
-          background: #c7b3ff;
-          border-radius: 50%;
-        }
-        .progress {
-          width: 40px;
-          top: 19px;
-          background: #33b40030;
-          span {
-            background: #33b400;
-          }
-        }
-        p {
-          display: block;
-          color: #586069;
-          font-size: 14px;
-          line-height: 1.5;
-        }
-      }
-      .info {
-        display: block;
-        overflow: hidden;
-        time, a {
+        time {
           display: block;
           color: #a8b0b9;
           font-size: 12px;
           line-height: 1.5;
           float: left;
         }
-        a {
-          float: right;
-          display: none;
-          &:hover {
-            color: #5081ff;
-          }
-        }
       }
-      > p {
+      p.tips {
         text-align: center;
         line-height: 40px;
         font-size: 12px;
@@ -215,7 +212,7 @@
       > h3 {
         font-size: 14px;
         color: #222;
-        border-bottom: 1px dashed #f7f9fc - 8;
+        border-bottom: 1px dashed #dee3e8 + 15;
         line-height: 1.5;
         font-weight: bold;
         padding-bottom: 5px;

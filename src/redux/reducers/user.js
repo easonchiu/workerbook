@@ -8,7 +8,8 @@ const initialState = {
     count: 0,
     skip: 0,
     limit: 0,
-  }
+  },
+  subList: [], // 下属列表
 }
 
 export default handleActions({
@@ -28,6 +29,12 @@ export default handleActions({
     return {
       ...state,
       profile: action.payload,
+    }
+  },
+  USER_SUB_LIST(state, action) {
+    return {
+      ...state,
+      subList: action.payload.list || [],
     }
   }
 }, initialState)

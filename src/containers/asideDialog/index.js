@@ -14,7 +14,7 @@ class AsideDialog extends React.PureComponent {
         this.setState({
           visible: true
         })
-      })
+      }, 10)
     }
   }
 

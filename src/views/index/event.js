@@ -1,65 +1,29 @@
-export default class Event {
+import fetcher from 'src/utils/fetcher'
 
+export default class Event {
   // 获取首页需要的数据
   fetchData = async () => {
-    try {
-      await Promise.all([
-        this.props.$user.fetchProfile(),
-        // this.props.$user.fetchMyTodayDaily(),
-        // this.props.$daily.fetchListByDay(),
-        // this.props.$department.fetchList({
-        //   skip: 0,
-        //   limit: 5,
-        // }),
-        // this.props.$user.fetchList(),
-        // this.props.$project.fetchList({
-        //   status: 1
-        // }),
-      ])
-    }
-    catch (err) {
-      console.error(err)
-      alert(err.message)
-    }
-  }
-
-  // 更新数据
-  reload = async () => {
-    try {
-      await Promise.all([
-        // this.props.$user.fetchMyTodayDaily(),
-        // this.props.$daily.fetchListByDay(),
-      ])
-    }
-    catch (err) {
-      console.error(err)
-      alert(err.message)
-    }
+    await fetcher.all([
+      this.props.$user.fetchProfile,
+      [this.props.$department.fetchList, {
+        skip: 0,
+        limit: 5,
+      }]
+    ])
   }
 
   // 侧栏分组翻页
   groupPageChange = async page => {
-    try {
-      const { limit } = this.props.department$.departments
-      await this.props.$department.fetchList({
-        skip: (page - 1) * limit,
-        limit
-      })
-    }
-    catch (err) {
-      alert(err.message)
-    }
+    const { limit } = this.props.department$.departments
+    await fetcher.one(this.props.$department.fetchList, {
+      skip: (page - 1) * limit,
+      limit
+    })
   }
 
   // 侧栏分组点击
   groupClick = async gid => {
-    try {
-      await this.props.$user.fetchList({ gid })
-    }
-    catch (err) {
-      console.error(err)
-      alert(err.message)
-    }
+    await fetcher.one(this.props.$user.fetchList, { gid })
   }
 
   // 侧栏项目点击

@@ -15,7 +15,7 @@ const c_create = payload => async () => {
 // update department
 const c_update = payload => async () => {
   const res = await http.request({
-    url: '/console/departments/' + payload.id,
+    url: '/console/departments/id/' + payload.id,
     method: 'PUT',
     data: ignore(payload, 'id'),
   })
@@ -47,7 +47,7 @@ const c_fetchSelectList = () => async dispatch => {
 // fetch department one by id
 const c_fetchOneById = id => async dispatch => {
   const res = await http.request({
-    url: '/console/departments/' + id,
+    url: '/console/departments/id/' + id,
     method: 'GET',
   })
   return res
@@ -56,10 +56,23 @@ const c_fetchOneById = id => async dispatch => {
 // delete department
 const c_del = id => async dispatch => {
   const res = await http.request({
-    url: '/console/departments/' + id,
+    url: '/console/departments/id/' + id,
     method: 'DELETE',
   })
   return res
+}
+
+// fetch departments list.
+const fetchList = ({ skip = 0, limit = 10 } = {}) => async dispatch => {
+  const res = await http.request({
+    url: '/departments',
+    method: 'GET',
+    params: {
+      skip,
+      limit,
+    }
+  })
+  dispatch(createAction('DEPARTMENT_LIST')(res))
 }
 
 export default {
@@ -69,4 +82,6 @@ export default {
   c_create,
   c_del,
   c_fetchSelectList,
+
+  fetchList,
 }

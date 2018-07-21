@@ -14,31 +14,35 @@ const UserHeader = props => {
     // 全部为英文的名字，如果超过6个字母，只保留首字母，使用大号字体
     name = name.substr(0, 1).toUpperCase()
     isBig = true
-  } else if ((/\./i).test(name)) {
+  }
+  else if ((/\./i).test(name)) {
     // 如果有点，取点前半段，同样如果超过6个字母，保留首字母，使用大号字体
     name = name.split('.')[0]
     if (name.length > maxLen) {
       name = name.substr(0, 1).toUpperCase()
       isBig = true
     }
-  } else if (!(/([a-z]+)/gi).test(name)) {
+  }
+  else if (!(/([a-z]+)/gi).test(name)) {
     // 如果非英文名，则认为包含中文等其他，超过3个字，取名，否则取姓
     if (name.length >= 3) {
       name = name.substr(-2)
-    } else if (name.length === 1) {
+    }
+    else if (name.length === 1) {
       isBig = true
     }
   }
 
-  let color = props.userId ? props.userId.toString().replace(/\D/g, '') : 0
-  color = color ? color % 6 : 0
+  let color = props.id ? props.id.toString().replace(/\D/g, '') : 0
+  color = color ? (color - 0) % 6 : 0
 
   const colorful = props.colorful || props.to
 
   const css = classNames('wb-user-header', props.className, {
     'mini': props.mini,
     'big-font': isBig,
-    [`color-${color}`]: colorful
+    [`color-${color}`]: colorful,
+    'colorful': colorful,
   })
 
   if (props.to) {

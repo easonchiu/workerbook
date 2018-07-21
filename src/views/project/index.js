@@ -6,6 +6,7 @@ import Event from './event'
 
 import Wrapper from 'src/containers/wrapper'
 import ProjectItem from 'src/components/projectItem'
+import MissionDetailDialog from 'src/components/missionDetailDialog'
 import AssignMissionDialog from 'src/components/assignMissionDialog'
 
 @VIEW
@@ -14,7 +15,10 @@ export default class View extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      assignMissionDialogVisible: true
+      missionDetailDialogVisible: false,
+      missionDetailDialogDate: null,
+
+      assignMissionDialogVisible: false,
     }
   }
 
@@ -22,9 +26,23 @@ export default class View extends PureComponent {
     this.evt.fetchData()
   }
 
+  renderAssignMissionDialog() {
+    const { subList: users } = this.props.user$
+    return (
+      <AssignMissionDialog
+        ref={r => { this.assignMissionDialog = r }}
+        visible={this.state.assignMissionDialogVisible}
+        users={users}
+        onClose={this.evt.onCloseAssignMissionDialog}
+        onSubmit={this.evt.onAssignMissionSubmit}
+        onEditSubmit={this.evt.onEditAssignMissionSubmit}
+      />
+    )
+  }
+
   render(props, state) {
-    const { profile } = this.props.user$
-    const { projects } = this.props.project$
+    const { profile } = props.user$
+    const { projects } = props.project$
 
     return (
       <div className="view-project">
@@ -42,7 +60,8 @@ export default class View extends PureComponent {
                   <ProjectItem
                     key={item.id}
                     source={item}
-                    onAssignClick={this.evt.click}
+                    onAddAssignMissionClick={this.evt.onAddAssignMissionClick}
+                    onMissionClick={this.evt.onMissionClick}
                   />
                 ))
               }
@@ -53,10 +72,14 @@ export default class View extends PureComponent {
 
         <Wrapper.Footer />
 
-        <AssignMissionDialog
-          visible={this.state.assignMissionDialogVisible}
-          onCloseClick={this.evt.hide}
+        <MissionDetailDialog
+          source={state.missionDetailDialogDate}
+          visible={state.missionDetailDialogVisible}
+          onEditClick={this.evt.onEditAssignMissionClick}
+          onCloseClick={this.evt.onCloseMissionDetailDialog}
         />
+
+        {this.renderAssignMissionDialog()}
 
       </div>
     )

@@ -17,7 +17,7 @@ const c_create = payload => async () => {
 // update user
 const c_update = payload => async () => {
   const res = await http.request({
-    url: '/console/users/' + payload.id,
+    url: '/console/users/id/' + payload.id,
     method: 'PUT',
     data: ignore(payload, 'id'),
   })
@@ -41,7 +41,7 @@ const c_fetchList = ({ departmentId, skip, limit = 10 } = {}) => async dispatch 
 // fetch user one by id
 const c_fetchOneById = id => async dispatch => {
   const res = await http.request({
-    url: '/console/users/' + id,
+    url: '/console/users/id/' + id,
     method: 'GET',
   })
   return res
@@ -50,7 +50,7 @@ const c_fetchOneById = id => async dispatch => {
 // delete user
 const c_del = id => async dispatch => {
   const res = await http.request({
-    url: '/console/users/' + id,
+    url: '/console/users/id/' + id,
     method: 'DELETE',
   })
   return res
@@ -79,6 +79,15 @@ const fetchProfile = () => async (dispatch, getState) => {
   dispatch(createAction('USER_PROFILE')(res))
 }
 
+// fetch users list.
+const fetchSubList = () => async dispatch => {
+  const res = await http.request({
+    url: '/users/subordinate',
+    method: 'GET',
+  })
+  dispatch(createAction('USER_SUB_LIST')(res))
+}
+
 export default {
   login,
   fetchProfile,
@@ -87,4 +96,6 @@ export default {
   c_fetchList,
   c_fetchOneById,
   c_update,
+
+  fetchSubList,
 }

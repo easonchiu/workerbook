@@ -82,7 +82,7 @@ class ConsoleDepartment extends React.PureComponent {
     ))
     return (
       <div className="console-department">
-        <header>
+        <header className="console-header">
           <h1>部门管理</h1>
           <Button onClick={this.evt.onAddDepartmentClick}>添加</Button>
         </header>

@@ -1,11 +1,11 @@
-import { createAction } from 'easy-action'
+// import { createAction } from 'easy-action'
 import http from 'src/utils/http'
 import ignore from 'src/utils/ignore'
 
 // create mission
-const c_create = payload => async () => {
+const create = payload => async () => {
   const res = await http.request({
-    url: '/console/missions',
+    url: '/missions',
     method: 'POST',
     data: payload
   })
@@ -13,41 +13,26 @@ const c_create = payload => async () => {
 }
 
 // update mission
-const c_update = payload => async () => {
+const update = payload => async () => {
   const res = await http.request({
-    url: '/console/missions/' + payload.id,
+    url: '/missions/id/' + payload.id,
     method: 'PUT',
     data: ignore(payload, 'id'),
   })
   return res
 }
 
-// fetch mission list.
-const c_fetchList = ({ status, skip, limit } = {}) => async dispatch => {
-  const res = await http.request({
-    url: '/console/missions',
-    method: 'GET',
-    params: {
-      status,
-      skip,
-      limit,
-    }
-  })
-  dispatch(createAction('C_MISSION_LIST')(res))
-}
-
 // fetch mission one by id
-const c_fetchOneById = id => async dispatch => {
+const fetchOneById = id => async dispatch => {
   const res = await http.request({
-    url: '/console/missions/' + id,
+    url: '/missions/id/' + id,
     method: 'GET',
   })
   return res
 }
 
 export default {
-  c_create,
-  c_fetchList,
-  c_fetchOneById,
-  c_update,
+  create,
+  update,
+  fetchOneById,
 }

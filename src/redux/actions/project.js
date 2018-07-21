@@ -15,7 +15,7 @@ const c_create = payload => async () => {
 // update project
 const c_update = payload => async () => {
   const res = await http.request({
-    url: '/console/projects/' + payload.id,
+    url: '/console/projects/id/' + payload.id,
     method: 'PUT',
     data: ignore(payload, 'id'),
   })
@@ -23,10 +23,14 @@ const c_update = payload => async () => {
 }
 
 // fetch project list.
-const c_fetchList = ({ status } = {}) => async dispatch => {
+const c_fetchList = ({ skip = 0, limit = 10 } = {}) => async dispatch => {
   const res = await http.request({
     url: '/console/projects',
     method: 'GET',
+    params: {
+      skip,
+      limit,
+    }
   })
   dispatch(createAction('C_PROJECT_LIST')(res))
 }
@@ -34,7 +38,7 @@ const c_fetchList = ({ status } = {}) => async dispatch => {
 // fetch project one by id
 const c_fetchOneById = id => async dispatch => {
   const res = await http.request({
-    url: '/console/projects/' + id,
+    url: '/console/projects/id/' + id,
     method: 'GET',
   })
   return res
@@ -43,7 +47,7 @@ const c_fetchOneById = id => async dispatch => {
 // delete project
 const c_del = id => async dispatch => {
   const res = await http.request({
-    url: '/console/projects/' + id,
+    url: '/console/projects/id/' + id,
     method: 'DELETE',
   })
   return res

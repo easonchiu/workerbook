@@ -1,17 +1,5 @@
 
 .console-user {
-  > .console-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    h1 {
-      flex: 1;
-      font-size: 20px;
-      line-height: 1.5;
-      color: #222;
-      font-weight: bold;
-    }
-  }
   table {
     td:nth-child(1) {
       width: 120px;

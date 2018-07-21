@@ -4,6 +4,8 @@ import classNames from 'classnames'
 
 import IconDescription from 'src/components/svg/description'
 import IconClose from 'src/components/svg/close'
+import IconAdd from 'src/components/svg/add'
+import UserHeader from 'src/components/userHeader'
 
 class ProjectItem extends React.PureComponent {
   constructor(props) {
@@ -43,25 +45,24 @@ class ProjectItem extends React.PureComponent {
     const source = props.source || {}
 
     const Item = data => {
+      const user = data ? data.user ? data.user : {} : {}
       return (
         <div
           className="item"
           key={data.id}
           onClick={() => {
-            props.onAssignClick &&
-            props.onAssignClick(data.id)
+            props.onMissionClick &&
+            props.onMissionClick(data.id, source)
           }}
         >
-          <h6>{data.name}</h6>
+          <UserHeader name={user.nickname} id={user.id} mini colorful />
+          <div className="info">
+            <h6>{data.name}</h6>
+            <time>截至时间 {(new Date(data.deadline)).format('yyyy年 MM月dd日')}</time>
+          </div>
           <div className="progress">
             <span style={{ width: data.progress + '%' }} />
           </div>
-          {
-            data.description && <p>{data.description}</p>
-          }
-          <span className="info">
-            <time>截至时间 {(new Date(data.deadline)).format('yyyy年 MM月dd日')}</time>
-          </span>
         </div>
       )
     }
@@ -70,6 +71,15 @@ class ProjectItem extends React.PureComponent {
       <div className="missions">
         <header className="header">
           <h5>任务列表</h5>
+          <a
+            href="javascript:;"
+            onClick={() => {
+              props.onAddAssignMissionClick &&
+              props.onAddAssignMissionClick(source)
+            }}
+          >
+            <IconAdd />添加
+          </a>
         </header>
         {
           source.missions && source.missions.length ?
@@ -77,7 +87,7 @@ class ProjectItem extends React.PureComponent {
               {
                 source.missions.map(item => <Item key={item.id} {...item} />)
               }
-              <p>共{source.missions.length + '个'}任务</p>
+              <p className="tips">共{source.missions.length + '个'}任务</p>
             </div> :
             <p className="empty">暂无任务</p>
         }

@@ -1,33 +1,20 @@
 import Toast from 'src/components/toast'
-import Loading from 'src/components/loading'
+import fetcher from 'src/utils/fetcher'
 
 export default class Event {
   fetchData = async (pager = 1) => {
-    try {
-      Loading.show()
-      await Promise.all([
-        this.props.$project.c_fetchList({
-          skip: pager * 9 - 9,
-          limit: 9
-        })
-      ])
-    }
-    catch (err) {
-      Toast.error(err.message)
-    }
-    finally {
-      Loading.hide()
-    }
+    await fetcher.one(this.props.$project.c_fetchList, {
+      skip: pager * 30 - 30,
+      limit: 30,
+    })
   }
 
-  // 获取所有部门信息
-  fetchDepartments = async () => {
-    try {
-      await this.props.$department.c_fetchSelectList()
-    }
-    catch (err) {
-      Toast.error(err.message)
-    }
+  // 获取所有部门信息 / 获取可分配任务的用户列表
+  fetchOtherData = async () => {
+    await fetcher.all([
+      this.props.$department.c_fetchSelectList,
+      this.props.$user.fetchSubList,
+    ])
   }
 
   // 翻页
@@ -37,36 +24,18 @@ export default class Event {
 
   // 新增项目提交
   onAddProjectSubmit = async data => {
-    try {
-      Loading.show()
-      await this.props.$project.c_create(data)
-      this.onCloseProjectDialog()
-      await this.fetchData()
-      Toast.success('添加成功')
-    }
-    catch (err) {
-      Toast.error(err.message)
-    }
-    finally {
-      Loading.hide()
-    }
+    await fetcher.one(this.props.$project.c_create, data)
+    this.onCloseProjectDialog()
+    await this.fetchData()
+    Toast.success('添加成功')
   }
 
   // 修改项目提交
   onEditProjectSubmit = async data => {
-    try {
-      Loading.show()
-      await this.props.$project.c_update(data)
-      this.onCloseProjectDialog()
-      await this.fetchData()
-      Toast.success('修改成功')
-    }
-    catch (err) {
-      Toast.error(err.message)
-    }
-    finally {
-      Loading.hide()
-    }
+    await fetcher.one(this.props.$project.c_update, data)
+    this.onCloseProjectDialog()
+    await this.fetchData()
+    Toast.success('修改成功')
   }
 
   // 项目添加按钮点击
@@ -77,20 +46,11 @@ export default class Event {
 
   // 项目编辑按钮点击
   onEditProjectClick = async data => {
-    try {
-      Loading.show()
-      const res = await this.props.$project.c_fetchOneById(data.id)
-      res.departments = res.departments ? res.departments.map(i => i.id) : []
-      res.deadline = res.deadline ? new Date(res.deadline) : new Date()
-      this.projectDialog && this.projectDialog.$fill(res)
-      this.onOpenProjectDialog()
-    }
-    catch (err) {
-      Toast.error(err.message)
-    }
-    finally {
-      Loading.hide()
-    }
+    const res = await fetcher.one(await this.props.$project.c_fetchOneById, data.id)
+    res.departments = res.departments ? res.departments.map(i => i.id) : []
+    res.deadline = res.deadline ? new Date(res.deadline) : new Date()
+    this.projectDialog && this.projectDialog.$fill(res)
+    this.onOpenProjectDialog()
   }
 
   // 项目删除按钮点击
@@ -116,19 +76,10 @@ export default class Event {
   // 确定删除项目
   onDelProjectSubmit = async data => {
     if (data && data.id) {
-      try {
-        Loading.show()
-        await this.props.$project.c_del(data.id)
-        await this.fetchData()
-        this.onCloseDelProjectDialog()
-        Toast.success('删除成功')
-      }
-      catch (err) {
-        Toast.error(err.message)
-      }
-      finally {
-        Loading.hide()
-      }
+      await fetcher.one(this.props.$project.c_del, data.id)
+      await this.fetchData()
+      this.onCloseDelProjectDialog()
+      Toast.success('删除成功')
     }
     else {
       Toast.error('系统错误')
@@ -148,84 +99,4 @@ export default class Event {
       projectDialogVisible: false
     })
   }
-
-  // ------------任务-------------
-
-  // 添加任务按钮点击
-  onAddMissionClick = project => {
-    if (this.missionDialog) {
-      this.missionDialog.$clear()
-      this.missionDialog.$project(project)
-    }
-    this.onOpenMissionDialog()
-  }
-
-  // 编辑任务点击
-  onEditMissionClick = async (data, project) => {
-    try {
-      Loading.show()
-      const res = await this.props.$mission.c_fetchOneById(data.id)
-      if (this.missionDialog) {
-        res.deadline = res.deadline ? new Date(res.deadline) : new Date()
-        this.missionDialog.$fill(res)
-        this.missionDialog.$project(project)
-      }
-      this.onOpenMissionDialog()
-    }
-    catch (err) {
-      Toast.error(err.message)
-    }
-    finally {
-      Loading.hide()
-    }
-  }
-
-  // 打开任务弹层
-  onOpenMissionDialog = () => {
-    this.setState({
-      missionDialogVisible: true
-    })
-  }
-
-  // 关闭任务弹层
-  onCloseMissionDialog = () => {
-    this.setState({
-      missionDialogVisible: false
-    })
-  }
-
-  // 新增任务提交
-  onAddMissionSubmit = async data => {
-    try {
-      Loading.show()
-      await this.props.$mission.c_create(data)
-      this.onCloseMissionDialog()
-      await this.fetchData()
-      Toast.success('添加成功')
-    }
-    catch (err) {
-      Toast.error(err.message)
-    }
-    finally {
-      Loading.hide()
-    }
-  }
-
-  // 修改任务提交
-  onEditMissionSubmit = async data => {
-    try {
-      Loading.show()
-      await this.props.$mission.c_update(data)
-      this.onCloseMissionDialog()
-      await this.fetchData()
-      Toast.success('修改成功')
-    }
-    catch (err) {
-      Toast.error(err.message)
-    }
-    finally {
-      Loading.hide()
-    }
-  }
-
 }

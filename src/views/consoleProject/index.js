@@ -5,11 +5,11 @@ import ComponentEvent from 'src/hoc/componentEvent'
 import Event from './event'
 
 import Button from 'src/components/button'
-import ProjectItem from 'src/components/consoleProjectItem'
 import Pager from 'src/components/pager'
 import ConsoleProjectDialog from 'src/components/consoleProjectDialog'
-import ConsoleMissionDialog from 'src/components/consoleMissionDialog'
 import ConsoleDeleteDialog from 'src/components/consoleDeleteDialog'
+import IconRewrite from 'src/components/svg/rewrite'
+import IconDelete from 'src/components/svg/delete'
 
 @VIEW
 @ComponentEvent('evt', Event)
@@ -20,13 +20,12 @@ class ConsoleProject extends React.PureComponent {
       projectDialogVisible: false,
       delProjectDialogVisible: false,
       delProjectDialogData: null,
-      missionDialogVisible: false,
     }
   }
 
   componentDidMount() {
     this.evt.fetchData()
-    this.evt.fetchDepartments()
+    this.evt.fetchOtherData()
   }
 
   renderProjectDialog() {
@@ -56,55 +55,63 @@ class ConsoleProject extends React.PureComponent {
     )
   }
 
-  renderMissionDialog() {
-    return (
-      <ConsoleMissionDialog
-        ref={r => { this.missionDialog = r }}
-        visible={this.state.missionDialogVisible}
-        onClose={this.evt.onCloseMissionDialog}
-        onSubmit={this.evt.onAddMissionSubmit}
-        onEditSubmit={this.evt.onEditMissionSubmit}
-      />
-    )
-  }
-
   render() {
     const { c_projects: projects } = this.props.project$
-    const row = []
-    for (let i = 0; i < projects.list.length; i += 4) {
-      row.push(
-        <div className="console-row" key={i}>
+    const header = (
+      <tr>
+        <td>编号</td>
+        <td>名称</td>
+        <td>任务数</td>
+        <td>进度</td>
+        <td>截至时间</td>
+        <td>创建时间</td>
+        <td>操作</td>
+      </tr>
+    )
+    const body = projects.list.map((res, i) => (
+      <tr key={res.id}>
+        <td>{projects.skip + i + 1}</td>
+        <td>
           {
-            [0, 1, 2, 3].map(j => {
-              const item = projects.list[i + j]
-              if (item) {
-                return (
-                  <ProjectItem
-                    key={j}
-                    onAddMissionClick={this.evt.onAddMissionClick}
-                    onEditMissionClick={this.evt.onEditMissionClick}
-                    onDelMissionClick={this.evt.onDelMissionClick}
-                    onEditProjectClick={this.evt.onEditProjectClick}
-                    onDelProjectClick={this.evt.onDelProjectClick}
-                    source={item}
-                  />
-                )
-              }
-              return <div className="space" key={j} />
-            })
+            res.weight === 2 ?
+              <span className="weight-2">重要</span> :
+              res.weight === 3 ?
+                <span className="weight-3">紧急</span> :
+                null
           }
-        </div>
-      )
-    }
+          {res.name}
+        </td>
+        <td>{res.missions ? res.missions.length : '-'}</td>
+        <td>
+          <span className="progress-text">{res.progress} %</span>
+          {
+            <div className="progress">
+              <span style={{ width: res.progress + '%' }} />
+            </div>
+          }
+        </td>
+        <td>{new Date(res.deadline).format('yyyy-MM-dd hh:mm')}</td>
+        <td>{new Date(res.createTime).format('yyyy-MM-dd hh:mm')}</td>
+        <td className="c">
+          <IconRewrite.A
+            onClick={() => this.evt.onEditProjectClick(res)}
+          />
+          <IconDelete.A
+            onClick={() => this.evt.onDelProjectClick(res)}
+          />
+        </td>
+      </tr>
+    ))
     return (
       <div className="console-project">
         <header className="console-header">
           <h1>项目管理</h1>
           <Button onClick={this.evt.onAddProjectClick}>添加</Button>
         </header>
-        <div className="console-list">
-          {row}
-        </div>
+        <table className="console-table">
+          <thead>{header}</thead>
+          <tbody>{body}</tbody>
+        </table>
         <Pager
           current={projects.skip / projects.limit + 1}
           max={Math.ceil(projects.count / projects.limit)}
@@ -112,7 +119,6 @@ class ConsoleProject extends React.PureComponent {
         />
         {this.renderProjectDialog()}
         {this.renderDelProjectDialog()}
-        {this.renderMissionDialog()}
       </div>
     )
   }

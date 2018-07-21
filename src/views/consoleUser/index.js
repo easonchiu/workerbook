@@ -86,7 +86,7 @@ class ConsoleUser extends React.PureComponent {
         <td>{users.skip + i + 1}</td>
         <td>{res.nickname}</td>
         <td>{res.username}</td>
-        <td>{res.departmentName}</td>
+        <td>{res.department ? res.department.name : ''}</td>
         <td>{res.title}</td>
         <td>{roles[res.role]}</td>
         <td>{status[res.status]}</td>

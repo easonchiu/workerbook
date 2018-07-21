@@ -1,60 +1,175 @@
 import './style'
 import React from 'react'
-import AsideDialog from 'src/containers/asideDialog'
-import IconClose from 'src/components/svg/close'
-import IconAdd from 'src/components/svg/add'
-import UserHeader from 'src/components/userHeader'
-import UserSelect from 'src/components/userSelect'
+import ignore from 'src/utils/ignore'
 
-const Mission = props => {
-  return (
-    <div className="mission-info">
-      <h2>前端页面开发</h2>
-      <div className="progress">
-        <span style={{ width: 40 + '%' }} />
-      </div>
-      <p className="description">
-        世界杯活动页面开发世界杯活动页面开发世界杯活动页面开发世界杯活动页面开发世界杯活动页面开发
-      </p>
-      <div className="joined-list clearfix">
-        <UserHeader name="Eason.Chiu" mini to="/" />
-        <UserHeader name="牛哥牛哥" mini to="/" />
-        <UserHeader name="张小三" mini to="/" />
-        <UserHeader name="李四" mini to="/" />
-        <UserHeader name="龙五" mini to="/" />
-        <UserHeader name="Eason.Chiu" mini to="/" />
-        <UserHeader name="牛哥牛哥" mini to="/" />
-        <UserHeader name="张小三" mini to="/" />
-        <UserHeader name="张小三" mini to="/" />
-        <UserHeader name="李四" mini to="/" />
-        <UserHeader name="龙五" mini to="/" />
-        <IconAdd.A className="assign" />
-      </div>
-      <footer className="footer">
-        <p><span>参与人数</span>3人</p>
-        <p><span>截至时间</span>2018年 3月3日</p>
-      </footer>
-    </div>
-  )
-}
+import Toast from 'src/components/toast'
+import Err from 'src/utils/errif'
+import Button from 'src/components/button'
+import Input from 'src/components/input'
+import DayPicker from 'src/components/dayPicker'
+import Form from 'src/containers/form'
+import MainDialog from 'src/containers/mainDialog'
+import Select from 'src/components/select'
 
-const AssignMissionDialog = props => {
-  return (
-    <AsideDialog
-      className="wb-dialog-assign-mission"
-      visible={props.visible}
-      onBgClick={props.onCloseClick}
-    >
-      <div className="inner">
-        <header className="header">
-          <h2><span className="weight-2">重要</span>世界杯活动页面开发</h2>
-          <IconClose.A onClick={props.onCloseClick} />
-        </header>
-        <Mission />
-        {/* <UserSelect /> */}
-      </div>
-    </AsideDialog>
-  )
+class AssignMissionDialog extends React.PureComponent {
+  constructor(props) {
+    super(props)
+    this.nilForm = {
+      name: '',
+      userId: '',
+      deadline: new Date(),
+      id: '',
+    }
+    this.state = {
+      ...this.nilForm,
+      projectDeadline: new Date()
+    }
+  }
+
+  $clear() {
+    this.setState({
+      ...this.nilForm
+    })
+  }
+
+  $project(data) {
+    this.projectId = data.id
+    if (data.deadline) {
+      if (typeof data.deadline === 'string') {
+        data.deadline = new Date(data.deadline)
+      }
+      this.setState({
+        projectDeadline: data.deadline || new Date()
+      })
+    }
+  }
+
+  $fill(data = {}) {
+    const d = {}
+    Object.keys(this.nilForm).forEach(i => {
+      if (typeof data[i] !== 'undefined') {
+        d[i] = data[i]
+      }
+    })
+    this.setState({
+      ...d
+    })
+  }
+
+  // 表单字段修改
+  onFormChange = e => {
+    const key = e.target.name
+    this.setState({
+      [key]: e.target.value
+    })
+  }
+
+  // 日期修改
+  onDeadlineChange = e => {
+    this.setState({
+      deadline: e
+    })
+  }
+
+  // 执行人修改
+  onUserChange = e => {
+    this.setState({
+      userId: e
+    })
+  }
+
+  onFormSubmit = () => {
+    if (!this.projectId) {
+      Toast.error('找不到相关的项目')
+      return
+    }
+    Err.IfEmpty(this.state.name, '任务名称不能为空')
+    Err.IfEmpty(this.state.userId, '执行人不能为空')
+
+    if (!Err.Handle()) {
+      this.props.onSubmit && this.props.onSubmit(ignore({
+        ...this.state,
+        projectId: this.projectId,
+      }, 'id projectDeadline'))
+    }
+  }
+
+  onFormEditSubmit = () => {
+    if (!this.projectId) {
+      Toast.error('找不到相关的项目')
+      return
+    }
+    Err.IfEmpty(this.state.name, '任务名称不能为空')
+    Err.IfEmpty(this.state.userId, '执行人不能为空')
+
+    if (!Err.Handle()) {
+      this.props.onEditSubmit && this.props.onEditSubmit(ignore({
+        ...this.state,
+        projectId: this.projectId,
+      }, 'projectDeadline'))
+    }
+  }
+
+  renderDialog() {
+    const select = this.props.users || []
+    return (
+      <MainDialog
+        className="wb-dialog-assign-mission"
+        title={this.state.id ? '修改任务' : '添加任务'}
+        visible={this.props.visible}
+        onClose={this.props.onClose}
+      >
+        <Form>
+          <Form.Row label="任务名称">
+            <Input
+              name="name"
+              value={this.state.name}
+              onChange={this.onFormChange}
+            />
+          </Form.Row>
+
+          <Form.Row label="执行人">
+            <Select
+              value={this.state.userId}
+              onClick={this.onUserChange}
+            >
+              {
+                select.map(item => (
+                  <Select.Option key={item.id} value={item.id}>
+                    {item.nickname}
+                  </Select.Option>
+                ))
+              }
+            </Select>
+          </Form.Row>
+
+          <Form.Row label="截至时间">
+            <DayPicker
+              end={this.state.projectDeadline}
+              value={this.state.deadline}
+              onChange={this.onDeadlineChange}
+            />
+          </Form.Row>
+
+          <Form.Row>
+            {
+              this.state.id ?
+                <Button onClick={this.onFormEditSubmit}>
+                  修改
+                </Button> :
+                <Button onClick={this.onFormSubmit}>
+                  提交
+                </Button>
+            }
+          </Form.Row>
+        </Form>
+      </MainDialog>
+    )
+  }
+
+  render() {
+    return this.renderDialog()
+  }
 }
 
 export default AssignMissionDialog

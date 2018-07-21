@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 
 const Header = props => {
-  const { profile, nav } = props
+  let { profile, nav } = props
+  profile = profile || {}
+  const department = profile.department || {}
   return (
     <header className="wb-header">
       <div className="wb-header__inner">
@@ -18,7 +20,7 @@ const Header = props => {
         </nav>
         <div className="profile">
           <h6>晚上好：{profile.nickname}</h6>
-          <p>{profile.title}@{profile.departmentName}</p>
+          <p>{profile.title}@{department.name}</p>
           <span>
             <a href="javascript:;">修改密码</a>
             <a href="javascript:;">退出帐号</a>

@@ -26,7 +26,7 @@ class Toast {
 
     setTimeout(function () {
       toast.classList.add('wb-toast--show')
-    })
+    }, 10)
 
     setTimeout(() => {
       this.hide(true, toast.id)

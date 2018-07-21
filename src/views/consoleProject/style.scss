@@ -1,36 +1,65 @@
 
 .console-project {
-  .console-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    h1 {
-      flex: 1;
-      font-size: 20px;
-      line-height: 1.5;
-      color: #222;
-      font-weight: bold;
+  .progress {
+    height: 4px;
+    border-radius: 3px;
+    background: #5081ff30;
+    overflow: hidden;
+    span {
+      display: block;
+      height: 100%;
+      background: #5081ff;
     }
   }
-  .console-list {
-    overflow: hidden;
-    > .console-row {
-      display: flex;
-      margin-bottom: 10px;
-      &:last-child {
-        margin-bottom: 0;
-      }
-      > div {
-        flex: 1;
-        margin-right: 10px;
-        height: 500px;
-        &:last-child {
-          margin-right: 0;
-        }
-        &.space {
-          padding: 1px;
-        }
-      }
+  .weight-2, .weight-3 {
+    display: inline-block;
+    border-radius: 50px;
+    margin: 0 5px 0 0;
+    position: relative;
+    top: -1px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1;
+    padding: 4px 6px;
+    background: #ff9900;
+  }
+  .weight-3 {
+    background: #ff3300;
+  }
+  .progress-text {
+    font-size: 12px;
+    color: #a8b0b9;
+    line-height: 1;
+    position: relative;
+    display: block;
+    text-align: left;
+    margin-bottom: 2px;
+  }
+  table {
+    td:nth-child(1) {
+      width: 120px;
+      text-align: center;
+    }
+    td:nth-child(3) {
+      width: 120px;
+      text-align: center;
+    }
+    td:nth-child(4) {
+      width: 120px;
+      text-align: center;
+    }
+    td:nth-child(5) {
+      width: 150px;
+      text-align: center;
+    }
+    td:nth-child(6) {
+      width: 150px;
+      text-align: center;
+    }
+    td:last-child {
+      width: 120px;
+      text-align: center;
     }
   }
 }

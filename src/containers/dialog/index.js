@@ -16,7 +16,7 @@ class Dialog extends React.PureComponent {
         this.setState({
           ani: 'in'
         })
-      })
+      }, 10)
     }
 
     this.el = document.getElementById('wb_dialogs')
@@ -48,20 +48,22 @@ class Dialog extends React.PureComponent {
 
   componentDidUpdate(pp, ps) {
     if (!ps.visible && this.state.visible) {
-      setTimeout(() => {
+      clearTimeout(this.t)
+      this.t = setTimeout(() => {
         this.setState({
           ani: 'in'
         })
         this.props.onStatusChange && this.props.onStatusChange(true)
-      })
+      }, 10)
     }
     else if (ps.ani === 'in' && this.state.ani === 'out') {
       this.props.onStatusChange && this.props.onStatusChange(false)
-      setTimeout(() => {
+      clearTimeout(this.t)
+      this.t = setTimeout(() => {
         this.setState({
           visible: false
         })
-      }, 250)
+      }, 230)
     }
   }
 
