@@ -55,7 +55,13 @@ class ProjectItem extends React.PureComponent {
             props.onMissionClick(data.id, source)
           }}
         >
-          <UserHeader name={user.nickname} id={user.id} mini colorful />
+          <UserHeader
+            mini
+            id={user.id}
+            name={user.nickname}
+            self={user.id === props.userId}
+            status={!user.exist ? 99 : user.status}
+          />
           <div className="info">
             <h6>{data.name}</h6>
             <time>截至时间 {(new Date(data.deadline)).format('yyyy年 MM月dd日')}</time>

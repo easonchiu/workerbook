@@ -7,7 +7,6 @@ export default class Event {
     await fetcher.all([
       this.props.$user.fetchProfile,
       this.props.$project.fetchList,
-      this.props.$user.fetchSubList,
     ])
   }
 
@@ -42,7 +41,8 @@ export default class Event {
   }
 
   // 添加任务按钮点击
-  onAddAssignMissionClick = project => {
+  onAddAssignMissionClick = async project => {
+    await fetcher.one(this.props.$user.fetchSubList, project.id)
     if (this.assignMissionDialog) {
       this.assignMissionDialog.$clear()
       this.assignMissionDialog.$project(project)
@@ -52,12 +52,17 @@ export default class Event {
 
   // 编辑任务点击
   onEditAssignMissionClick = async data => {
-    const res = await fetcher.one(this.props.$mission.fetchOneById, data.id)
+    const project = data.project || {}
+    const res = await fetcher.all([
+      [this.props.$mission.fetchOneById, data.id],
+      [this.props.$user.fetchSubList, project.id]
+    ])
     if (this.assignMissionDialog) {
-      res.deadline = res.deadline ? new Date(res.deadline) : new Date()
-      res.userId = res.user ? res.user.id : ''
-      this.assignMissionDialog.$fill(res)
-      this.assignMissionDialog.$project(data.project)
+      const mission = res[0]
+      mission.deadline = mission.deadline ? new Date(mission.deadline) : new Date()
+      mission.userId = mission.user ? mission.user.id : ''
+      this.assignMissionDialog.$fill(mission)
+      this.assignMissionDialog.$project(project)
     }
     this.onOpenAssignMissionDialog()
   }

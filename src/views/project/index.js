@@ -60,6 +60,7 @@ export default class View extends PureComponent {
                   <ProjectItem
                     key={item.id}
                     source={item}
+                    userId={profile.id}
                     onAddAssignMissionClick={this.evt.onAddAssignMissionClick}
                     onMissionClick={this.evt.onMissionClick}
                   />

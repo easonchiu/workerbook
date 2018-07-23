@@ -6,7 +6,8 @@ import classNames from 'classnames'
 import Tips from 'src/components/tips'
 
 const UserHeader = props => {
-  let { name } = props
+  // status: 1 正常 2 停用 99 已被删除
+  let { name, status, self } = props
   let isBig = false
   let maxLen = props.mini ? 2 : 6
 
@@ -36,20 +37,33 @@ const UserHeader = props => {
   let color = props.id ? props.id.toString().replace(/\D/g, '') : 0
   color = color ? (color - 0) % 6 : 0
 
-  const colorful = props.colorful || props.to
-
-  const css = classNames('wb-user-header', props.className, {
+  const css = classNames('wb-user-header', [`color-${color}`], props.className, {
     'mini': props.mini,
     'big-font': isBig,
-    [`color-${color}`]: colorful,
-    'colorful': colorful,
   })
+
+  let st = null
+
+  if (!self) {
+    st = status === 99 ?
+      <span className="del" /> :
+      status === 2 ?
+        <span className="stop" /> :
+        null
+  }
+  else {
+    st = <span className="self" />
+  }
+
+  const stText = status === 99 ?
+    ' [已删除]' : status === 2 ? ' [停用]' : ''
 
   if (props.to) {
     return (
       <Link className={css} to={props.to}>
-        <Tips tips={props.name}>
+        <Tips tips={props.name + stText}>
           {name}
+          {st}
         </Tips>
       </Link>
     )
@@ -58,6 +72,7 @@ const UserHeader = props => {
   return (
     <div className={css}>
       {name}
+      {st}
     </div>
   )
 }

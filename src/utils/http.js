@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { clearToken } from 'src/utils/token'
+import { getToken, clearToken } from 'src/utils/token'
 
 // type an error
 function HttpError(message, data) {
@@ -37,7 +37,7 @@ const http = axios.create({
  * 请求拦截器，在发起请求之前
  */
 http.interceptors.request.use(config => {
-  const token = '5b4315467179e585bf2005c4' // getToken()
+  const token = getToken()
   if (token) {
     config.headers.authorization = 'Bearer ' + token
   }

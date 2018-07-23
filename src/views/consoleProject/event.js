@@ -11,10 +11,7 @@ export default class Event {
 
   // 获取所有部门信息 / 获取可分配任务的用户列表
   fetchOtherData = async () => {
-    await fetcher.all([
-      this.props.$department.c_fetchSelectList,
-      this.props.$user.fetchSubList,
-    ])
+    await fetcher.one(this.props.$department.c_fetchSelectList)
   }
 
   // 翻页

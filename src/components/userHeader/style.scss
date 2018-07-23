@@ -30,24 +30,44 @@
     align-items: center;
     justify-content: center;
   }
+
+  .del, .stop, .self {
+    display: block;
+    width: 10px;
+    height: 10px;
+    background: #ff3300;
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+  }
+
+  .stop {
+    background: #ff9900;
+  }
+
+  .self {
+    background: #5081ff;
+  }
 }
 
-.wb-user-header.color-0.colorful {
+.wb-user-header.color-0 {
   background: #feb5cc;
 }
-.wb-user-header.color-1.colorful {
+.wb-user-header.color-1 {
   background: #c7b3ff;
 }
-.wb-user-header.color-2.colorful {
+.wb-user-header.color-2 {
   background: #68e4b1;
 }
-.wb-user-header.color-3.colorful {
+.wb-user-header.color-3 {
   background: #a8e26f;
 }
-.wb-user-header.color-4.colorful {
+.wb-user-header.color-4 {
   background: #82c6f1;
 }
-.wb-user-header.color-5.colorful {
+.wb-user-header.color-5 {
   background: #f8b981;
 }
 

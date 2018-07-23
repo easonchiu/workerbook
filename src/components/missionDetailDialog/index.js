@@ -10,6 +10,9 @@ const MissionDetailDialog = props => {
   source = source || {}
   const project = source.project || {}
   const user = source.user || {}
+  const stText = !user.exist ?
+    <em className="del">[已删除]</em> :
+    user.status === 2 ? <em className="stop">[停用]</em> : ''
 
   const renderMission = () => (
     <div className="mission-info">
@@ -17,11 +20,20 @@ const MissionDetailDialog = props => {
       <div className="progress">
         <span style={{ width: (source.progress || 0) + '%' }} />
       </div>
-      <time><span>截至时间</span> {new Date(source.deadline).format('yyyy年 MM月dd日')}</time>
+      <time>
+        <span>截至时间</span> {new Date(source.deadline).format('yyyy年 MM月dd日')}
+      </time>
       <div className="user">
-        <UserHeader name={user.nickname || ''} colorful mini to="/" />
+        <UserHeader
+          to="/"
+          mini
+          colorful
+          name={user.nickname || ''}
+          id={user.id}
+          status={!user.exist ? 99 : user.status}
+        />
         <div className="info">
-          <p>{user.nickname}</p>
+          <p>{user.nickname}{stText}</p>
           <span>{user.title}</span>
         </div>
       </div>

@@ -111,6 +111,14 @@
             color: #a8b0b9;
             line-height: 1.2;
           }
+          em {
+            font-size: 12px;
+            margin-left: 5px;
+            color: #ff6600;
+            &.del {
+              color: #ff3300;
+            }
+          }
         }
       }
       > .edit {

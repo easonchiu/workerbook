@@ -80,10 +80,13 @@ const fetchProfile = () => async (dispatch, getState) => {
 }
 
 // fetch users list.
-const fetchSubList = () => async dispatch => {
+const fetchSubList = projectId => async dispatch => {
   const res = await http.request({
     url: '/users/subordinate',
     method: 'GET',
+    params: {
+      projectId
+    },
   })
   dispatch(createAction('USER_SUB_LIST')(res))
 }

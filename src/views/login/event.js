@@ -1,4 +1,5 @@
 import { setToken } from 'src/utils/token'
+import fetcher from 'src/utils/fetcher'
 
 export default class Event {
 
@@ -20,7 +21,7 @@ export default class Event {
   onSubmit = async e => {
     e.preventDefault()
     try {
-      const token = await this.props.$user.login({
+      const token = await fetcher.one(this.props.$user.login, {
         username: this.state.username,
         password: this.state.password,
       })
@@ -28,8 +29,12 @@ export default class Event {
       this.props.history.push('/')
     }
     catch (err) {
-      alert(err.message)
+      this.setState({
+        username: '',
+        password: '',
+      })
     }
+
   }
 
 }
