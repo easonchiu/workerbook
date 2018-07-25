@@ -1,24 +1,42 @@
 @charset "utf-8";
 
 .view-index {
-  .mission-bar {
-    header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 15px;
-      h1 {
-        font-size: 18px;
-        line-height: 20px;
-        font-weight: 700;
-        flex: 1;
+  > .header-missions {
+    background: #fff;
+    padding: 20px 0 20px;
+    margin: 0 -1600px 20px -1600px;
+    border-bottom: 1px solid #dee3e8;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    > .inner {
+      width: 1130px;
+      margin: 0 auto;
+      > header {
+        margin-bottom: 15px;
+        h1 {
+          font-size: 18px;
+          line-height: 20px;
+          font-weight: 700;
+        }
+      }
+      .list {
+        margin-right: -10px;
+        display: flex;
+        > div {
+          margin-right: 10px;
+        }
       }
     }
-    .list {
-      margin-right: -10px;
-      display: flex;
-      > div {
-        margin-right: 10px;
-      }
+  }
+
+  .body {
+    > .main {
+      width: 810px;
+      margin-right: 15px;
+      float: left;
+    }
+    > .aside {
+      width: 305px;
+      float: left;
     }
   }
 }

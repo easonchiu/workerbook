@@ -7,8 +7,8 @@ import UserHeader from 'src/components/userHeader'
 const AsideUserList = props => {
   const { list, isAll } = props
   return (
-    <AsidePanel title={isAll ? '全部成员' : '部门成员'} className="aside-user-list">
-      <div className="user-list clearfix">
+    <AsidePanel title={isAll ? '全部成员' : '部门成员'} className="wb-aside-user-list">
+      <div className="list clearfix">
         {
           list && list.length ?
             list.map(item => {

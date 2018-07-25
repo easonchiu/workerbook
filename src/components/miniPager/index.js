@@ -22,7 +22,7 @@ const MiniPager = props => {
   })
 
   return (
-    <div className="mini-pager">
+    <div className="wb-mini-pager">
       <a
         href="javascript:;"
         className={lcss}

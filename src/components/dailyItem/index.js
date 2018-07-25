@@ -1,33 +1,43 @@
 import './style'
 import React from 'react'
 
-const Daily = props => {
-  const { data } = props
+const DailyItem = props => {
+  // const { data } = props
+
+  // 日报列表
+  const renderDailyList = () => {
+    return (
+      <div className="daily-list">
+        <div className="item">
+          <div className="mission clearfix">
+            <span />
+            <strong>社区4.0 前端页面开发</strong>
+          </div>
+          <p>配合测试, 上传合同接口增加接收字段,车辆修改记录接口增加返回字段</p>
+          <p>配合测试, 修改车辆状态增加操作日志记录(补7月24日)</p>
+        </div>
+
+        <div className="item">
+          <div className="mission clearfix">
+            <span />
+            <strong>社区4.0 前端页面开发</strong>
+          </div>
+          <p>配合测试, 上传合同接口增加接收字段,车辆修改记录接口增加返回字段</p>
+        </div>
+
+      </div>
+    )
+  }
+
   return (
-    <section className="daily-item">
+    <section className="wb-daily-item">
       <h2>
-        <a href="javascript:;">{data.nickname}</a>
+        <a href="javascript:;">Eason.Chiu</a>
         更新于
-        {
-          data.updateTime &&
-          <time>{new Date(data.updateTime).format('hh:mm:ss')}</time>
-        }
+        <time>15:30</time>
       </h2>
-      <ul>
-        {
-          data.dailyList.map(i => (
-            <li key={i.id}>
-              <p>
-                {
-                  i.pname && <strong>{i.pname}</strong>
-                }
-                {i.record}
-              </p>
-            </li>
-          ))
-        }
-      </ul>
+      {renderDailyList()}
     </section>
   )
 }
-export default Daily
+export default DailyItem

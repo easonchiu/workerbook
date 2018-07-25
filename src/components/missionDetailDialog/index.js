@@ -63,7 +63,7 @@ const MissionDetailDialog = props => {
                   <span className="weight-3">紧急</span> :
                   null
             }
-            {project.name || '项目名称啊啊啊'}
+            {project.name}
           </h2>
           <IconClose.A onClick={props.onCloseClick} />
         </header>

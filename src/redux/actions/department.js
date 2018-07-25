@@ -1,6 +1,5 @@
 import { createAction } from 'easy-action'
 import http from 'src/utils/http'
-import ignore from 'src/utils/ignore'
 
 // create department
 const c_create = payload => async () => {
@@ -17,7 +16,7 @@ const c_update = payload => async () => {
   const res = await http.request({
     url: '/console/departments/id/' + payload.id,
     method: 'PUT',
-    data: ignore(payload, 'id'),
+    data: payload,
   })
   return res
 }

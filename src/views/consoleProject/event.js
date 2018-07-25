@@ -9,11 +9,6 @@ export default class Event {
     })
   }
 
-  // 获取所有部门信息 / 获取可分配任务的用户列表
-  fetchOtherData = async () => {
-    await fetcher.one(this.props.$department.c_fetchSelectList)
-  }
-
   // 翻页
   onPageClick = pager => {
     this.fetchData(pager)
@@ -36,14 +31,19 @@ export default class Event {
   }
 
   // 项目添加按钮点击
-  onAddProjectClick = () => {
+  onAddProjectClick = async () => {
+    await fetcher.one(this.props.$department.c_fetchSelectList)
     this.projectDialog && this.projectDialog.$clear()
     this.onOpenProjectDialog()
   }
 
   // 项目编辑按钮点击
   onEditProjectClick = async data => {
-    const res = await fetcher.one(await this.props.$project.c_fetchOneById, data.id)
+    let res = await fetcher.all([
+      [await this.props.$project.c_fetchOneById, data.id],
+      this.props.$department.c_fetchSelectList
+    ])
+    res = res[0]
     res.departments = res.departments ? res.departments.map(i => i.id) : []
     res.deadline = res.deadline ? new Date(res.deadline) : new Date()
     this.projectDialog && this.projectDialog.$fill(res)

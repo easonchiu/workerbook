@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react'
 
 import Input from 'src/components/input'
 import Button from 'src/components/button'
+import Select from 'src/components/select'
 
 class MyDailyWriter extends PureComponent {
   constructor(props) {
@@ -10,56 +11,44 @@ class MyDailyWriter extends PureComponent {
 
     this.state = {
       record: '',
-      progress: 0,
+      progress: 15,
       project: '',
     }
   }
 
   // 日报编写区 - 我已经写的日报
   renderMyDailyList() {
-    const list = this.props.myDailyList
+    // const list = this.props.myDailyList
     return (
-      <ul className="my-daily-list">
-        {
-          list && list.length ?
-            list.map(i => (
-              <li key={i.id}>
-                <div className="progress">
-                  {i.progress}
-                </div>
-                <p className="record">
-                  {
-                    i.pname ? <strong>{i.pname}</strong> : null
-                  }
-                  {i.record}
-                </p>
-                <div className="tools">
-                  <a
-                    href="javascript:;"
-                    onClick={this.editDailyClick.bind(null, i.id)}
-                  >
-                    编辑
-                  </a>
-                  <a
-                    href="javascript:;"
-                    onClick={this.deleteDailyClick.bind(null, i.id)}
-                  >
-                    删除
-                  </a>
-                </div>
-              </li>
-            )) :
-            null
-        }
-      </ul>
+      <div className="daily-list">
+        <div className="item">
+          <div className="mission clearfix">
+            <span />
+            <strong>社区4.0 前端页面开发</strong>
+          </div>
+          <p>配合测试, 上传合同接口增加接收字段,车辆修改记录接口增加返回字段</p>
+          <p>配合测试, 修改车辆状态增加操作日志记录(补7月24日)</p>
+        </div>
+
+        <div className="item">
+          <div className="mission clearfix">
+            <span />
+            <strong>社区4.0 前端页面开发</strong>
+          </div>
+          <p>配合测试, 上传合同接口增加接收字段,车辆修改记录接口增加返回字段</p>
+        </div>
+
+      </div>
     )
   }
 
   // 日报编写区 - 新建日报面板
   renderWriter() {
-    const list = this.props.projectList
+    // const list = this.props.projectList
+    const progress = '5_10_15_20_25_30_35_40_45_50_55_60_65_70_75_80_85_90_95_100'
+
     return (
-      <div className="daily-writer-box">
+      <div className="writer-box">
         <Input
           multi={true}
           className="writer-input"
@@ -68,38 +57,39 @@ class MyDailyWriter extends PureComponent {
           onChange={this.dailyWriterChange}
         />
 
-        <div className="writer-tools">
-          {
-            list && list.length ?
-              <select
-                value={this.state.project}
-                onChange={this.dailyProjectChange}
-              >
-                <option value={0}>项目归属</option>
-                {
-                  list.map(item => (
-                    <option
-                      key={item.id}
-                      value={item.id}
-                    >
-                      {item.name}
-                    </option>
-                  ))
-                }
-              </select> :
-              null
-          }
-
-          <select
-            value={this.state.progress}
-            onChange={this.progressChange}
+        <div className="tools clearfix">
+          <Select
+            value={this.state.project}
+            onChange={this.dailyProjectChange}
+            className="missions"
+            placeholder="请选择任务"
           >
-            <option value={100}>完成度 100%</option>
-            <option value={5}>完成度 5%</option>
-            <option value={10}>完成度 10%</option>
-            <option value={15}>完成度 15%</option>
-            <option value={20}>完成度 20%</option>
-          </select>
+            <Select.Option value={1}>xxx</Select.Option>
+            <Select.Option value={2}>xxx</Select.Option>
+            <Select.Option value={3}>xxx</Select.Option>
+            <Select.Option value={4}>xxx</Select.Option>
+            <Select.Option value={5}>xxx</Select.Option>
+            <Select.Option value={6}>xxx</Select.Option>
+          </Select>
+
+          <Select
+            value={this.state.progress}
+            onClick={this.progressChange}
+            className="progress"
+            placeholder="任务进度"
+          >
+            {
+              progress.split('_').map(i => (
+                <Select.Option
+                  key={i}
+                  value={i - 0}
+                  text={<p><span>任务进度</span>{i}%</p>}
+                >
+                  {i}
+                </Select.Option>
+              ))
+            }
+          </Select>
 
           <Button className="send-button" onClick={this.onAppend}>
             发布一条
@@ -156,13 +146,14 @@ class MyDailyWriter extends PureComponent {
   // 进度编辑
   progressChange = e => {
     this.setState({
-      progress: e.target.value
+      progress: e
     })
   }
 
   render() {
     return (
-      <div className="my-daily-writer">
+      <div className="wb-daily-writer">
+        <div className="icon" />
         {this.renderMyDailyList()}
         {this.renderWriter()}
       </div>

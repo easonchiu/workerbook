@@ -9,11 +9,6 @@ export default class Event {
     })
   }
 
-  // 获取所有部门信息
-  fetchDepartments = async () => {
-    await fetcher.one(this.props.$department.c_fetchSelectList)
-  }
-
   // 翻页
   onPageClick = pager => {
     this.fetchData(pager)
@@ -36,14 +31,19 @@ export default class Event {
   }
 
   // 添加按钮点击
-  onAddUserClick = () => {
+  onAddUserClick = async () => {
+    await fetcher.one(this.props.$department.c_fetchSelectList)
     this.userDialog && this.userDialog.$clear()
     this.onOpenUserDialog()
   }
 
   // 编辑按钮点击
   onEditUserClick = async data => {
-    const res = await fetcher.one(await this.props.$user.c_fetchOneById, data.id)
+    let res = await fetcher.all([
+      [await this.props.$user.c_fetchOneById, data.id],
+      this.props.$department.c_fetchSelectList
+    ])
+    res = res[0]
     res.departmentId = res.department ? res.department.id : ''
     this.userDialog && this.userDialog.$fill(res)
     this.onOpenUserDialog()

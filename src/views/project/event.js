@@ -4,10 +4,7 @@ import fetcher from 'src/utils/fetcher'
 export default class Event {
   // 获取首页需要的数据
   fetchData = async () => {
-    await fetcher.all([
-      this.props.$user.fetchProfile,
-      this.props.$project.fetchList,
-    ])
+    await fetcher.one(this.props.$project.fetchList)
   }
 
   // 打开任务详情

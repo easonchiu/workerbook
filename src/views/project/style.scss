@@ -1,24 +1,18 @@
 
 .view-project {
-  .wb-body {
-    display: block;
-    padding-top: 20px;
-  }
+  padding-top: 20px;
+
   .project-list {
     margin-bottom: 10px;
     > header {
-      display: flex;
-      align-items: center;
       margin-bottom: 15px;
       h1 {
         font-size: 18px;
         line-height: 20px;
         font-weight: 700;
-        flex: 1;
       }
     }
     > .list {
-      overflow: hidden;
       margin-right: -10px;
       > div {
         float: left;
