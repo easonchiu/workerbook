@@ -4,12 +4,10 @@ import VIEW from 'src/hoc/view'
 import ComponentEvent from 'src/hoc/componentEvent'
 import Event from './event'
 
-import Wrapper from 'src/containers/wrapper'
-
 import AsideDepartmentList from 'src/containers/asideDepartmentList'
 import AsideUserList from 'src/containers/asideUserList'
 
-import MissionItem from 'src/components/homeMissionItem'
+import MissionItem from 'src/components/missionItem'
 import MyDailyWriter from 'src/components/myDailyWriter'
 import MainDailyList from 'src/containers/mainDailyList'
 
@@ -49,14 +47,14 @@ export default class View extends PureComponent {
     return <MainDailyList list={this.props.daily$.list} />
   }
 
-  // 侧栏的分组模块
-  renderGroupList() {
+  // 侧栏的部门模块
+  renderDepartmentList() {
     return (
       <AsideDepartmentList
         data={this.props.department$.departments}
         active={this.props.user$.activeGroup}
-        itemClick={this.evt.groupClick}
-        onPageChange={this.evt.groupPageChange}
+        itemClick={this.evt.departmentClick}
+        onPageChange={this.evt.departmentPageChange}
       />
     )
   }
@@ -73,36 +71,35 @@ export default class View extends PureComponent {
   }
 
   render(props, state) {
-    const profile = this.props.user$.profile
+    // const profile = this.props.user$.profile
 
     return (
       <div className="view-index">
-        <Wrapper.Header nav="index" profile={profile} />
 
-        <Wrapper.Full className="mission-bar">
-          <header>
-            <h1>参与的任务</h1>
-          </header>
-          <div className="list">
-            <MissionItem />
-            <MissionItem />
-            <MissionItem />
+        <div className="header-missions">
+          <div className="inner">
+            <header>
+              <h1>参与的任务</h1>
+            </header>
+            <div className="list clearfix">
+              <MissionItem />
+              <MissionItem />
+              <MissionItem />
+            </div>
           </div>
-        </Wrapper.Full>
+        </div>
 
-        <Wrapper.Body>
-          <Wrapper.Body.Main>
+        <div className="body clearfix">
+          <div className="main">
             {this.renderMyDailyWriter()}
             {this.renderDailyList()}
-          </Wrapper.Body.Main>
+          </div>
 
-          <Wrapper.Body.Aside>
-            {this.renderGroupList()}
+          <div className="aside">
+            {this.renderDepartmentList()}
             {this.renderUserList()}
-          </Wrapper.Body.Aside>
-        </Wrapper.Body>
-
-        <Wrapper.Footer />
+          </div>
+        </div>
 
         <MainDialog visible={this.state.popupVisible}>
           <div

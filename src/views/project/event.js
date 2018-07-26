@@ -5,7 +5,6 @@ export default class Event {
   // 获取首页需要的数据
   fetchData = async () => {
     await fetcher.all([
-      this.props.$user.fetchProfile,
       this.props.$project.fetchList,
     ])
   }
@@ -42,7 +41,9 @@ export default class Event {
 
   // 添加任务按钮点击
   onAddAssignMissionClick = async project => {
-    await fetcher.one(this.props.$user.fetchSubList, project.id)
+    const departments = project.departments ?
+      project.departments.map(item => item.id) : []
+    await fetcher.one(this.props.$user.fetchSubList, departments)
     if (this.assignMissionDialog) {
       this.assignMissionDialog.$clear()
       this.assignMissionDialog.$project(project)
@@ -55,7 +56,7 @@ export default class Event {
     const project = data.project || {}
     const res = await fetcher.all([
       [this.props.$mission.fetchOneById, data.id],
-      [this.props.$user.fetchSubList, project.id]
+      [this.props.$user.fetchSubList, project.departments]
     ])
     if (this.assignMissionDialog) {
       const mission = res[0]

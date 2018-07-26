@@ -25,7 +25,6 @@ class ConsoleUser extends React.PureComponent {
 
   componentDidMount() {
     this.evt.fetchData()
-    this.evt.fetchDepartments()
   }
 
   // 添加用户的弹层

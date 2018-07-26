@@ -25,7 +25,6 @@ class ConsoleProject extends React.PureComponent {
 
   componentDidMount() {
     this.evt.fetchData()
-    this.evt.fetchOtherData()
   }
 
   renderProjectDialog() {

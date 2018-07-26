@@ -56,9 +56,22 @@ class Select extends React.PureComponent {
     const { props } = this
     const current = {}
 
-    const closeIcon = <svg width="128" height="128" viewBox="0 0 1024 1024"><path d={'M597.795527 511.488347 813.564755 295.718095c23.833825-23.833825 23.833825-62.47489 0.001023-86.307691-23.832801-23.832801-62.47489-23.833825-86.307691 0L511.487835 425.180656 295.717583 209.410404c-23.833825-23.833825-62.475913-23.833825-86.307691 0-23.832801 23.832801-23.833825 62.47489 0 86.308715l215.769228 215.769228L209.410915 727.258599c-23.833825 23.833825-23.833825 62.47489 0 86.307691 23.832801 23.833825 62.473867 23.833825 86.307691 0l215.768205-215.768205 215.769228 215.769228c23.834848 23.833825 62.475913 23.832801 86.308715 0 23.833825-23.833825 23.833825-62.47489 0-86.307691L597.795527 511.488347z'} /></svg>
+    const closeIcon = (
+      <svg width="128" height="128" viewBox="0 0 1024 1024">
+        <path
+          d={'M597.795527 511.488347 813.564755 295.718095c23.833825-23.833825 23.833825-62.47489 0.001023-86.307691-23.832801-23.832801-62.47489-23.833825-86.307691 0L511.487835 425.180656 295.717583 209.410404c-23.833825-23.833825-62.475913-23.833825-86.307691 0-23.832801 23.832801-23.833825 62.47489 0 86.308715l215.769228 215.769228L209.410915 727.258599c-23.833825 23.833825-23.833825 62.47489 0 86.307691 23.832801 23.833825 62.473867 23.833825 86.307691 0l215.768205-215.768205 215.769228 215.769228c23.834848 23.833825 62.475913 23.832801 86.308715 0 23.833825-23.833825 23.833825-62.47489 0-86.307691L597.795527 511.488347z'}
+        />
+      </svg>
+    )
 
-    const downIcon = <svg className="wb-select__down" width="128" height="128" viewBox="0 0 1024 1024"><path d={'M126.040 295.7c18.8-18.8 49.1-18.801 67.901 0l318 318 318-318c18.8-18.8 49.2-18.8 67.901 0 18.8 18.8 18.801 49.1 0 67.901l-352 352c-18.8 18.8-49.2 18.8-67.901 0l-352-352c-9.4-9.4-14-21.7-14-34 0.1-12.2 4.7-24.501 14.1-33.9z'} /></svg>
+    const downIcon = (
+      <svg className="wb-select__down" width="128" height="128" viewBox="0 0 1024 1024">
+        <path
+          d={'M126.040 295.7c18.8-18.8 49.1-18.801 67.901 0l318 318 318-318c18.8-18.8 49.2-18.8 67.901 0 18.8 18.8 18.801 49.1 0 67.901l-352 352c-18.8 18.8-49.2 18.8-67.901 0l-352-352c-9.4-9.4-14-21.7-14-34 0.1-12.2 4.7-24.501 14.1-33.9z'}
+        />
+      </svg>
+    )
+
     let children = this.props.children
 
     if (props.children && !Array.isArray(props.children)) {
@@ -72,14 +85,14 @@ class Select extends React.PureComponent {
         if (!Array.isArray(props.value)) {
           if (props.value === item.props.value) {
             current.value = item.props.value
-            current.text = item.props.children
+            current.text = item.props.text || item.props.children
           }
         }
         else {
           if (props.value.indexOf(item.props.value) !== -1) {
             currentValues.push({
               value: item.props.value,
-              text: item.props.children,
+              text: item.props.text || item.props.children,
             })
           }
         }
@@ -95,7 +108,7 @@ class Select extends React.PureComponent {
         value=""
         onClick={props.onClick}
       >
-        请选择
+        暂无选项
       </Option>
 
     const multiValues = props.multi && (
@@ -117,7 +130,7 @@ class Select extends React.PureComponent {
                 </span>
               )
             }) :
-            <sup>请选择</sup>
+            <sup>{props.placeholder || '请选择'}</sup>
         }
         {downIcon}
         <a className="bg" href="javascript:;" onClick={this.transVisible} />
@@ -126,7 +139,7 @@ class Select extends React.PureComponent {
 
     return (
       <div
-        className={classNames('wb-select', {
+        className={classNames('wb-select', this.props.className, {
           'wb-select--multi': props.multi,
           'wb-select--opened': this.state.visible,
         })}
@@ -140,7 +153,7 @@ class Select extends React.PureComponent {
               className="wb-select__value"
               onClick={this.transVisible}
             >
-              {current.text || <sup>请选择</sup>}
+              {current.text || <sup>{props.placeholder || '请选择'}</sup>}
               {downIcon}
             </a>
         }
@@ -166,7 +179,13 @@ const Option = props => {
     }
   }
   const active = isActive(props.value, props.current)
-  const checkIcon = <svg width="128" height="128" viewBox="0 0 1024 1024"><path d={'M913.017 237.02c-25.311-25.312-66.349-25.312-91.66 0l-412.475 412.474-206.237-206.237c-25.312-25.312-66.35-25.312-91.661 0s-25.312 66.35 0 91.66l252.067 252.067c0.729 0.73 1.439 1.402 2.134 2.029 25.434 23.257 64.913 22.585 89.527-2.029l458.303-458.303c25.313-25.312 25.313-66.35 0.001-91.661z'} /></svg>
+  const checkIcon = (
+    <svg width="128" height="128" viewBox="0 0 1024 1024">
+      <path
+        d={'M913.017 237.02c-25.311-25.312-66.349-25.312-91.66 0l-412.475 412.474-206.237-206.237c-25.312-25.312-66.35-25.312-91.661 0s-25.312 66.35 0 91.66l252.067 252.067c0.729 0.73 1.439 1.402 2.134 2.029 25.434 23.257 64.913 22.585 89.527-2.029l458.303-458.303c25.313-25.312 25.313-66.35 0.001-91.661z'}
+      />
+    </svg>
+  )
 
   return (
     <li>

@@ -4,7 +4,6 @@ import VIEW from 'src/hoc/view'
 import ComponentEvent from 'src/hoc/componentEvent'
 import Event from './event'
 
-import Wrapper from 'src/containers/wrapper'
 import ProjectItem from 'src/components/projectItem'
 import MissionDetailDialog from 'src/components/missionDetailDialog'
 import AssignMissionDialog from 'src/components/assignMissionDialog'
@@ -43,35 +42,27 @@ export default class View extends PureComponent {
   render(props, state) {
     const { profile } = props.user$
     const { projects } = props.project$
-
     return (
       <div className="view-project">
-        <Wrapper.Header nav="project" profile={profile} />
 
-        <Wrapper.Body>
-
-          <div className="project-list">
-            <header>
-              <h1>参与中的</h1>
-            </header>
-            <div className="list">
-              {
-                projects.map(item => (
-                  <ProjectItem
-                    key={item.id}
-                    source={item}
-                    userId={profile.id}
-                    onAddAssignMissionClick={this.evt.onAddAssignMissionClick}
-                    onMissionClick={this.evt.onMissionClick}
-                  />
-                ))
-              }
-            </div>
+        <div className="project-list">
+          <header>
+            <h1>参与中的</h1>
+          </header>
+          <div className="list clearfix">
+            {
+              projects.map(item => (
+                <ProjectItem
+                  key={item.id}
+                  source={item}
+                  userId={profile.id}
+                  onAddAssignMissionClick={this.evt.onAddAssignMissionClick}
+                  onMissionClick={this.evt.onMissionClick}
+                />
+              ))
+            }
           </div>
-
-        </Wrapper.Body>
-
-        <Wrapper.Footer />
+        </div>
 
         <MissionDetailDialog
           source={state.missionDetailDialogDate}

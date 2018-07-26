@@ -60,7 +60,7 @@ class ProjectItem extends React.PureComponent {
             id={user.id}
             name={user.nickname}
             self={user.id === props.userId}
-            status={!user.exist ? 99 : user.status}
+            status={user.isDelete ? 99 : user.status}
           />
           <div className="info">
             <h6>{data.name}</h6>

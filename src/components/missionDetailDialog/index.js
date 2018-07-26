@@ -10,7 +10,7 @@ const MissionDetailDialog = props => {
   source = source || {}
   const project = source.project || {}
   const user = source.user || {}
-  const stText = !user.exist ?
+  const stText = user.isDelete ?
     <em className="del">[已删除]</em> :
     user.status === 2 ? <em className="stop">[停用]</em> : ''
 
@@ -30,7 +30,7 @@ const MissionDetailDialog = props => {
           colorful
           name={user.nickname || ''}
           id={user.id}
-          status={!user.exist ? 99 : user.status}
+          status={user.isDelete ? 99 : user.status}
         />
         <div className="info">
           <p>{user.nickname}{stText}</p>
@@ -63,7 +63,7 @@ const MissionDetailDialog = props => {
                   <span className="weight-3">紧急</span> :
                   null
             }
-            {project.name || '项目名称啊啊啊'}
+            {project.name}
           </h2>
           <IconClose.A onClick={props.onCloseClick} />
         </header>

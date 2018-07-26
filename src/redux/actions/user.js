@@ -1,7 +1,6 @@
 import http from 'src/utils/http'
 import { createAction } from 'easy-action'
-import ignore from 'src/utils/ignore'
-
+import transId from 'src/utils/transId'
 
 // 管理后台相关接口
 // create user
@@ -11,17 +10,17 @@ const c_create = payload => async () => {
     method: 'POST',
     data: payload,
   })
-  return res
+  return transId(res)
 }
 
 // update user
 const c_update = payload => async () => {
   const res = await http.request({
-    url: '/console/users/id/' + payload.id,
+    url: '/console/users/' + payload.id,
     method: 'PUT',
-    data: ignore(payload, 'id'),
+    data: payload,
   })
-  return res
+  return transId(res)
 }
 
 // fetch users list.
@@ -35,25 +34,28 @@ const c_fetchList = ({ departmentId, skip, limit = 10 } = {}) => async dispatch 
       limit,
     }
   })
+  transId(res)
+  res.skip = skip
+  res.limit = limit
   dispatch(createAction('C_USER_LIST')(res))
 }
 
 // fetch user one by id
 const c_fetchOneById = id => async dispatch => {
   const res = await http.request({
-    url: '/console/users/id/' + id,
+    url: '/console/users/' + id,
     method: 'GET',
   })
-  return res
+  return transId(res)
 }
 
 // delete user
 const c_del = id => async dispatch => {
   const res = await http.request({
-    url: '/console/users/id/' + id,
+    url: '/console/users/' + id,
     method: 'DELETE',
   })
-  return res
+  return transId(res)
 }
 
 // user login
@@ -63,7 +65,7 @@ const login = payload => async () => {
     method: 'POST',
     data: payload,
   })
-  return res
+  return res.token
 }
 
 // my profile
@@ -76,18 +78,20 @@ const fetchProfile = () => async (dispatch, getState) => {
     url: '/users/profile',
     method: 'GET',
   })
+  transId(res)
   dispatch(createAction('USER_PROFILE')(res))
 }
 
 // fetch users list.
-const fetchSubList = projectId => async dispatch => {
+const fetchSubList = departments => async dispatch => {
   const res = await http.request({
-    url: '/users/subordinate',
+    url: '/users',
     method: 'GET',
     params: {
-      projectId
+      departments: departments.join(',')
     },
   })
+  transId(res)
   dispatch(createAction('USER_SUB_LIST')(res))
 }
 

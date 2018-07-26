@@ -40,6 +40,7 @@ const UserHeader = props => {
   const css = classNames('wb-user-header', [`color-${color}`], props.className, {
     'mini': props.mini,
     'big-font': isBig,
+    'gray': props.gray,
   })
 
   let st = null

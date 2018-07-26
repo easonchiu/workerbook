@@ -50,7 +50,7 @@ http.interceptors.request.use(config => {
 http.interceptors.response.use(
   config => {
     // success handle
-    if (config.status === 204 || config.data.code === 0) {
+    if (config.status === 204 || config.data.resCode === '000000') {
       return config.data.data
     }
     // need to login, token is overdue or empty
@@ -59,10 +59,10 @@ http.interceptors.response.use(
       return false
     }
     // return reject error
-    return Promise.reject(new HttpError(config.data.msg, config.code))
+    return Promise.reject(new HttpError(config.data.resMsg, config.resCode))
   },
   error => {
-    return Promise.reject(new HttpError(error.response.data.msg || '系统错误', error.response.data.code))
+    return Promise.reject(new HttpError(error.response.data.resMsg || '系统错误', error.response.data.resCode))
   }
 )
 

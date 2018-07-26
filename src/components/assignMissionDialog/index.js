@@ -9,6 +9,7 @@ import Input from 'src/components/input'
 import DayPicker from 'src/components/dayPicker'
 import Form from 'src/containers/form'
 import MainDialog from 'src/containers/mainDialog'
+import UserHeader from 'src/components/userHeader'
 import Select from 'src/components/select'
 
 class AssignMissionDialog extends React.PureComponent {
@@ -132,13 +133,17 @@ class AssignMissionDialog extends React.PureComponent {
             <Select
               value={this.state.userId}
               onClick={this.onUserChange}
+              className="user-select"
             >
               {
-                select.map(item => (
-                  <Select.Option key={item.id} value={item.id}>
-                    {item.nickname}
-                  </Select.Option>
-                ))
+                select && select.length ?
+                  select.map(item => (
+                    <Select.Option key={item.id} value={item.id} text={item.nickname}>
+                      <UserHeader mini name={item.nickname} id={item.id} />
+                      <p>{item.nickname}</p>
+                    </Select.Option>
+                  )) :
+                  null
               }
             </Select>
           </Form.Row>

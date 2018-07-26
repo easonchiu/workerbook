@@ -13,13 +13,9 @@ class HomeMissionItem extends React.PureComponent {
         <div className="progress">
           <span style={{ width: 40 + '%' }} />
         </div>
-        <h3>归属项目 app5.3.1开发</h3>
-        <p className="description">
-          世界杯活动页面开发世界杯活动页面开发世界杯活动页面开发世界杯活动页面开发世界杯活动页面开发
-        </p>
-        <footer className="footer">
+        <footer>
           <p><span>截至时间</span>2018年 3月3日</p>
-          <p><span>参与人数</span>3人</p>
+          <p><span>归属项目</span>app5.3.1开发</p>
         </footer>
       </div>
     )

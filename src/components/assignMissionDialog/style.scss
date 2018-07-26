@@ -6,4 +6,22 @@
       max-width: 100%;
     }
   }
+  .user-select {
+    ul {
+      a {
+        overflow: hidden;
+      }
+      .wb-user-header {
+        float: left;
+        margin-right: 10px;
+        height: 38px;
+        width: 38px;
+      }
+      p {
+        float: left;
+        height: 38px;
+        line-height: 38px;
+      }
+    }
+  }
 }

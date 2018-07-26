@@ -68,7 +68,7 @@ export default class Event {
   // 确定删除部门
   onDelDepartmentSubmit = async data => {
     if (data && data.id) {
-      if (data.userCount !== 0) {
+      if (data.count !== 0) {
         Toast.error('请先将该部门内的用户移出')
         return
       }

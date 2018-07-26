@@ -91,7 +91,7 @@ class ConsoleUserDialog extends React.PureComponent {
     Err.IfEmpty(this.state.role, '请选择职位')
 
     if (!Err.Handle()) {
-      this.props.onEditSubmit && this.props.onEditSubmit(this.state)
+      this.props.onEditSubmit && this.props.onEditSubmit(ignore(this.state, 'password'))
     }
   }
 

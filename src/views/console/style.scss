@@ -1,12 +1,10 @@
 
 .view-console {
-  .console-main {
-    display: flex;
-    padding: 20px;
-    align-items: flex-start;
-  }
+  padding-top: 20px;
+
   .console-aside {
-    width: 180px;
+    width: 160px;
+    float: left;
     background: #fff;
     border: 1px solid #dee3e8;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
@@ -67,7 +65,8 @@
     }
   }
   .console-body {
-    flex: 1;
+    float: left;
+    width: 1125px;
     background: #fff;
     border: 1px solid #dee3e8;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
