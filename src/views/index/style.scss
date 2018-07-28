@@ -8,7 +8,7 @@
     border-bottom: 1px solid #dee3e8;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
     > .inner {
-      width: 1130px;
+      width: 1128px;
       margin: 0 auto;
       > header {
         margin-bottom: 15px;
@@ -19,10 +19,10 @@
         }
       }
       .list {
-        margin-right: -10px;
-        display: flex;
+        margin-right: -15px;
         > div {
-          margin-right: 10px;
+          margin-right: 15px;
+          float: left;
         }
       }
     }
@@ -35,7 +35,7 @@
       float: left;
     }
     > .aside {
-      width: 305px;
+      width: 303px;
       float: left;
     }
   }

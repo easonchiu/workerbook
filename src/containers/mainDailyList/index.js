@@ -1,32 +1,23 @@
 import './style'
 import React from 'react'
-
 import DailyItem from 'src/components/dailyItem'
 import UserHeader from 'src/components/userHeader'
 
 const MainDailyList = props => {
-  // const { list = [] } = props
+  const source = props.source || { list: [] }
   return (
     <article className="wb-main-daily-list">
-      <div className="daily-item clearfix">
-        <UserHeader name="easonZhao" id={1} to="/" />
-        <DailyItem />
-      </div>
-
-      <div className="daily-item clearfix">
-        <UserHeader name="easonZhao" id={2} to="/" />
-        <DailyItem />
-      </div>
-
-      <div className="daily-item clearfix">
-        <UserHeader name="easonZhao" id={3} to="/" />
-        <DailyItem />
-      </div>
-
-      <div className="daily-item clearfix">
-        <UserHeader name="easonZhao" id={4} to="/" />
-        <DailyItem />
-      </div>
+      {
+        source.list.map(item => {
+          const user = item.user || {}
+          return (
+            <div className="row clearfix" key={item.id}>
+              <UserHeader name={user.nickname} id={user.id} gray to="/" />
+              <DailyItem source={item} />
+            </div>
+          )
+        })
+      }
     </article>
   )
 }

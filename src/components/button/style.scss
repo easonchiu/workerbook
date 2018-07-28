@@ -30,10 +30,12 @@
     box-shadow: none;
   }
   &.light {
-    color: #5081ff;
-    background: #f7f9fc;
+    background: #fff;
+    border: 1px solid #dee3e8;
+    color: #8a929b;
+    box-shadow: inset 0 0 0 1px hsla(0,0%,100%,1);
     &:hover {
-      background: #f7f9fc - 5;
+      background: #f7f9fc;
     }
   }
   &.danger {

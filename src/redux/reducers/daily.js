@@ -1,16 +1,31 @@
 import { handleActions } from 'easy-action'
 
 const initialState = {
-  list: [],
-  activeProject: '', // 当前list对应的项目id
+  day: {
+    list: [],
+    skip: 0,
+    limit: 0,
+    count: 0,
+  },
+  today: []
 }
 
 export default handleActions({
   DAILY_LIST_BY_DAY(state, action) {
     return {
       ...state,
-      list: action.payload.list,
-      activeProject: action.payload.projectId || '',
+      day: {
+        list: action.payload.list,
+        skip: action.payload.skip,
+        limit: action.payload.limit,
+        count: action.payload.count,
+      },
+    }
+  },
+  DAILY_TODAY(state, action) {
+    return {
+      ...state,
+      today: action.payload || [],
     }
   }
 }, initialState)

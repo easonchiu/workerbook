@@ -11,40 +11,57 @@ import MissionItem from 'src/components/missionItem'
 import MyDailyWriter from 'src/components/myDailyWriter'
 import MainDailyList from 'src/containers/mainDailyList'
 
-import MainDialog from 'src/containers/mainDialog'
-
 @VIEW
 @ComponentEvent('evt', Event)
 export default class View extends PureComponent {
-  constructor(props) {
-    super(props)
-    this.state = {
-      popupVisible: false
-    }
-  }
-
   componentDidMount() {
     this.evt.fetchData()
   }
 
+  // 任务栏
+  renderMissionBar() {
+    const list = this.props.mission$.owns_missions || []
+    return (
+      <div className="header-missions">
+        <div className="inner">
+          <header>
+            <h1>参与的任务</h1>
+          </header>
+          <div className="list clearfix">
+            {
+              list.map(item => (
+                <MissionItem key={item.id} source={item} />
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   // 日报编写区
   renderMyDailyWriter() {
+    const missions = this.props.mission$.owns_missions || []
+    const select = missions.map(item => ({
+      id: item.id,
+      text: item.name,
+    }))
+    const dailies = this.props.daily$.today
     return (
       <MyDailyWriter
-        ref={el => {
-          this.$myDailyWriter = el
-        }}
-        myDailyList={this.props.user$.fetchMyTodayDaily}
-        projectList={this.props.project$.list}
-        onDeleteItem={this.evt.deleteDailyClick}
-        onAppend={this.evt.appendDaily}
+        ref={r => { this.myDailyWriter = r }}
+        dailies={dailies}
+        missionSelect={select}
+        onEdit={this.evt.onEditDaily}
+        onDelete={this.evt.onDeleteDaily}
+        onCreate={this.evt.onCreateDaily}
       />
     )
   }
 
   // 主体区的日报列表
   renderDailyList() {
-    return <MainDailyList list={this.props.daily$.list} />
+    return <MainDailyList source={this.props.daily$.day} />
   }
 
   // 侧栏的部门模块
@@ -71,23 +88,10 @@ export default class View extends PureComponent {
   }
 
   render(props, state) {
-    // const profile = this.props.user$.profile
-
     return (
       <div className="view-index">
 
-        <div className="header-missions">
-          <div className="inner">
-            <header>
-              <h1>参与的任务</h1>
-            </header>
-            <div className="list">
-              <MissionItem />
-              <MissionItem />
-              <MissionItem />
-            </div>
-          </div>
-        </div>
+        {this.renderMissionBar()}
 
         <div className="body clearfix">
           <div className="main">
@@ -100,18 +104,6 @@ export default class View extends PureComponent {
             {this.renderUserList()}
           </div>
         </div>
-
-        <MainDialog visible={this.state.popupVisible}>
-          <div
-            onClick={() => {
-              this.setState({
-                popupVisible: false
-              })
-            }}
-          >
-            xxxx
-          </div>
-        </MainDialog>
       </div>
     )
   }

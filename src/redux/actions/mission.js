@@ -1,4 +1,4 @@
-// import { createAction } from 'easy-action'
+import { createAction } from 'easy-action'
 import http from 'src/utils/http'
 import ignore from 'src/utils/ignore'
 
@@ -22,6 +22,15 @@ const update = payload => async () => {
   return res
 }
 
+// fetch owns mission list.
+const fetchOwnsList = () => async dispatch => {
+  const res = await http.request({
+    url: '/missions/owns',
+    method: 'GET',
+  })
+  dispatch(createAction('OWNS_MISSION_LIST')(res))
+}
+
 // fetch mission one by id
 const fetchOneById = id => async dispatch => {
   const res = await http.request({
@@ -34,5 +43,6 @@ const fetchOneById = id => async dispatch => {
 export default {
   create,
   update,
+  fetchOwnsList,
   fetchOneById,
 }
