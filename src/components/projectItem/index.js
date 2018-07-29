@@ -6,6 +6,7 @@ import IconDescription from 'src/components/svg/description'
 import IconClose from 'src/components/svg/close'
 import IconAdd from 'src/components/svg/add'
 import UserHeader from 'src/components/userHeader'
+import Toast from 'src/components/toast'
 
 class ProjectItem extends React.PureComponent {
   constructor(props) {
@@ -16,6 +17,7 @@ class ProjectItem extends React.PureComponent {
     }
   }
 
+  // 展开和收起详情
   onToggleDescClick = () => {
     clearTimeout(this.t)
     if (!this.state.showDesc) {
@@ -38,6 +40,17 @@ class ProjectItem extends React.PureComponent {
         })
       }, 300)
     }
+  }
+
+  // 添加任务
+  onAddAssignMissionClick = () => {
+    const source = this.props.source || {}
+    if (source.isTimeout) {
+      Toast.error('项目已超过截至时间，不能添加任务')
+      return
+    }
+    this.props.onAddAssignMissionClick &&
+    this.props.onAddAssignMissionClick(source)
   }
 
   renderMissions() {
@@ -64,7 +77,7 @@ class ProjectItem extends React.PureComponent {
           />
           <div className="info">
             <h6>{data.name}</h6>
-            <time>截至时间 {(new Date(data.deadline)).format('yyyy年 MM月dd日')}</time>
+            <time>截至时间 {(new Date(data.deadline)).format('yyyy年 MM月dd日 hh_mm_ss')}</time>
           </div>
           <div className="progress">
             <span style={{ width: data.progress + '%' }} />
@@ -79,10 +92,7 @@ class ProjectItem extends React.PureComponent {
           <h5>任务列表</h5>
           <a
             href="javascript:;"
-            onClick={() => {
-              props.onAddAssignMissionClick &&
-              props.onAddAssignMissionClick(source)
-            }}
+            onClick={this.onAddAssignMissionClick}
           >
             <IconAdd />添加
           </a>
@@ -158,7 +168,7 @@ class ProjectItem extends React.PureComponent {
             <span>时间周期</span>
             {new Date(source.createTime).format('yyyy年 MM月dd日')}
             {' ~ '}
-            {new Date(source.deadline).format('yyyy年 MM月dd日')}
+            {new Date(source.deadline).format('yyyy年 MM月dd日 hh_mm_ss')}
           </p>
           <IconDescription.A onClick={this.onToggleDescClick} />
         </footer>

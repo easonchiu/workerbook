@@ -105,7 +105,6 @@ class AssignMissionDialog extends React.PureComponent {
     if (!Err.Handle()) {
       this.props.onEditSubmit && this.props.onEditSubmit(ignore({
         ...this.state,
-        projectId: this.projectId,
       }, 'projectDeadline'))
     }
   }
