@@ -1,9 +1,12 @@
 import './style'
 import React from 'react'
+
 import AsideDialog from 'src/containers/asideDialog'
 import IconClose from 'src/components/svg/close'
 import IconRewrite from 'src/components/svg/rewrite'
+import IconDelete from 'src/components/svg/delete'
 import UserHeader from 'src/components/userHeader'
+import Progress from 'src/components/progress'
 
 const MissionDetailDialog = props => {
   let { source } = props
@@ -17,9 +20,7 @@ const MissionDetailDialog = props => {
   const renderMission = () => (
     <div className="mission-info">
       <h3>{source.name}</h3>
-      <div className="progress">
-        <span style={{ width: (source.progress || 0) + '%' }} />
-      </div>
+      <Progress width={60} value={source.progress} />
       <time>
         <span>截至时间</span> {new Date(source.deadline).format('yyyy年 MM月dd日')}
       </time>
@@ -37,13 +38,22 @@ const MissionDetailDialog = props => {
           <span>{user.title}</span>
         </div>
       </div>
-      <IconRewrite.A
-        className="edit"
-        onClick={() => {
-          props.onEditClick &&
-          props.onEditClick(source)
-        }}
-      />
+      <div className="tools">
+        <IconRewrite.A
+          tips="编辑"
+          onClick={() => {
+            props.onEditClick &&
+            props.onEditClick(source)
+          }}
+        />
+        <IconDelete.A
+          tips="删除"
+          onClick={() => {
+            props.onDeleteClick &&
+            props.onDeleteClick(source)
+          }}
+        />
+      </div>
     </div>
   )
 
@@ -65,7 +75,7 @@ const MissionDetailDialog = props => {
             }
             {project.name}
           </h2>
-          <IconClose.A onClick={props.onCloseClick} />
+          <IconClose.A className="close" onClick={props.onCloseClick} />
         </header>
         {renderMission()}
         <div className="dailies">

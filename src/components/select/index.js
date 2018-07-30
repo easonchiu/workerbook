@@ -6,7 +6,7 @@ class Select extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      visible: false
+      visible: props.visible || false
     }
     this.id = `wb-select-${new Date() - 0}${Math.round(Math.random() * 9999)}`
   }

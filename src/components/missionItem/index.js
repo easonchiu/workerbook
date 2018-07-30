@@ -1,6 +1,7 @@
 import './style'
 import React from 'react'
 
+import Progress from 'src/components/progress'
 
 class MissionItem extends React.PureComponent {
   render() {
@@ -18,9 +19,7 @@ class MissionItem extends React.PureComponent {
           }
           {source.name}
         </h2>
-        <div className="progress">
-          <span style={{ width: source.progress + '%' }} />
-        </div>
+        <Progress width={60} value={source.progress} />
         <h3>归属项目 {project.name}</h3>
         <p className="description">
           {project.description}

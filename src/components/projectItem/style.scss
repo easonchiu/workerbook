@@ -35,22 +35,10 @@
       }
     }
   }
-  .progress {
-    width: 60px;
-    height: 4px;
+  .wb-progress {
     position: absolute;
     right: 10px;
-    top: 20px;
-    background: #5081ff30;
-    border-radius: 3px;
-    overflow: hidden;
-    span {
-      display: block;
-      width: 50%;
-      height: 100%;
-      border-radius: 3px;
-      background: #5081ff;
-    }
+    top: 12px;
   }
   .departments {
     padding: 0 10px 5px 10px;
@@ -123,13 +111,10 @@
           background: #f7f9fc;
         }
       }
-      .progress {
-        width: 40px;
-        top: 19px;
-        background: #33b40030;
-        span {
-          background: #33b400;
-        }
+      .wb-progress {
+        position: absolute;
+        right: 10px;
+        top: 10px;
       }
       .wb-user-header {
         margin-right: 10px;
@@ -230,23 +215,11 @@
           font-size: 12px;
         }
       }
-      > a {
+      > .close {
         position: absolute;
-        right: 10px;
+        right: 5px;
         top: 10px;
-        width: 19px;
-        height: 19px;
-        display: block;
-        &:hover svg {
-          fill: #5081ff;
-        }
-        svg {
-          display: block;
-          width: 11px;
-          height: 11px;
-          fill: #a8b0b9;
-          margin: 4px;
-        }
+        padding: 5px;
       }
     }
   }
@@ -259,7 +232,7 @@
     height: 36px;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
-    p {
+    > p {
       line-height: 36px;
       color: #a8b0b9;
       font-size: 12px;
@@ -271,14 +244,8 @@
     }
     a {
       float: right;
-      width: 20px;
-      height: 20px;
       margin-top: 7px;
       svg {
-        display: block;
-        width: 16px;
-        height: 16px;
-        margin: 2px;
         fill: #8a929b;
       }
       &:hover svg {

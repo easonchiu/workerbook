@@ -7,7 +7,7 @@ import Tips from 'src/components/tips'
 
 const UserHeader = props => {
   // status: 1 正常 2 停用 99 已被删除
-  let { name, status, self } = props
+  let { name = '', status = 1, self } = props
   let isBig = false
   let maxLen = props.mini ? 2 : 6
 

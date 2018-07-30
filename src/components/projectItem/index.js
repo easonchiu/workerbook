@@ -7,6 +7,7 @@ import IconClose from 'src/components/svg/close'
 import IconAdd from 'src/components/svg/add'
 import UserHeader from 'src/components/userHeader'
 import Toast from 'src/components/toast'
+import Progress from 'src/components/progress'
 
 class ProjectItem extends React.PureComponent {
   constructor(props) {
@@ -79,9 +80,7 @@ class ProjectItem extends React.PureComponent {
             <h6>{data.name}</h6>
             <time>截至时间 {(new Date(data.deadline)).format('yyyy年 MM月dd日 hh_mm_ss')}</time>
           </div>
-          <div className="progress">
-            <span style={{ width: data.progress + '%' }} />
-          </div>
+          <Progress width={40} value={data.progress} />
         </div>
       )
     }
@@ -127,9 +126,7 @@ class ProjectItem extends React.PureComponent {
           }
           {source.name}
         </h2>
-        <div className="progress">
-          <span style={{ width: source.progress + '%' }} />
-        </div>
+        <Progress width={60} value={source.progress} color="blue" />
         <div className="departments">
           {
             source.departments ?
@@ -151,7 +148,7 @@ class ProjectItem extends React.PureComponent {
             >
               <div className="desc-inner">
                 <h3>项目说明</h3>
-                <IconClose.A onClick={this.onToggleDescClick} />
+                <IconClose.A className="close" onClick={this.onToggleDescClick} />
                 {
                   source.description ?
                     <p>{source.description}</p> :

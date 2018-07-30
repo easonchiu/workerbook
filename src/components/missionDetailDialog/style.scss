@@ -32,24 +32,25 @@
           }
         }
       }
-      a {
+      .close {
         position: absolute;
         right: 15px;
         top: 15px;
         display: block;
         width: 30px;
         height: 30px;
+        padding: 0;
         overflow: hidden;
         &:hover svg {
           fill: #5081ff;
         }
-      }
-      svg {
-        display: block;
-        width: 14px;
-        height: 14px;
-        margin: 8px 0 8px 16px;
-        fill: #586069;
+        svg {
+          display: block;
+          width: 14px;
+          height: 14px;
+          margin: 8px 0 8px 16px;
+          fill: #586069;
+        }
       }
     }
     > .mission-info {
@@ -62,22 +63,10 @@
         line-height: 1.5;
         margin-bottom: 5px;
       }
-      > .progress {
-        width: 60px;
-        height: 4px;
+      > .wb-progress {
         position: absolute;
         right: 15px;
-        top: 20px;
-        background: #33b40030;
-        border-radius: 3px;
-        overflow: hidden;
-        span {
-          display: block;
-          width: 50%;
-          height: 100%;
-          border-radius: 3px;
-          background: #33b400;
-        }
+        top: 17px;
       }
       > time {
         padding: 0 15px 15px 15px;
@@ -121,20 +110,14 @@
           }
         }
       }
-      > .edit {
+      > .tools {
         position: absolute;
         right: 15px;
         bottom: 15px;
         display: block;
-        padding: 2px;
-        svg {
-          display: block;
-          width: 16px;
-          height: 16px;
-          fill: #a8b0b9;
-        }
-        &:hover svg {
-          fill: #5081ff;
+        .wb-icon {
+          display: inline-block;
+          margin-left: 5px;
         }
       }
     }

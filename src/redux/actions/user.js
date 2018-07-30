@@ -80,6 +80,22 @@ const fetchProfile = () => async (dispatch, getState) => {
 }
 
 // fetch users list.
+const fetchList = payload => async dispatch => {
+  if (!payload.departmentId) {
+    payload = ignore(payload, 'departmentId')
+  }
+  const res = await http.request({
+    url: '/users',
+    method: 'GET',
+    params: payload,
+  })
+  if (payload.departmentId && res) {
+    res.departmentId = payload.departmentId
+  }
+  dispatch(createAction('USER_LIST')(res))
+}
+
+// fetch users list.
 const fetchSubList = projectId => async dispatch => {
   const res = await http.request({
     url: '/users/subordinate',
@@ -101,4 +117,5 @@ export default {
   c_update,
 
   fetchSubList,
+  fetchList,
 }

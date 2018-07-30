@@ -72,9 +72,11 @@ class ConsoleDepartment extends React.PureComponent {
         <td>{new Date(res.createTime).format('yyyy-MM-dd hh:mm')}</td>
         <td className="c">
           <IconRewrite.A
+            tips="编辑"
             onClick={() => this.evt.onEditDepartmentClick(res)}
           />
           <IconDelete.A
+            tips="删除"
             onClick={() => this.evt.onDelDepartmentClick(res)}
           />
         </td>

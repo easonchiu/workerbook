@@ -4,8 +4,6 @@ import VIEW from 'src/hoc/view'
 import ComponentEvent from 'src/hoc/componentEvent'
 import Event from './event'
 
-import Wrapper from 'src/containers/wrapper'
-
 @VIEW
 @ComponentEvent('evt', Event)
 export default class View extends PureComponent {
@@ -75,16 +73,15 @@ export default class View extends PureComponent {
     )
   }
 
-  render(props, state) {
-    const profile = this.props.user$.profile
-
+  renderSummary() {
+    const chart = this.props.chart$.departmentUsersSummary || {}
+    const list = chart.list || []
+    const department = chart.department || {}
     return (
-      <div className="view-group-chart">
-        <Wrapper.Header nav="chart" profile={profile} />
-
-        <Wrapper.Full className="group-chart">
+      <div className="summary">
+        <div className="inner">
           <header>
-            <h1>前端开发部门</h1>
+            <h1>{department.name}</h1>
           </header>
           <div className="chart">
             <ul>
@@ -102,60 +99,61 @@ export default class View extends PureComponent {
                 <li />
                 <li />
               </ul>
-              <div>
-                <sup />
-                <sub />
-                <span />
-              </div>
-              <div>
-                <sup />
-                <span style={{ height: '70px' }} />
-              </div>
-              <div>
-                <sup />
-                <sub />
-                <span style={{ height: '70px' }} />
-              </div>
-              <div>
-                <sup />
-                <sub />
-                <span />
-              </div>
-              <div>
-                <sup />
-                <span style={{ height: '70px' }} />
-              </div>
-              <div>
-                <sup />
-                <sub />
-                <span style={{ height: '70px' }} />
-              </div>
-              <div>
-                <sub style={{ height: '110px' }} />
-                <span />
-              </div>
+              {
+                list.map((item, i) => {
+                  const missions = item.missions || []
+                  const vs = {
+                    normal: 0,
+                    timeout: 0,
+                    unstart: 0,
+                  }
+                  missions.forEach(item => {
+                    if (item.isTimeout) {
+                      vs.timeout += 1
+                    }
+                    else if (item.progress === 0) {
+                      vs.unstart += 1
+                    }
+                    else {
+                      vs.normal += 1
+                    }
+                  })
+                  return (
+                    <div key={i}>
+                      <sup style={{ height: vs.unstart * 20 + 'px' }} />
+                      <sub style={{ height: vs.timeout * 20 + 'px' }} />
+                      <span style={{ height: vs.normal * 20 + 'px' }} />
+                    </div>
+                  )
+                })
+              }
             </div>
           </div>
           <div className="user">
-            <span>张三</span>
-            <span>张三</span>
-            <span>张三</span>
-            <span>张三</span>
-            <span>张三</span>
-            <span>张三</span>
-            <span>张三</span>
+            {
+              list.map(item => (
+                <span key={item.id}>{item.nickname}</span>
+              ))
+            }
           </div>
-        </Wrapper.Full>
+        </div>
+      </div>
+    )
+  }
 
-        <Wrapper.Body>
+  render(props, state) {
+    return (
+      <div className="view-department-chart">
+
+        {this.renderSummary()}
+
+        <div className="body clearfix">
 
           {this.renderEachUser()}
           {this.renderEachUser()}
           {this.renderEachUser()}
 
-        </Wrapper.Body>
-
-        <Wrapper.Footer />
+        </div>
       </div>
     )
   }

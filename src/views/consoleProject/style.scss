@@ -1,16 +1,5 @@
 
 .console-project {
-  .progress {
-    height: 4px;
-    border-radius: 3px;
-    background: #5081ff30;
-    overflow: hidden;
-    span {
-      display: block;
-      height: 100%;
-      background: #5081ff;
-    }
-  }
   .weight-2, .weight-3 {
     display: inline-block;
     border-radius: 50px;
@@ -27,14 +16,8 @@
   .weight-3 {
     background: #ff3300;
   }
-  .progress-text {
-    font-size: 12px;
-    color: #586069;
-    line-height: 1;
-    position: relative;
-    display: block;
-    text-align: left;
-    margin-bottom: 2px;
+  .wb-progress {
+    margin: 0 auto;
   }
   table {
     td:nth-child(1) {

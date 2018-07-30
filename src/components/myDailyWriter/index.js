@@ -8,6 +8,7 @@ import Button from 'src/components/button'
 import Select from 'src/components/select'
 import IconDel from 'src/components/svg/delete'
 import IconRewrite from 'src/components/svg/rewrite'
+import Toast from 'src/components/toast'
 
 class MyDailyWriter extends PureComponent {
   constructor(props) {
@@ -20,6 +21,9 @@ class MyDailyWriter extends PureComponent {
       rewriteId: '',
       rewriteContent: '',
       deleteId: '',
+
+      setProgressId: '',
+      serProgressValue: 5,
     }
   }
 
@@ -46,7 +50,9 @@ class MyDailyWriter extends PureComponent {
     if (!this.parentHasCss(e.target, 'delete-content')) {
       document.removeEventListener('click', this.listener)
       this.setState({
-        deleteId: ''
+        deleteId: '',
+        setProgressId: '',
+        setProgressValue: '',
       })
     }
   }
@@ -161,6 +167,15 @@ class MyDailyWriter extends PureComponent {
     })
   }
 
+  // 修改进度点击
+  onSetProgressClick = data => {
+    this.setState({
+      setProgressId: data.mission,
+      setProgressValue: data.progress,
+    })
+    document.addEventListener('click', this.listener)
+  }
+
   // 日报编写区 - 我已经写的日报
   renderMyDailyList() {
     const dailies = this.props.dailies || []
@@ -172,6 +187,7 @@ class MyDailyWriter extends PureComponent {
         if (typeof data[key] === 'undefined') {
           data[key] = { list: [] }
         }
+        data[key]['mission'] = key
         data[key]['progress'] = item.progress
         data[key]['groupTitle'] = item.project.name + item.mission.name
         data[key]['list'].push({
@@ -232,10 +248,11 @@ class MyDailyWriter extends PureComponent {
               </div> :
               <div className="tools clearfix">
                 <IconDel.A
-                  className="del"
+                  tips="删除"
                   onClick={this.onDeleteClick.bind(this, data)}
                 />
                 <IconRewrite.A
+                  tips="编辑"
                   onClick={this.onRewriteClick.bind(this, data)}
                 />
               </div>
@@ -248,16 +265,27 @@ class MyDailyWriter extends PureComponent {
       <div className="daily-list">
         {
           Object.values(data).map((item, i) => {
+            const headerCss = className('header', 'clearfix', {
+              'setting': item.mission === this.state.setProgressId
+            })
             return (
               <div key={i} className="item">
-                <div className="header clearfix">
+                <div className={headerCss}>
                   <span />
                   <strong>{item.groupTitle} - {item.progress}</strong>
-                  <div href="javascript:;" className="progress clearfix">
+                  <div className="progress clearfix">
                     <span>任务进度 <em>{item.progress} %</em></span>
-                    <IconRewrite.A />
+                    <IconRewrite.A
+                      tips="修改进度"
+                      onClick={this.onSetProgressClick.bind(null, item)}
+                    />
                   </div>
                 </div>
+                {
+                  this.state.setProgressId === item.mission ?
+                    this.renderWrittenProgressSelect() :
+                    null
+                }
                 {
                   item.list.map(dailyItem)
                 }
@@ -269,11 +297,91 @@ class MyDailyWriter extends PureComponent {
     )
   }
 
+  // 任务select
+  renderMissionSelect() {
+    const missions = this.props.missionSelect || []
+    return (
+      <Select
+        value={this.state.missionId}
+        onClick={this.onMissionChange}
+        className="select-missions"
+        placeholder="请选择任务"
+      >
+        {
+          missions.map(item => (
+            <Select.Option key={item.id} value={item.id}>{item.text}</Select.Option>
+          ))
+        }
+      </Select>
+    )
+  }
+
+  // 进度select
+  renderProgressSelect() {
+    const progress = '5_10_15_20_25_30_35_40_45_50_55_60_65_70_75_80_85_90_95_100'
+    return (
+      <Select
+        value={this.state.progress}
+        onClick={this.progressChange}
+        className="select-progress"
+        placeholder="任务进度"
+      >
+        {
+          progress.split('_').map(i => (
+            <Select.Option
+              key={i}
+              value={i - 0}
+              text={<p><span>任务进度</span>{i}%</p>}
+            >
+              {i}<span>%</span>
+            </Select.Option>
+          ))
+        }
+      </Select>
+    )
+  }
+
+  // 编辑已写任务进度的提交
+  onSetProgress = val => {
+    if (this.props.onSetProgress && this.state.setProgressId) {
+      this.props.onSetProgress({
+        missionId: this.state.setProgressId,
+        progress: val,
+      })
+    }
+    else {
+      Toast.error('系统错误')
+    }
+  }
+
+  // 编辑已写任务的进度
+  renderWrittenProgressSelect() {
+    const progress = '5_10_15_20_25_30_35_40_45_50_55_60_65_70_75_80_85_90_95_100'
+    return (
+      <Select
+        value={this.state.setProgressValue}
+        onClick={this.onSetProgress}
+        className="select-progress"
+        placeholder="任务进度"
+        visible={true}
+      >
+        {
+          progress.split('_').map(i => (
+            <Select.Option
+              key={i}
+              value={i - 0}
+              text={<p><span>任务进度</span>{i}%</p>}
+            >
+              {i}<span>%</span>
+            </Select.Option>
+          ))
+        }
+      </Select>
+    )
+  }
+
   // 日报编写区 - 新建日报面板
   renderWriter() {
-    const progress = '5_10_15_20_25_30_35_40_45_50_55_60_65_70_75_80_85_90_95_100'
-    const missions = this.props.missionSelect || []
-
     return (
       <div className="writer-box">
         <Input
@@ -285,38 +393,8 @@ class MyDailyWriter extends PureComponent {
         />
 
         <div className="tools clearfix">
-          <Select
-            value={this.state.missionId}
-            onClick={this.onMissionChange}
-            className="missions"
-            placeholder="请选择任务"
-          >
-            {
-              missions.map(item => (
-                <Select.Option key={item.id} value={item.id}>{item.text}</Select.Option>
-              ))
-            }
-          </Select>
-
-          <Select
-            value={this.state.progress}
-            onClick={this.progressChange}
-            className="progress"
-            placeholder="任务进度"
-          >
-            {
-              progress.split('_').map(i => (
-                <Select.Option
-                  key={i}
-                  value={i - 0}
-                  text={<p><span>任务进度</span>{i}%</p>}
-                >
-                  {i}<span>%</span>
-                </Select.Option>
-              ))
-            }
-          </Select>
-
+          {this.renderMissionSelect()}
+          {this.renderProgressSelect()}
           <Button className="send-button" onClick={this.onAppendClick}>
             发布一条
           </Button>

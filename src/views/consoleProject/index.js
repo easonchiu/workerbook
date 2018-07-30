@@ -10,6 +10,7 @@ import ConsoleProjectDialog from 'src/components/consoleProjectDialog'
 import ConsoleDeleteDialog from 'src/components/consoleDeleteDialog'
 import IconRewrite from 'src/components/svg/rewrite'
 import IconDelete from 'src/components/svg/delete'
+import Progress from 'src/components/progress'
 
 @VIEW
 @ComponentEvent('evt', Event)
@@ -82,20 +83,17 @@ class ConsoleProject extends React.PureComponent {
         </td>
         <td>{res.missions ? res.missions.length : '-'}</td>
         <td>
-          <span className="progress-text">{res.progress} %</span>
-          {
-            <div className="progress">
-              <span style={{ width: res.progress + '%' }} />
-            </div>
-          }
+          <Progress value={res.progress} width={80} />
         </td>
         <td>{new Date(res.deadline).format('yyyy-MM-dd')}</td>
         <td>{new Date(res.createTime).format('yyyy-MM-dd hh:mm')}</td>
         <td className="c">
           <IconRewrite.A
+            tips="编辑"
             onClick={() => this.evt.onEditProjectClick(res)}
           />
           <IconDelete.A
+            tips="删除"
             onClick={() => this.evt.onDelProjectClick(res)}
           />
         </td>

@@ -34,7 +34,7 @@ const AsideDepartmentList = props => {
     >
       <ul>
         <li>
-          <Item active={active === ''} onClick={itemClick.bind(null, '')}>
+          <Item active={!active} onClick={itemClick.bind(null, '')}>
             <i /><span>全部</span>
           </Item>
         </li>

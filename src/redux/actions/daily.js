@@ -54,10 +54,23 @@ const fetchToday = payload => async dispatch => {
   return res
 }
 
+// 修改日报任务的度进
+const updateProgress = payload => async dispatch => {
+  const res = await http.request({
+    url: '/dailies/today/mission/' + payload.missionId,
+    method: 'PATCH',
+    data: {
+      progress: payload.progress
+    }
+  })
+  return res
+}
+
 export default {
   fetchListByDay,
   fetchToday,
   create,
   update,
   del,
+  updateProgress,
 }

@@ -14,9 +14,10 @@ const AsideUserList = props => {
             list.map(item => {
               return (
                 <UserHeader
+                  gray
                   name={item.nickname}
                   key={item.id}
-                  userId={item.id}
+                  id={item.id}
                   to={`/index?uid=${item.id}`}
                 />
               )

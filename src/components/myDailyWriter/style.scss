@@ -29,6 +29,7 @@
     .item {
       padding: 15px 0 10px 0;
       border-bottom: 1px dashed #f7f9fc - 20;
+      position: relative;
       &:last-child {
         border-bottom: none;
         padding-bottom: 15px;
@@ -75,22 +76,39 @@
         a {
           float: right;
           display: block;
-          &:hover svg {
-            fill: #5081ff;
-          }
-        }
-        svg {
-          display: block;
-          width: 14px;
-          height: 14px;
-          margin: 3px;
-          fill: #8a929b;
         }
       }
       &:hover {
         .progress {
           display: block;
         }
+      }
+      &.setting .progress {
+        display: block;
+        svg {
+          fill: #5081ff;
+        }
+      }
+    }
+    .select-progress {
+      position: absolute;
+      right: 0;
+      top: 15px;
+      float: none;
+      border: none !important;
+      box-shadow: none !important;
+      background: none;
+      width: 0;
+      height: 0;
+      .wb-select__list {
+        position: absolute;
+        right: 0;
+        left: auto;
+        top: 30px;
+        margin-top: 0;
+      }
+      .wb-select__value {
+        display: none;
       }
     }
     .content {
@@ -104,7 +122,7 @@
           display: block;
         }
       }
-      sup {
+      > sup {
         font-size: 12px;
         line-height: 20px;
         display: block;
@@ -113,7 +131,7 @@
         overflow: hidden;
         color: #d8d9df;
       }
-      p {
+      > p {
         float: left;
         color: #586069;
         font-size: 14px;
@@ -128,7 +146,7 @@
       &:last-child {
         margin: 0 !important;
       }
-      sup {
+      > sup {
         margin-top: 5px;
       }
       &:hover {
@@ -169,27 +187,9 @@
       width: 80px;
       height: 20px;
       float: right;
-      svg {
-        display: block;
-        width: 14px;
-        height: 14px;
-        margin: 3px;
-        fill: #a8b0b9;
-      }
-      a {
-        width: 20px;
-        height: 20px;
+      .wb-icon {
         float: right;
         margin-left: 5px;
-        display: block;
-        &:hover {
-          svg {
-            fill: #5081ff;
-          }
-        }
-        &.del:hover svg {
-          fill: #ff3300;
-        }
       }
     }
   }
@@ -206,69 +206,71 @@
 
   // 操作栏
   .tools {
-    .missions {
-      float: left;
-      margin-right: 10px;
-    }
-    .progress {
-      width: 130px;
-      max-width: none;
-      float: left;
-      .wb-select__value {
-        p {
-          width: 100%;
-          font-size: 12px;
-          line-height: 1;
-          text-align: center;
-          span {
-            color: #8a929b;
-            padding-right: 5px;
-          }
-        }
-      }
-      ul {
-        padding: 5px;
-        overflow: hidden;
-        max-height: none;
-        width: 312px;
-      }
-      li {
-        float: left;
-        padding: 5px;
-        a {
-          display: block;
-          width: 50px;
-          height: 50px;
-          background: #f7f9fc;
-          border-radius: 50%;
-          text-align: center;
-          line-height: 50px;
-          color: #8a929b;
-          font-size: 12px;
-          padding: 0;
-          cursor: pointer;
-          &:hover {
-            background: #f7f9fc - 5;
-          }
-          svg {
-            display: none;
-          }
-          &.wb-select__list-active {
-            background: #5081ff;
-            color: #fff;
-            span {
-              color: #fff;
-            }
-          }
-        }
-        span {
-          color: #a8b0b9;
-          padding-left: 3px;
-        }
-      }
-    }
     .send-button {
       float: right;
+    }
+  }
+
+  .select-missions {
+    float: left;
+    margin-right: 10px;
+  }
+
+  .select-progress {
+    width: 130px;
+    max-width: none;
+    float: left;
+    .wb-select__value {
+      p {
+        width: 100%;
+        font-size: 12px;
+        line-height: 1;
+        text-align: center;
+        span {
+          color: #8a929b;
+          padding-right: 5px;
+        }
+      }
+    }
+    ul {
+      padding: 5px;
+      overflow: hidden;
+      max-height: none;
+      width: 312px;
+    }
+    li {
+      float: left;
+      padding: 5px;
+      a {
+        display: block;
+        width: 50px;
+        height: 50px;
+        background: #f7f9fc;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 50px;
+        color: #8a929b;
+        font-size: 12px;
+        padding: 0;
+        cursor: pointer;
+        &:hover {
+          background: #f7f9fc - 5;
+        }
+        svg {
+          display: none;
+        }
+        &.wb-select__list-active {
+          background: #5081ff;
+          color: #fff;
+          span {
+            color: #fff;
+          }
+        }
+      }
+      span {
+        color: #a8b0b9;
+        padding-left: 3px;
+      }
     }
   }
 

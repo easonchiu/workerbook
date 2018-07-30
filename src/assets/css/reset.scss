@@ -106,22 +106,11 @@ a {
     vertical-align: middle;
     line-height: 20px;
     &.c {
-      a {
-        position: relative;
+      .wb-icon {
         top: 2px;
         display: inline-block;
         visibility: hidden;
         margin: 0 5px;
-        padding: 2px;
-        svg {
-          display: block;
-          width: 16px;
-          height: 16px;
-          fill: #a8b0b9;
-        }
-        &:hover svg {
-          fill: #5081ff;
-        }
       }
     }
   }

@@ -3,6 +3,7 @@ import $daily from './daily'
 import $department from './department'
 import $project from './project'
 import $mission from './mission'
+import $chart from './chart'
 
 export default {
   $user,
@@ -10,4 +11,5 @@ export default {
   $department,
   $project,
   $mission,
+  $chart,
 }

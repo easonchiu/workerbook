@@ -55,6 +55,7 @@ export default class View extends PureComponent {
         onEdit={this.evt.onEditDaily}
         onDelete={this.evt.onDeleteDaily}
         onCreate={this.evt.onCreateDaily}
+        onSetProgress={this.evt.onSetMissionProgress}
       />
     )
   }
@@ -69,7 +70,7 @@ export default class View extends PureComponent {
     return (
       <AsideDepartmentList
         data={this.props.department$.departments}
-        active={this.props.user$.activeGroup}
+        active={this.props.user$.users.departmentId}
         itemClick={this.evt.departmentClick}
         onPageChange={this.evt.departmentPageChange}
       />
@@ -78,11 +79,11 @@ export default class View extends PureComponent {
 
   // 侧栏的用户模块
   renderUserList() {
+    const users = this.props.user$.users || { list: [] }
     return (
       <AsideUserList
-        list={this.props.user$.list}
-        isAll={this.props.user$.activeGroup === ''}
-        itemClick={this.evt.groupClick}
+        list={users.list}
+        isAll={!users.departmentId}
       />
     )
   }
