@@ -4,8 +4,6 @@ import VIEW from 'src/hoc/view'
 import ComponentEvent from 'src/hoc/componentEvent'
 import Event from './event'
 
-import Wrapper from 'src/containers/wrapper'
-
 @VIEW
 @ComponentEvent('evt', Event)
 export default class View extends PureComponent {
@@ -51,26 +49,18 @@ export default class View extends PureComponent {
 
     return (
       <div className="view-project-chart">
-        <Wrapper.Header nav="chart" profile={profile} />
-
-        <Wrapper.Full className="project-chart">
           <header>
             <h1>5.3.1开发 进度总览</h1>
           </header>
           <div className="chart">
             chart
           </div>
-        </Wrapper.Full>
 
-        <Wrapper.Body>
 
           {this.renderEachMission()}
           {this.renderEachMission()}
           {this.renderEachMission()}
 
-        </Wrapper.Body>
-
-        <Wrapper.Footer />
       </div>
     )
   }

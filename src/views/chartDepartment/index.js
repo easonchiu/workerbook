@@ -4,6 +4,7 @@ import VIEW from 'src/hoc/view'
 import ComponentEvent from 'src/hoc/componentEvent'
 import Event from './event'
 
+
 @VIEW
 @ComponentEvent('evt', Event)
 export default class View extends PureComponent {
@@ -74,68 +75,16 @@ export default class View extends PureComponent {
   }
 
   renderSummary() {
-    const chart = this.props.chart$.departmentUsersSummary || {}
-    const list = chart.list || []
+    const chart = this.props.chart$.oneDepartmentSummary || {}
     const department = chart.department || {}
     return (
       <div className="summary">
         <div className="inner">
           <header>
             <h1>{department.name}</h1>
+            <span>任务汇总</span>
           </header>
-          <div className="chart">
-            <ul>
-              <li>8</li>
-              <li>6</li>
-              <li>4</li>
-              <li>2</li>
-              <li>0</li>
-            </ul>
-            <div className="chart-pic">
-              <ul>
-                <li />
-                <li />
-                <li />
-                <li />
-                <li />
-              </ul>
-              {
-                list.map((item, i) => {
-                  const missions = item.missions || []
-                  const vs = {
-                    normal: 0,
-                    timeout: 0,
-                    unstart: 0,
-                  }
-                  missions.forEach(item => {
-                    if (item.isTimeout) {
-                      vs.timeout += 1
-                    }
-                    else if (item.progress === 0) {
-                      vs.unstart += 1
-                    }
-                    else {
-                      vs.normal += 1
-                    }
-                  })
-                  return (
-                    <div key={i}>
-                      <sup style={{ height: vs.unstart * 20 + 'px' }} />
-                      <sub style={{ height: vs.timeout * 20 + 'px' }} />
-                      <span style={{ height: vs.normal * 20 + 'px' }} />
-                    </div>
-                  )
-                })
-              }
-            </div>
-          </div>
-          <div className="user">
-            {
-              list.map(item => (
-                <span key={item.id}>{item.nickname}</span>
-              ))
-            }
-          </div>
+          <div id="summary-chart" style={{ height: '300px' }} />
         </div>
       </div>
     )
