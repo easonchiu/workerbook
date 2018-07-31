@@ -80,7 +80,7 @@ class ProjectItem extends React.PureComponent {
             <h6>{data.name}</h6>
             <time>截至时间 {(new Date(data.deadline)).format('yyyy年 MM月dd日 hh_mm_ss')}</time>
           </div>
-          <Progress width={40} value={data.progress} />
+          <Progress width={40} value={data.progress} isTimeout={data.isTimeout} />
         </div>
       )
     }
