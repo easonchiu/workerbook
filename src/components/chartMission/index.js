@@ -1,14 +1,12 @@
+import React from 'react'
 import HighCharts from 'highcharts'
 
-export default class Event {
 
-  // 获取首页需要的数据
-  fetchData = async () => {
-    this.render()
-  }
+class Chart extends React.PureComponent {
 
-  render = () => {
-    HighCharts.chart('summary-chart', {
+  // 渲染chart
+  renderMissionChart = chart => {
+    return HighCharts.chart('mission-chart-' + this.props.id, {
       chart: {
         type: 'area'
       },
@@ -42,18 +40,11 @@ export default class Event {
           }
         }
       },
-      yAxis: [{
-        visible: false,
-        crosshair: {
-          width: 1,
-          color: '#5081ff90',
-        },
-        tickPositions: [0, 500],
-      }, {
+      yAxis: {
         title: {
           text: ''
         },
-        tickPositions: [0, 20, 40, 60, 80, 100],
+        tickPositions: [0, 25, 50, 75, 100],
         gridLineColor: '#dee3e8',
         gridLineDashStyle: 'Dash',
         lineColor: '#dee3e8',
@@ -65,7 +56,7 @@ export default class Event {
           },
           format: '{value} %'
         }
-      }],
+      },
       tooltip: {
         backgroundColor: 'rgba(0,0,0,0.8)',
         borderWidth: 0,
@@ -96,22 +87,34 @@ export default class Event {
         }
       },
       series: [{
-        name: '订单详情页面修改',
-        data: [null, null, null, null, null, 5, 100]
-      }, {
-        name: '前端页面开发',
-        data: [null, null, null, null, 25, 50, 100]
-      }, {
-        name: '原型设计',
-        data: [null, null, 15, 30, 40, 60, 100]
-      }, {
-        name: '接口开发',
-        data: [null, 5, 30, 35, 50, 80, 100]
-      }, {
-        name: '测试及上线',
-        data: [null, 5, 15, 30, 35, 50, 100]
+        name: '套餐下单h5修改',
+        showInLegend: false,
+        data: [null, 5, 10, 20, 25, 5, 100]
       }]
     })
   }
 
+  componentDidMount() {
+    const chart = this.props.source || {}
+    // if (chart.id) {
+    this.$chart = this.renderMissionChart(chart)
+    // }
+  }
+
+  componentWillUnmount() {
+    if (this.$chart && this.$chart.destroy) {
+      this.$chart.destroy()
+    }
+  }
+
+  render() {
+    // const chart = this.props.source || {}
+    return (
+      <div id={'mission-chart-' + this.props.id} style={{ height: '150px' }}>
+        暂无任务数据
+      </div>
+    )
+  }
 }
+
+export default Chart

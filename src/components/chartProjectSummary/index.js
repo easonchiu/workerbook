@@ -1,14 +1,12 @@
+import React from 'react'
 import HighCharts from 'highcharts'
 
-export default class Event {
 
-  // 获取首页需要的数据
-  fetchData = async () => {
-    this.render()
-  }
+class Chart extends React.PureComponent {
 
-  render = () => {
-    HighCharts.chart('summary-chart', {
+  // 渲染chart
+  renderSummaryChart = chart => {
+    return HighCharts.chart('summary-chart-xxx', {
       chart: {
         type: 'area'
       },
@@ -22,7 +20,7 @@ export default class Event {
         crosshair: {
           color: '#5081ff10',
         },
-        categories: ['3/15', '3/16', '3/17', '3/18', '3/19', '3/20', '3/21'],
+        categories: ['3/15', '3/16', '3/17', '3/18', '3/19', '3/20', '3/21', '3/22', '3/23', '3/24'],
         tickmarkPlacement: 'on',
         title: {
           enabled: false
@@ -30,7 +28,7 @@ export default class Event {
         plotLines: [{
           color: '#ff9900',
           width: 2,
-          value: 5,
+          value: 8,
         }],
         tickWidth: 0,
         lineColor: '#dee3e8',
@@ -96,22 +94,45 @@ export default class Event {
         }
       },
       series: [{
-        name: '订单详情页面修改',
-        data: [null, null, null, null, null, 5, 100]
+        name: 'Bug修复',
+        data: [null, null, null, null, null, 5, 30, 80, 100, 100]
+      }, {
+        name: '测试',
+        data: [null, null, null, null, null, 20, 50, 100, 100, 100]
+      }, {
+        name: '接口联调',
+        data: [null, null, null, 20, 50, 100, 100, 100, 100, 100]
       }, {
         name: '前端页面开发',
-        data: [null, null, null, null, 25, 50, 100]
-      }, {
-        name: '原型设计',
-        data: [null, null, 15, 30, 40, 60, 100]
+        data: [null, null, 5, 50, 100, 100, 100, 100, 100, 100],
       }, {
         name: '接口开发',
-        data: [null, 5, 30, 35, 50, 80, 100]
-      }, {
-        name: '测试及上线',
-        data: [null, 5, 15, 30, 35, 50, 100]
+        data: [null, 5, 30, 100, 100, 100, 100, 100, 100, 100]
       }]
     })
   }
 
+  componentDidMount() {
+    const chart = this.props.source || {}
+    // if (chart.id) {
+    this.$chart = this.renderSummaryChart(chart)
+    // }
+  }
+
+  componentWillUnmount() {
+    if (this.$chart && this.$chart.destroy) {
+      this.$chart.destroy()
+    }
+  }
+
+  render() {
+    // const chart = this.props.source || {}
+    return (
+      <div id={'summary-chart-xxx'} style={{ height: '350px' }}>
+        暂无项目数据
+      </div>
+    )
+  }
 }
+
+export default Chart

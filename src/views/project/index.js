@@ -7,6 +7,7 @@ import Event from './event'
 import ProjectItem from 'src/components/projectItem'
 import MissionDetailDialog from 'src/components/missionDetailDialog'
 import AssignMissionDialog from 'src/components/assignMissionDialog'
+import Pager from 'src/components/pager'
 
 @VIEW
 @ComponentEvent('evt', Event)
@@ -41,7 +42,7 @@ export default class View extends PureComponent {
 
   render(props, state) {
     const { profile } = props.user$
-    const { projects } = props.project$
+    const projects = props.project$.projects || { list: [] }
 
     return (
       <div className="view-project">
@@ -51,7 +52,7 @@ export default class View extends PureComponent {
           </header>
           <div className="list clearfix">
             {
-              projects.map(item => (
+              projects.list.map(item => (
                 <ProjectItem
                   key={item.id}
                   source={item}
@@ -62,6 +63,11 @@ export default class View extends PureComponent {
               ))
             }
           </div>
+          <Pager
+            current={projects.skip / projects.limit + 1}
+            max={Math.ceil(projects.count / projects.limit)}
+            onClick={this.evt.onProjectPageClick}
+          />
         </div>
 
         <MissionDetailDialog

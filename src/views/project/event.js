@@ -3,8 +3,16 @@ import fetcher from 'src/utils/fetcher'
 
 export default class Event {
   // 获取首页需要的数据
-  fetchData = async () => {
-    await fetcher.one(this.props.$project.fetchList)
+  fetchData = async (page = 1) => {
+    await fetcher.one(this.props.$project.fetchList, {
+      skip: page * 9 - 9,
+      limit: 9,
+    })
+  }
+
+  // 翻页点击
+  onProjectPageClick = p => {
+    this.fetchData(p)
   }
 
   // 打开任务详情

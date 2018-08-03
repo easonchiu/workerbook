@@ -261,37 +261,40 @@ class MyDailyWriter extends PureComponent {
       )
     }
 
+    const list = Object.values(data)
     return (
       <div className="daily-list">
         {
-          Object.values(data).map((item, i) => {
-            const headerCss = className('header', 'clearfix', {
-              'setting': item.mission === this.state.setProgressId
-            })
-            return (
-              <div key={i} className="item">
-                <div className={headerCss}>
-                  <span />
-                  <strong>{item.groupTitle} - {item.progress}</strong>
-                  <div className="progress clearfix">
-                    <span>任务进度 <em>{item.progress} %</em></span>
-                    <IconRewrite.A
-                      tips="修改进度"
-                      onClick={this.onSetProgressClick.bind(null, item)}
-                    />
+          list && list.length ?
+            list.map((item, i) => {
+              const headerCss = className('header', 'clearfix', {
+                'setting': item.mission === this.state.setProgressId
+              })
+              return (
+                <div key={i} className="item">
+                  <div className={headerCss}>
+                    <span />
+                    <strong>{item.groupTitle} - {item.progress}</strong>
+                    <div className="progress clearfix">
+                      <span>任务进度 <em>{item.progress} %</em></span>
+                      <IconRewrite.A
+                        tips="修改进度"
+                        onClick={this.onSetProgressClick.bind(null, item)}
+                      />
+                    </div>
                   </div>
+                  {
+                    this.state.setProgressId === item.mission ?
+                      this.renderWrittenProgressSelect() :
+                      null
+                  }
+                  {
+                    item.list.map(dailyItem)
+                  }
                 </div>
-                {
-                  this.state.setProgressId === item.mission ?
-                    this.renderWrittenProgressSelect() :
-                    null
-                }
-                {
-                  item.list.map(dailyItem)
-                }
-              </div>
-            )
-          })
+              )
+            }) :
+            <p className="empty">今天还没写过日报哦~</p>
         }
       </div>
     )

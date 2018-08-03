@@ -54,10 +54,11 @@ const c_del = id => async dispatch => {
 }
 
 // fetch project list.
-const fetchList = () => async dispatch => {
+const fetchList = payload => async dispatch => {
   const res = await http.request({
     url: '/projects',
     method: 'GET',
+    params: payload,
   })
   dispatch(createAction('PROJECT_LIST')(res))
 }

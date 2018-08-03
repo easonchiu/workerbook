@@ -4,69 +4,135 @@ import VIEW from 'src/hoc/view'
 import ComponentEvent from 'src/hoc/componentEvent'
 import Event from './event'
 
-import Button from 'src/components/button'
+import PieChartProject from 'src/components/pieChartProject'
+import PieChartDepartment from 'src/components/pieChartDepartment'
+import Pager from 'src/components/pager'
 
 @VIEW
 @ComponentEvent('evt', Event)
 export default class View extends PureComponent {
-  componentDidMount() {
-    this.evt.fetchData()
+  constructor(props) {
+    super(props)
+    this.state = {
+      tabsIndex: 0
+    }
   }
 
-  render() {
-    const departments = this.props.chart$.departmentsSummary || { list: [] }
-    return (
-      <div className="view-chart">
+  componentDidMount() {
+    if (this.state.tabsIndex === 0) {
+      this.evt.fetchProjectData()
+    }
+    else {
+      this.evt.fetchDepartmentData()
+    }
+  }
 
+  // 项目图表列表
+  renderProjectsChart() {
+    const projects = this.props.analytics$.projectsList || { list: [] }
+    return (
+      <div className="projects-chart clearfix">
+        {
+          projects.list.map(item => {
+            return (
+              <PieChartProject
+                key={item.id}
+                source={item}
+                onClick={id => {
+                  this.props.history.push('/chart/project/' + id)
+                }}
+              />
+            )
+          })
+        }
+      </div>
+    )
+  }
+
+  // 部门图表列表
+  renderDepartmentsChart() {
+    const departments = this.props.analytics$.departmentsList || { list: [] }
+    return (
+      <div className="departments-chart clearfix">
+        {
+          departments.list.map(item => {
+            return (
+              <PieChartDepartment
+                key={item.id}
+                source={item}
+                onClick={id => {
+                  this.props.history.push('/chart/department/' + id)
+                }}
+              />
+            )
+          })
+        }
+      </div>
+    )
+  }
+
+  // 渲染项目页面
+  renderProjectPage() {
+    const projects = this.props.analytics$.projectsList || {}
+    return (
+      <div>
         <header className="chart-title">
           <h1>进行中的项目</h1>
         </header>
+        {this.renderProjectsChart()}
+        <Pager
+          current={projects.skip / projects.limit + 1}
+          max={Math.ceil(projects.count / projects.limit)}
+          onClick={this.evt.onProjectPageClick}
+        />
+      </div>
+    )
+  }
 
-        <div className="projects-chart clearfix">
-          <div className="panel">
-            <h2>第一个项目</h2>
-            <p>进度：80%</p>
-            <p>截止时间：2018-3-22</p>
-            <p>已用时：78天 剩余：14天</p>
-            <p>任务数：7</p>
-            <p>延期任务数：0</p>
-          </div>
-        </div>
-
+  // 渲染部门页面
+  renderDepartmentPage() {
+    const departments = this.props.analytics$.departmentsList || {}
+    return (
+      <div>
         <header className="chart-title">
-          <h1>部门</h1>
+          <h1>全部部门</h1>
+        </header>
+        {this.renderDepartmentsChart()}
+        <Pager
+          current={departments.skip / departments.limit + 1}
+          max={Math.ceil(departments.count / departments.limit)}
+          onClick={this.evt.onDepartmentPageClick}
+        />
+      </div>
+    )
+  }
+
+  render() {
+    return (
+      <div className="view-chart">
+
+        <header className="chart-tabs">
+          <a
+            href="javascript:;"
+            className={this.state.tabsIndex === 0 ? 'active' : ''}
+            onClick={this.evt.onTabsClick.bind(this, 0)}
+          >
+            项目
+          </a>
+          <a
+            href="javascript:;"
+            className={this.state.tabsIndex === 1 ? 'active' : ''}
+            onClick={this.evt.onTabsClick.bind(this, 1)}
+          >
+            部门
+          </a>
         </header>
 
-        <div className="departments-chart clearfix">
-          {
-            departments.list.map(item => {
-              // 异步渲染数据，同步顺序会出错
-              setTimeout(() => {
-                this.evt.renderDepartmentChart('chart' + item.id, item.missions || [])
-              })
-              return (
-                <div key={item.id} className="panel">
-                  <header className="header clearfix">
-                    <h2>{item.name}</h2>
-                    <span>人数：{item.userCount}</span>
-                  </header>
-                  <div className="chart" id={'chart' + item.id}>
-                    暂无任务数据
-                  </div>
-                  <Button
-                    light
-                    className="detail"
-                    onClick={() => {
-                      this.props.history.push('/chart/department/' + item.id)
-                    }}
-                  >
-                    详情
-                  </Button>
-                </div>
-              )
-            })
-          }
-        </div>
+        {
+          this.state.tabsIndex === 0 ?
+            this.renderProjectPage() :
+            this.renderDepartmentPage()
+        }
 
       </div>
     )

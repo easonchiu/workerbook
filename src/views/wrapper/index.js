@@ -10,7 +10,7 @@ const Index = AsyncComponent(() => import('src/views/index'))
 const Project = AsyncComponent(() => import('src/views/project'))
 const Chart = AsyncComponent(() => import('src/views/chart'))
 const ChartDepartment = AsyncComponent(() => import('src/views/chartDepartment'))
-// const ChartProject = AsyncComponent(() => import('src/views/chartProject'))
+const ChartProject = AsyncComponent(() => import('src/views/chartProject'))
 const Console = AsyncComponent(() => import('src/views/console'))
 
 @VIEW
@@ -67,6 +67,7 @@ class Wrapper extends React.PureComponent {
             <Route exact path="/project" component={Project} />
             <Route exact path="/chart" component={Chart} />
             <Route exact path="/chart/department/:id" component={ChartDepartment} />
+            <Route exact path="/chart/project/:id" component={ChartProject} />
             <Route exact path="/console/:p" component={Console} />
             <Redirect to="/index" />
           </Switch>

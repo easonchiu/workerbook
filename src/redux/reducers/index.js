@@ -5,7 +5,7 @@ import daily$ from './daily'
 import department$ from './department'
 import project$ from './project'
 import mission$ from './mission'
-import chart$ from './chart'
+import analytics$ from './analytics'
 
 export default combineReducers({
   user$,
@@ -13,5 +13,5 @@ export default combineReducers({
   department$,
   project$,
   mission$,
-  chart$,
+  analytics$,
 })
