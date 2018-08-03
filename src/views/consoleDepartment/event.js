@@ -4,14 +4,15 @@ import fetcher from 'src/utils/fetcher'
 export default class Event {
   fetchData = async (pager = 1) => {
     await fetcher.one(this.props.$department.c_fetchList, {
-      skip: pager * 30 - 30,
-      limit: 30,
+      skip: pager * 5 - 5,
+      limit: 5,
     })
   }
 
   // 翻页
-  onPageClick = pager => {
-    this.fetchData(pager)
+  onPageClick = p => {
+    this.fetchData(p)
+    this.props.history.push('?page=' + p)
   }
 
   // 新增部门提交

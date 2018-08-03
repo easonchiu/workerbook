@@ -110,6 +110,15 @@
         &:hover {
           background: #f7f9fc;
         }
+        &.timeout {
+          background: #ff660005;
+          .info time {
+            color: #ff6600;
+          }
+          &:hover {
+            background: #ff660009;
+          }
+        }
       }
       .wb-progress {
         position: absolute;

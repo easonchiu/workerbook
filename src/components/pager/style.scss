@@ -12,9 +12,11 @@
     justify-content: center;
     font-size: 14px;
     color: #586069;
+    background: #fff;
     position: relative;
     border-radius: 3px;
     margin-left: 4px;
+    user-select: none;
     &:hover, &.active {
       z-index: 2;
       border: 1px solid #5081ff;

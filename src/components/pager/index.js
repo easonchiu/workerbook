@@ -86,8 +86,10 @@ const Pager = props => {
     list = allList
   }
 
+  const css = classNames('wb-pager', props.className)
+
   return (
-    <div className="wb-pager">
+    <div className={css}>
       <a
         href="javascript:;"
         className={classNames('wb-pager__prev', {

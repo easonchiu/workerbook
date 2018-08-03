@@ -5,14 +5,15 @@ export default class Event {
   // 获取首页需要的数据
   fetchData = async (page = 1) => {
     await fetcher.one(this.props.$project.fetchList, {
-      skip: page * 9 - 9,
-      limit: 9,
+      skip: page * 3 - 3,
+      limit: 3,
     })
   }
 
   // 翻页点击
   onProjectPageClick = p => {
     this.fetchData(p)
+    this.props.history.push('?page=' + p)
   }
 
   // 打开任务详情
