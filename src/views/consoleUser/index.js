@@ -24,7 +24,8 @@ class ConsoleUser extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.evt.fetchData()
+    const p = this.search.page || 1
+    this.evt.fetchData(p)
   }
 
   // 添加用户的弹层

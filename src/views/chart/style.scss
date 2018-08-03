@@ -2,10 +2,6 @@
 .view-chart {
   padding-top: 20px;
 
-  .wb-pager {
-    justify-content: center;
-  }
-
   > .chart-tabs {
     border: 1px solid #dee3e8;
     background: #fff;
@@ -32,31 +28,6 @@
         color: #5081ff;
         font-weight: bold;
       }
-    }
-  }
-
-  .chart-title {
-    margin-bottom: 15px;
-    h1 {
-      font-size: 18px;
-      line-height: 20px;
-      font-weight: bold;
-    }
-  }
-
-  .projects-chart {
-    margin-right: -15px;
-    .wb-pie-chart-project {
-      float: left;
-      margin: 0 15px 15px 0;
-    }
-  }
-
-  .departments-chart {
-    margin-right: -15px;
-    .wb-pie-chart-department {
-      float: left;
-      margin: 0 15px 15px 0;
     }
   }
 }

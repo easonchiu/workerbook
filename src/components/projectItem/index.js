@@ -60,9 +60,12 @@ class ProjectItem extends React.PureComponent {
 
     const Item = data => {
       const user = data ? data.user ? data.user : {} : {}
+      const css = classNames('item', {
+        'timeout': data.isTimeout
+      })
       return (
         <div
-          className="item"
+          className={css}
           key={data.id}
           onClick={() => {
             props.onMissionClick &&
@@ -78,7 +81,7 @@ class ProjectItem extends React.PureComponent {
           />
           <div className="info">
             <h6>{data.name}</h6>
-            <time>截至时间 {(new Date(data.deadline)).format('yyyy年 MM月dd日 hh_mm_ss')}</time>
+            <time>截至时间 {(new Date(data.deadline)).format('yyyy年 MM月dd日')}</time>
           </div>
           <Progress width={40} value={data.progress} isTimeout={data.isTimeout} />
         </div>
@@ -165,7 +168,7 @@ class ProjectItem extends React.PureComponent {
             <span>时间周期</span>
             {new Date(source.createTime).format('yyyy年 MM月dd日')}
             {' ~ '}
-            {new Date(source.deadline).format('yyyy年 MM月dd日 hh_mm_ss')}
+            {new Date(source.deadline).format('yyyy年 MM月dd日')}
           </p>
           <IconDescription.A onClick={this.onToggleDescClick} />
         </footer>

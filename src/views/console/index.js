@@ -11,16 +11,16 @@ export default class View extends PureComponent {
     const page = this.props.location.pathname
     const menus = [{
       title: '人员管理',
-      to: '/console/user'
+      to: 'user'
     }, {
       title: '部门管理',
-      to: '/console/department'
+      to: 'department'
     }, {
       title: '项目管理',
-      to: '/console/project'
+      to: 'project'
     }, {
       title: '日程管理',
-      to: '/console/events'
+      to: 'events'
     }]
     return (
       <div className="console-aside">
@@ -29,7 +29,7 @@ export default class View extends PureComponent {
             menus.map(res => (
               <li
                 key={res.to}
-                className={page === res.to ? 'active' : ''}
+                className={page === '/console/' + res.to ? 'active' : ''}
               >
                 <Link to={res.to}>
                   <i /><span>{res.title}</span>
@@ -42,7 +42,7 @@ export default class View extends PureComponent {
     )
   }
 
-  render(props, state) {
+  render() {
     return (
       <div className="view-console clearfix">
 
