@@ -48,7 +48,8 @@ export default class Event {
 
   // 添加任务按钮点击
   onAddAssignMissionClick = async project => {
-    await fetcher.one(this.props.$user.fetchSubList, project.id)
+    const departments = project.departments ? project.departments.map(item => item.id) : []
+    await fetcher.one(this.props.$user.fetchSubList, departments)
     if (this.assignMissionDialog) {
       this.assignMissionDialog.$clear()
       this.assignMissionDialog.$project(project)
@@ -61,7 +62,7 @@ export default class Event {
     const project = data.project || {}
     const res = await fetcher.all([
       [this.props.$mission.fetchOneById, data.id],
-      [this.props.$user.fetchSubList, project.id]
+      [this.props.$user.fetchSubList, project.departments]
     ])
     if (this.assignMissionDialog) {
       const mission = res[0]
@@ -77,7 +78,11 @@ export default class Event {
   onAssignMissionSubmit = async data => {
     await fetcher.one(this.props.$mission.create, data)
     this.onCloseAssignMissionDialog()
-    await fetcher.one(this.props.$project.fetchList)
+    const p = this.search.page || 1
+    await fetcher.one(this.props.$project.fetchList, {
+      skip: p * 3 - 3,
+      limit: 3,
+    })
     Toast.success('添加成功')
   }
 
@@ -86,7 +91,11 @@ export default class Event {
     await fetcher.one(this.props.$mission.update, data)
     this.onCloseAssignMissionDialog()
     this.onCloseMissionDetailDialog()
-    await fetcher.one(this.props.$project.fetchList)
+    const p = this.search.page || 1
+    await fetcher.one(this.props.$project.fetchList, {
+      skip: p * 3 - 3,
+      limit: 3,
+    })
     Toast.success('修改成功')
   }
 

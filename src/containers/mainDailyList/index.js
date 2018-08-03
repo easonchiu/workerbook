@@ -9,10 +9,9 @@ const MainDailyList = props => {
     <article className="wb-main-daily-list">
       {
         source.list.map(item => {
-          const user = item.user || {}
           return (
             <div className="row clearfix" key={item.id}>
-              <UserHeader name={user.nickname} id={user.id} gray to="/" />
+              <UserHeader name={item.nickname} id={item.userId} gray to="/" />
               <DailyItem source={item} />
             </div>
           )

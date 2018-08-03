@@ -19,7 +19,7 @@ class MissionItem extends React.PureComponent {
           }
           {source.name}
         </h2>
-        <Progress width={60} value={source.progress} isTimeout={source.isTimeout} />
+        <Progress width={60} value={source.progress} isDelay={source.isDelay} />
         <h3>归属项目 {project.name}</h3>
         <p className="description">
           {project.description}

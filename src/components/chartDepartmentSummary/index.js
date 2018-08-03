@@ -6,7 +6,7 @@ class Chart extends React.PureComponent {
 
   // 渲染chart
   renderSummaryChart = chart => {
-    const list = chart.users || []
+    const list = chart.list || []
     const X = [] // 横坐标，用户名
     const Y = [[], [], [], []] // 纵坐标，任务
     list.forEach((item, index) => {
@@ -17,7 +17,7 @@ class Chart extends React.PureComponent {
       Y[3].push(0)
       item.missions.forEach(item => {
         // 已延期任务+1
-        if (item.isTimeout) {
+        if (item.isDelay) {
           Y[1][index] += 1
         }
         // 未开始任务+1

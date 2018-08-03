@@ -11,7 +11,7 @@ const Progress = props => {
     <div
       className={className('wb-progress', {
         [`wb-progress--${props.color}`]: props.color,
-        'wb-progress--timeout': props.isTimeout && props.value < 100,
+        'wb-progress--timeout': props.isDelay && props.value < 100,
       })}
       style={style}
     >

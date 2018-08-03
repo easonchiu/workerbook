@@ -5,7 +5,7 @@ import transId from 'src/utils/transId'
 // fetch one department summary
 const fetchDepartmentById = id => async dispatch => {
   const res = await http.request({
-    url: '/analytics/departments/' + id,
+    url: '/analysis/department/summary/' + id,
     method: 'GET',
   })
   dispatch(createAction('ANALYTICS_ONE_DEPARTMENT')(transId(res)))
@@ -14,7 +14,7 @@ const fetchDepartmentById = id => async dispatch => {
 // fetch departments summary
 const fetchDepartmentsList = payload => async dispatch => {
   const res = await http.request({
-    url: '/analytics/departments',
+    url: '/analysis/department',
     method: 'GET',
     params: payload,
   })
@@ -24,7 +24,7 @@ const fetchDepartmentsList = payload => async dispatch => {
 // fetch projects summary
 const fetchProjectsList = payload => async dispatch => {
   const res = await http.request({
-    url: '/analytics/projects',
+    url: '/analysis/project',
     method: 'GET',
     params: payload,
   })

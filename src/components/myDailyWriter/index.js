@@ -105,7 +105,7 @@ class MyDailyWriter extends PureComponent {
     if (!Err.Handle()) {
       this.props.onCreate &&
       this.props.onCreate({
-        content: this.state.content.trim(),
+        record: this.state.content.trim(),
         progress: this.state.progress,
         missionId: this.state.missionId,
       })
@@ -154,7 +154,7 @@ class MyDailyWriter extends PureComponent {
     if (!Err.Handle()) {
       this.props.onEdit &&
       this.props.onEdit({
-        content: this.state.rewriteContent.trim(),
+        record: this.state.rewriteContent.trim(),
         id: this.state.rewriteId,
       })
     }
@@ -182,16 +182,16 @@ class MyDailyWriter extends PureComponent {
     const data = {}
     dailies.forEach(item => {
       // 这是任务
-      if (item.mission && item.mission.id && item.project && item.project.id) {
-        const key = item.mission.id
+      if (item.missionId && item.projectId) {
+        const key = item.missionId
         if (typeof data[key] === 'undefined') {
           data[key] = { list: [] }
         }
         data[key]['mission'] = key
         data[key]['progress'] = item.progress
-        data[key]['groupTitle'] = item.project.name + item.mission.name
+        data[key]['groupTitle'] = item.projectName + item.missionName
         data[key]['list'].push({
-          content: item.content,
+          content: item.record,
           id: item.id,
         })
       }

@@ -13,14 +13,14 @@ const MissionDetailDialog = props => {
   source = source || {}
   const project = source.project || {}
   const user = source.user || {}
-  const stText = !user.exist ?
+  const stText = user.isDelete ?
     <em className="del">[已删除]</em> :
     user.status === 2 ? <em className="stop">[停用]</em> : ''
 
   const renderMission = () => (
     <div className="mission-info">
       <h3>{source.name}</h3>
-      <Progress width={60} value={source.progress} isTimeout={source.isTimeout} />
+      <Progress width={60} value={source.progress} isDelay={source.isDelay} />
       <time>
         <span>截至时间</span> {new Date(source.deadline).format('yyyy年 MM月dd日')}
       </time>
@@ -31,7 +31,7 @@ const MissionDetailDialog = props => {
           colorful
           name={user.nickname || ''}
           id={user.id}
-          status={!user.exist ? 99 : user.status}
+          status={user.isDelete ? 99 : user.status}
         />
         <div className="info">
           <p>{user.nickname}{stText}</p>

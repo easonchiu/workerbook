@@ -27,7 +27,7 @@ export default handleActions({
     return {
       ...state,
       departmentsList: {
-        list: action.payload.list || [],
+        list: action.payload || [],
         count: action.payload.count || 0,
         skip: action.payload.skip || 0,
         limit: action.payload.limit || 0,

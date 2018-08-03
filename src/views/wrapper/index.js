@@ -42,7 +42,13 @@ class Wrapper extends React.PureComponent {
           </nav>
           <div className="profile">
             <h6>晚上好：{profile.nickname}</h6>
-            <p>{profile.title}@{department.name}</p>
+            {
+              profile.title && department.name ?
+                <p>{profile.title}@{department.name}</p> :
+                department.name ?
+                  <p>{department.name}</p> :
+                  null
+            }
             <span>
               <a href="javascript:;">修改密码</a>
               <a href="javascript:;">退出帐号</a>

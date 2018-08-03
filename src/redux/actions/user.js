@@ -81,27 +81,28 @@ const fetchProfile = () => async (dispatch, getState) => {
 
 // fetch users list.
 const fetchList = payload => async dispatch => {
-  if (!payload.departmentId) {
-    payload = ignore(payload, 'departmentId')
-  }
+  const departments = payload.departmentId
+  payload = ignore(payload, 'departmentId')
   const res = await http.request({
     url: '/users',
     method: 'GET',
-    params: payload,
+    params: {
+      departments
+    },
   })
-  if (payload.departmentId && res) {
-    res.departmentId = payload.departmentId
+  if (departments && res) {
+    res.departmentId = departments
   }
   dispatch(createAction('USER_LIST')(transId(res)))
 }
 
 // fetch users list.
-const fetchSubList = projectId => async dispatch => {
+const fetchSubList = (departments = []) => async dispatch => {
   const res = await http.request({
-    url: '/users/subordinate',
+    url: '/users',
     method: 'GET',
     params: {
-      projectId
+      departments: departments.join(',')
     },
   })
   dispatch(createAction('USER_SUB_LIST')(transId(res)))

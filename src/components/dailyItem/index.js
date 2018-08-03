@@ -3,23 +3,22 @@ import React from 'react'
 
 const DailyItem = props => {
   const source = props.source || { list: [] }
-  const user = source.user || {}
 
   // 日报列表
   const renderDailyList = () => {
-    const dailies = source.dailies || []
+    const dailies = source.dailyList || []
     const data = {}
     dailies.forEach(item => {
       // 这是任务
-      if (item.mission && item.mission.id && item.project && item.project.id) {
-        const key = item.mission.id
+      if (item.missionId && item.projectId) {
+        const key = item.missionId
         if (typeof data[key] === 'undefined') {
           data[key] = { list: [] }
         }
         data[key]['progress'] = item.progress
-        data[key]['groupTitle'] = item.project.name + item.mission.name
+        data[key]['groupTitle'] = item.projectName + item.missionName
         data[key]['list'].push({
-          content: item.content,
+          content: item.record,
           id: item.id,
         })
       }
@@ -54,7 +53,7 @@ const DailyItem = props => {
   return (
     <section className="wb-daily-item">
       <header className="header">
-        <a href="javascript:;">{user.nickname}</a>
+        <a href="javascript:;">{source.nickname}</a>
         <span>更新于</span>
         <time>{new Date(source.updateTime).format('hh:mm:ss')}</time>
       </header>

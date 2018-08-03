@@ -23,7 +23,6 @@ export default class View extends PureComponent {
     return (
       <main className="view-login">
         <form>
-
           <Input
             placeholder="用户名"
             className="username"

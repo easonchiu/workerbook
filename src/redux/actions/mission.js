@@ -26,7 +26,7 @@ const update = payload => async () => {
 // fetch owns mission list.
 const fetchOwnsList = () => async dispatch => {
   const res = await http.request({
-    url: '/missions/owns',
+    url: '/missions/list',
     method: 'GET',
   })
   dispatch(createAction('OWNS_MISSION_LIST')(transId(res)))
@@ -35,7 +35,7 @@ const fetchOwnsList = () => async dispatch => {
 // fetch mission one by id
 const fetchOneById = id => async dispatch => {
   const res = await http.request({
-    url: '/missions/' + id,
+    url: '/missions/info/' + id,
     method: 'GET',
   })
   return transId(res)

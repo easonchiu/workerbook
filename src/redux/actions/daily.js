@@ -18,7 +18,7 @@ const fetchListByDay = ({ skip, limit = 10 } = {}) => async dispatch => {
 // create daily
 const create = payload => async () => {
   const res = await http.request({
-    url: '/dailies/today',
+    url: '/dailies',
     method: 'POST',
     data: payload,
   })
@@ -28,7 +28,7 @@ const create = payload => async () => {
 // update daily
 const update = payload => async () => {
   const res = await http.request({
-    url: '/dailies/today',
+    url: '/dailies',
     method: 'PUT',
     data: payload,
   })
@@ -38,7 +38,7 @@ const update = payload => async () => {
 // delete daily
 const del = payload => async () => {
   const res = await http.request({
-    url: '/dailies/today',
+    url: '/dailies',
     method: 'DELETE',
     data: payload,
   })
@@ -48,7 +48,7 @@ const del = payload => async () => {
 // fetch my today's daily
 const fetchToday = payload => async dispatch => {
   const res = await http.request({
-    url: '/dailies/today',
+    url: '/dailies/profile',
     method: 'GET',
   })
   dispatch(createAction('DAILY_TODAY')(transId(res)))
