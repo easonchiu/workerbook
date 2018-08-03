@@ -117,7 +117,7 @@ class PirChartDepartment extends React.PureComponent {
       <div key={data.id} className="wb-pie-chart-department">
         <header className="header clearfix">
           <h2>{data.name}</h2>
-          <span>人数：{data.userCount}</span>
+          <span>人数：{data.count}</span>
         </header>
         <div className="chart" id={'chart' + data.id}>
           暂无任务数据

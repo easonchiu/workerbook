@@ -1,5 +1,6 @@
 import { createAction } from 'easy-action'
 import http from 'src/utils/http'
+import transId from 'src/utils/transId'
 
 // fetch daily list by day.
 const fetchListByDay = ({ skip, limit = 10 } = {}) => async dispatch => {
@@ -11,7 +12,7 @@ const fetchListByDay = ({ skip, limit = 10 } = {}) => async dispatch => {
       limit,
     }
   })
-  dispatch(createAction('DAILY_LIST_BY_DAY')(res))
+  dispatch(createAction('DAILY_LIST_BY_DAY')(transId(res)))
 }
 
 // create daily
@@ -21,7 +22,7 @@ const create = payload => async () => {
     method: 'POST',
     data: payload,
   })
-  return res
+  return transId(res)
 }
 
 // update daily
@@ -31,7 +32,7 @@ const update = payload => async () => {
     method: 'PUT',
     data: payload,
   })
-  return res
+  return transId(res)
 }
 
 // delete daily
@@ -41,7 +42,7 @@ const del = payload => async () => {
     method: 'DELETE',
     data: payload,
   })
-  return res
+  return transId(res)
 }
 
 // fetch my today's daily
@@ -50,7 +51,7 @@ const fetchToday = payload => async dispatch => {
     url: '/dailies/today',
     method: 'GET',
   })
-  dispatch(createAction('DAILY_TODAY')(res))
+  dispatch(createAction('DAILY_TODAY')(transId(res)))
   return res
 }
 
@@ -58,12 +59,12 @@ const fetchToday = payload => async dispatch => {
 const updateProgress = payload => async dispatch => {
   const res = await http.request({
     url: '/dailies/today/mission/' + payload.missionId,
-    method: 'PATCH',
+    method: 'PUT',
     data: {
       progress: payload.progress
     }
   })
-  return res
+  return transId(res)
 }
 
 export default {

@@ -68,7 +68,7 @@ class ConsoleDepartment extends React.PureComponent {
       <tr key={res.id}>
         <td>{departments.skip + i + 1}</td>
         <td>{res.name}</td>
-        <td>{res.userCount}</td>
+        <td>{res.count}</td>
         <td>{new Date(res.createTime).format('yyyy-MM-dd hh:mm')}</td>
         <td className="c">
           <IconRewrite.A

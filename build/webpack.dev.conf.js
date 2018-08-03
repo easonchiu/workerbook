@@ -46,7 +46,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     port: config[process.env.PACKAGE].port,
     proxy: {
       '/proxy/*': {
-        target: 'http://localhost:8080/',
+        // target: 'http://localhost:8080/',
+        target: 'http://10.0.3.21:7001/',
         pathRewrite: {
           '^/proxy/': '/',
         },

@@ -45,7 +45,7 @@ const AsideDepartmentList = props => {
                 <Item active={active === item.id} onClick={itemClick.bind(null, item.id)}>
                   <i />
                   <span>{item.name}</span>
-                  <em>{item.userCount}人</em>
+                  <em>{item.count}人</em>
                 </Item>
               </li>
             )

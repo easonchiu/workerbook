@@ -50,7 +50,7 @@ http.interceptors.request.use(config => {
 http.interceptors.response.use(
   config => {
     // success handle
-    if (config.status === 204 || config.data.code === 0) {
+    if (config.status === 204 || config.data.code === '000000') {
       return config.data.data
     }
     // need to login, token is overdue or empty
