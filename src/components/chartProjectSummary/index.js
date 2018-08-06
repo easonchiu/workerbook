@@ -13,13 +13,21 @@ class Chart extends React.PureComponent {
     const range = []
 
     missions.forEach(item => {
-      const data = item.data
+      let data = item.data
       if (!data || !data.length) {
         return
       }
 
+      // 日期排序
+      data.sort((a, b) => {
+        const d1 = a.day.replace(/-/g, '')
+        const d2 = b.day.replace(/-/g, '')
+        return d1 > d2
+      })
+
       const d1 = data[0].day
       const d2 = data[item.data.length - 1].day
+
       // 只允许2006-01-02格式
       const reg = /^\d{4}(-\d{2}){2}$/
       if (!(reg).test(d1) || !(reg).test(d2)) {
@@ -72,6 +80,9 @@ class Chart extends React.PureComponent {
         d.data.forEach((i, index) => {
           if (d.data[index + 1] === null && i !== null) {
             d.data[index + 1] = i
+          }
+          if (i === 0) {
+            d.data[index] = null
           }
         })
       }
