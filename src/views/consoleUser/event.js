@@ -2,7 +2,7 @@ import Toast from 'src/components/toast'
 import fetcher from 'src/utils/fetcher'
 
 export default class Event {
-  fetchData = async (pager = 1) => {
+  fetchData = async (pager = this.search.page || 1) => {
     await fetcher.one(this.props.$user.c_fetchList, {
       skip: pager * 5 - 5,
       limit: 5,

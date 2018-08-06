@@ -10,8 +10,11 @@ import ChartMission from 'src/components/chartMission'
 @VIEW
 @ComponentEvent('evt', Event)
 export default class View extends PureComponent {
-  componentDidMount() {
-    this.evt.fetchData()
+  async componentDidMount() {
+    await this.evt.fetchData()
+    if (this.summaryChart) {
+      this.summaryChart.$fill()
+    }
   }
 
   renderEachMission(id) {
@@ -30,14 +33,22 @@ export default class View extends PureComponent {
   }
 
   renderSummary() {
+    const summary = this.props.analytics$.project.summary || { missions: [] }
     return (
       <div className="summary">
         <div className="inner">
           <header className="header">
-            <h1>app 5.3.1开发</h1>
+            <h1>{summary.name}</h1>
             <span>项目进度</span>
           </header>
-          <ChartProjectSummary source={{}} />
+          {
+            summary.id ?
+              <ChartProjectSummary
+                source={summary}
+                ref={r => { this.summaryChart = r }}
+              /> :
+              <div style={{ height: '350px' }} />
+          }
         </div>
       </div>
     )

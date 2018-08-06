@@ -77,7 +77,11 @@ export default class Event {
   onAssignMissionSubmit = async data => {
     await fetcher.one(this.props.$mission.create, data)
     this.onCloseAssignMissionDialog()
-    await fetcher.one(this.props.$project.fetchList)
+    const p = this.search.page || 1
+    await fetcher.one(this.props.$project.fetchList, {
+      skip: p * 3 - 3,
+      limit: 3,
+    })
     Toast.success('添加成功')
   }
 
@@ -86,7 +90,11 @@ export default class Event {
     await fetcher.one(this.props.$mission.update, data)
     this.onCloseAssignMissionDialog()
     this.onCloseMissionDetailDialog()
-    await fetcher.one(this.props.$project.fetchList)
+    const p = this.search.page || 1
+    await fetcher.one(this.props.$project.fetchList, {
+      skip: p * 3 - 3,
+      limit: 3,
+    })
     Toast.success('修改成功')
   }
 

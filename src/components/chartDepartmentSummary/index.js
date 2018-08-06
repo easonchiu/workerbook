@@ -114,7 +114,7 @@ class Chart extends React.PureComponent {
     })
   }
 
-  componentDidMount() {
+  $fill() {
     const chart = this.props.source || {}
     if (chart.id) {
       this.$chart = this.renderSummaryChart(chart)
@@ -130,9 +130,7 @@ class Chart extends React.PureComponent {
   render() {
     const chart = this.props.source || {}
     return (
-      <div id={'summary-chart' + chart.id} style={{ height: '250px' }}>
-        暂无项目数据
-      </div>
+      <div id={'summary-chart' + chart.id} style={{ height: '250px' }} />
     )
   }
 }

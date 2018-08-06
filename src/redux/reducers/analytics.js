@@ -1,7 +1,12 @@
 import { handleActions } from 'easy-action'
 
 const initialState = {
-  department: { users: [] },
+  department: {
+    summary: { users: [] }
+  },
+  project: {
+    summary: { missions: [] }
+  },
   departmentsList: {
     list: [],
     count: 0,
@@ -17,10 +22,22 @@ const initialState = {
 }
 
 export default handleActions({
-  ANALYTICS_ONE_DEPARTMENT(state, action) {
+  ANALYTICS_DEPARTMENT_SUMMARY(state, action) {
     return {
       ...state,
-      department: action.payload || { users: [] }
+      department: {
+        ...state.department,
+        summary: action.payload || { users: [] }
+      }
+    }
+  },
+  ANALYTICS_PROJECTS_SUMMARY(state, action) {
+    return {
+      ...state,
+      project: {
+        ...state.project,
+        summary: action.payload || { missions: [] }
+      }
     }
   },
   ANALYTICS_DEPARTMENTS_LIST(state, action) {

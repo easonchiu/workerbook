@@ -54,4 +54,11 @@
     width: 100px;
     margin: 0 auto 15px auto;
   }
+  &.timeout {
+    .info {
+      .delay {
+        color: #ff6600;
+      }
+    }
+  }
 }
