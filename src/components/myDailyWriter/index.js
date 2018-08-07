@@ -21,6 +21,7 @@ class MyDailyWriter extends PureComponent {
       rewriteId: '',
       rewriteContent: '',
       deleteId: '',
+      type: '',
 
       setProgressId: '',
       serProgressValue: 5,
@@ -57,10 +58,13 @@ class MyDailyWriter extends PureComponent {
     }
   }
 
-  // 任务选择
+  // 任务/日常选择
   onMissionChange = e => {
+    const isMission = (/\*\*mission/).test(e)
+    console.log(isMission)
     this.setState({
-      missionId: e
+      missionId: e,
+      type: isMission ? 'mission' : 'events',
     })
   }
 
@@ -100,14 +104,16 @@ class MyDailyWriter extends PureComponent {
   // 添加日报（发布按钮点击）
   onAppendClick = () => {
     Err.IfEmpty(this.state.content, '日报内容不能为空')
-    Err.IfEmpty(this.state.missionId, '请选择任务')
+    Err.IfEmpty(this.state.missionId, '请选择任务或日常')
 
     if (!Err.Handle()) {
+      const select = this.state.missionId.split('**')
       this.props.onCreate &&
       this.props.onCreate({
         record: this.state.content.trim(),
         progress: this.state.progress,
-        missionId: this.state.missionId,
+        [select[1] === 'events' ? 'eventId' : 'missionId']: select[0],
+        type: select[1],
       })
     }
   }
@@ -116,6 +122,7 @@ class MyDailyWriter extends PureComponent {
   $clear = () => {
     this.setState({
       content: '',
+      type: '',
       rewriteId: '',
       rewriteContent: '',
       deleteId: '',
@@ -187,9 +194,23 @@ class MyDailyWriter extends PureComponent {
         if (typeof data[key] === 'undefined') {
           data[key] = { list: [] }
         }
+        data[key]['type'] = 'mission'
         data[key]['mission'] = key
         data[key]['progress'] = item.progress
-        data[key]['groupTitle'] = item.projectName + item.missionName
+        data[key]['groupTitle'] = item.projectName + ' - ' + item.missionName
+        data[key]['list'].push({
+          content: item.record,
+          id: item.id,
+        })
+      }
+      // 这是日常
+      else if (item.eventId) {
+        const key = item.eventId
+        if (typeof data[key] === 'undefined') {
+          data[key] = { list: [] }
+        }
+        data[key]['type'] = 'events'
+        data[key]['groupTitle'] = item.eventName
         data[key]['list'].push({
           content: item.record,
           id: item.id,
@@ -273,15 +294,30 @@ class MyDailyWriter extends PureComponent {
               return (
                 <div key={i} className="item">
                   <div className={headerCss}>
-                    <span />
-                    <strong>{item.groupTitle} - {item.progress}</strong>
-                    <div className="progress clearfix">
-                      <span>任务进度 <em>{item.progress} %</em></span>
-                      <IconRewrite.A
-                        tips="修改进度"
-                        onClick={this.onSetProgressClick.bind(null, item)}
-                      />
-                    </div>
+                    {
+                      item.type === 'mission' ?
+                        <span /> :
+                        null
+                    }
+                    <strong>
+                      {
+                        item.type === 'events' ?
+                          <em>[日常]</em> :
+                          null
+                      }
+                      {item.groupTitle}
+                    </strong>
+                    {
+                      item.type === 'mission' ?
+                        <div className="progress clearfix">
+                          <span>任务进度 <em>{item.progress} %</em></span>
+                          <IconRewrite.A
+                            tips="修改进度"
+                            onClick={this.onSetProgressClick.bind(null, item)}
+                          />
+                        </div> :
+                        null
+                    }
                   </div>
                   {
                     this.state.setProgressId === item.mission ?
@@ -303,17 +339,50 @@ class MyDailyWriter extends PureComponent {
   // 任务select
   renderMissionSelect() {
     const missions = this.props.missionSelect || []
+    const events = this.props.eventsSelect || []
+
+    const missionsOptions = () => {
+      if (missions.length) {
+        const list = missions.map(item => (
+          <Select.Option
+            key={item.id}
+            value={item.id + '**mission'}
+          >
+            <h2>{item.text.p}</h2>
+            <span>{item.text.t}</span>
+          </Select.Option>
+        ))
+        list.unshift(<p key="missions-title" className="title">任务</p>)
+        return list
+      }
+      return []
+    }
+
+    const eventsOptions = () => {
+      if (events.length) {
+        const list = events.map(item => (
+          <Select.Option
+            key={item.id}
+            value={item.id + '**events'}
+          >
+            {item.text}
+          </Select.Option>
+        ))
+        list.unshift(<p key="events-title" className="title">日常</p>)
+        return list
+      }
+      return []
+    }
+
     return (
       <Select
         value={this.state.missionId}
         onClick={this.onMissionChange}
-        className="select-missions"
-        placeholder="请选择任务"
+        className="select-missions_events"
+        placeholder="请选择任务 / 日常"
       >
         {
-          missions.map(item => (
-            <Select.Option key={item.id} value={item.id}>{item.text}</Select.Option>
-          ))
+          [...missionsOptions(), ...eventsOptions()]
         }
       </Select>
     )
@@ -397,7 +466,11 @@ class MyDailyWriter extends PureComponent {
 
         <div className="tools clearfix">
           {this.renderMissionSelect()}
-          {this.renderProgressSelect()}
+          {
+            this.state.type === 'mission' ?
+              this.renderProgressSelect() :
+              null
+          }
           <Button className="send-button" onClick={this.onAppendClick}>
             发布一条
           </Button>

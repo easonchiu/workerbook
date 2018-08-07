@@ -42,14 +42,20 @@ export default class View extends PureComponent {
   }
 
   render(props, state) {
-    const { profile } = props.user$
+    const profile = props.user$.profile || {}
     const projects = props.project$.projects || { list: [] }
 
     return (
       <div className="view-project">
         <div className="project-list">
           <header>
-            <h1>参与中的</h1>
+            <h1>
+              {
+                (profile.role === 99 || profile.role === '99') ?
+                  '进行中的' :
+                  '参与中的'
+              }
+            </h1>
           </header>
           <div className="list clearfix">
             {
@@ -76,6 +82,7 @@ export default class View extends PureComponent {
           visible={state.missionDetailDialogVisible}
           onEditClick={this.evt.onEditAssignMissionClick}
           onCloseClick={this.evt.onCloseMissionDetailDialog}
+          onDeleteClick={this.evt.onDelMissionSubmit}
         />
 
         {this.renderAssignMissionDialog()}

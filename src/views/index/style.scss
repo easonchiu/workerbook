@@ -1,6 +1,10 @@
 @charset "utf-8";
 
 .view-index {
+  .empty-header-missions {
+    height: 20px;
+  }
+
   > .header-missions {
     background: #fff;
     padding: 20px 0 20px;

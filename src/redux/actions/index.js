@@ -4,6 +4,7 @@ import $department from './department'
 import $project from './project'
 import $mission from './mission'
 import $analytics from './analytics'
+import $events from './events'
 
 export default {
   $user,
@@ -12,4 +13,5 @@ export default {
   $project,
   $mission,
   $analytics,
+  $events,
 }

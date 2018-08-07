@@ -1,6 +1,7 @@
 import { createAction } from 'easy-action'
 import http from 'src/utils/http'
 import transId from 'src/utils/transId'
+import ignore from 'src/utils/ignore'
 
 // fetch daily list by day.
 const fetchListByDay = ({ skip, limit = 10 } = {}) => async dispatch => {
@@ -28,9 +29,9 @@ const create = payload => async () => {
 // update daily
 const update = payload => async () => {
   const res = await http.request({
-    url: '/dailies',
+    url: '/dailies/' + payload.id,
     method: 'PUT',
-    data: payload,
+    data: ignore(payload, 'id'),
   })
   return transId(res)
 }
@@ -38,9 +39,9 @@ const update = payload => async () => {
 // delete daily
 const del = payload => async () => {
   const res = await http.request({
-    url: '/dailies',
+    url: '/dailies/' + payload.id,
     method: 'DELETE',
-    data: payload,
+    data: ignore(payload, 'id'),
   })
   return transId(res)
 }

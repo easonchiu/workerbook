@@ -21,6 +21,9 @@ export default class View extends PureComponent {
   // 任务栏
   renderMissionBar() {
     const list = this.props.mission$.owns_missions || []
+    if (!list.length) {
+      return <div className="empty-header-missions" />
+    }
     return (
       <div className="header-missions">
         <div className="inner">
@@ -41,8 +44,20 @@ export default class View extends PureComponent {
 
   // 日报编写区
   renderMyDailyWriter() {
+    const role = this.props.user$.profile.role
+    if (role === '99' || role === 99) {
+      return null
+    }
     const missions = this.props.mission$.owns_missions || []
-    const select = missions.map(item => ({
+    const events = this.props.events$.events || []
+    const missionSelect = missions.map(item => ({
+      id: item.id,
+      text: {
+        t: item.name,
+        p: item.project.name,
+      },
+    }))
+    const eventsSelect = events.map(item => ({
       id: item.id,
       text: item.name,
     }))
@@ -51,7 +66,8 @@ export default class View extends PureComponent {
       <MyDailyWriter
         ref={r => { this.myDailyWriter = r }}
         dailies={dailies}
-        missionSelect={select}
+        missionSelect={missionSelect}
+        eventsSelect={eventsSelect}
         onEdit={this.evt.onEditDaily}
         onDelete={this.evt.onDeleteDaily}
         onCreate={this.evt.onCreateDaily}

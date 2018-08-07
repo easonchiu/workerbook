@@ -36,6 +36,12 @@
         border-bottom: none;
         padding-bottom: 15px;
       }
+      &.item--events {
+        .header em {
+          padding-right: 5px;
+          color: #a8b0b9;
+        }
+      }
     }
     .header {
       font-size: 14px;

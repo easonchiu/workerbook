@@ -34,7 +34,9 @@ const UserHeader = props => {
     }
   }
 
-  let color = props.id ? props.id.toString().replace(/\D/g, '') : 0
+  const az = 'abcdefghijklmnopqrstuvwxyz'.split('')
+  let color = props.id ? props.id.toString().replace(/\D/g, i => az.indexOf(i)) : '10584295'
+  color = color.substr(1, 6)
   color = color ? (color - 0) % 6 : 0
 
   const css = classNames('wb-user-header', [`color-${color}`], props.className, {

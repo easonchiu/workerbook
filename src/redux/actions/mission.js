@@ -23,6 +23,16 @@ const update = payload => async () => {
   return transId(res)
 }
 
+// delete mission
+const del = payload => async () => {
+  const res = await http.request({
+    url: '/missions/' + payload.id,
+    method: 'DELETE',
+    data: ignore(payload, 'id'),
+  })
+  return transId(res)
+}
+
 // fetch owns mission list.
 const fetchOwnsList = () => async dispatch => {
   const res = await http.request({
@@ -44,6 +54,7 @@ const fetchOneById = id => async dispatch => {
 export default {
   create,
   update,
+  del,
   fetchOwnsList,
   fetchOneById,
 }

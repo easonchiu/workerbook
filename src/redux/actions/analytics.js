@@ -2,16 +2,7 @@ import { createAction } from 'easy-action'
 import http from 'src/utils/http'
 import transId from 'src/utils/transId'
 
-// fetch one department summary
-const fetchDepartmentById = id => async dispatch => {
-  const res = await http.request({
-    url: '/analysis/department/summary/' + id,
-    method: 'GET',
-  })
-  dispatch(createAction('ANALYTICS_ONE_DEPARTMENT')(transId(res)))
-}
-
-// fetch departments summary
+// fetch departments list
 const fetchDepartmentsList = payload => async dispatch => {
   const res = await http.request({
     url: '/analysis/department',
@@ -21,7 +12,16 @@ const fetchDepartmentsList = payload => async dispatch => {
   dispatch(createAction('ANALYTICS_DEPARTMENTS_LIST')(transId(res)))
 }
 
-// fetch projects summary
+// fetch one department summary
+const fetchDepartmentSummary = id => async dispatch => {
+  const res = await http.request({
+    url: '/analysis/department/summary/' + id,
+    method: 'GET',
+  })
+  dispatch(createAction('ANALYTICS_DEPARTMENT_SUMMARY')(transId(res)))
+}
+
+// fetch projects list
 const fetchProjectsList = payload => async dispatch => {
   const res = await http.request({
     url: '/analysis/project',
@@ -31,8 +31,18 @@ const fetchProjectsList = payload => async dispatch => {
   dispatch(createAction('ANALYTICS_PROJECTS_LIST')(transId(res)))
 }
 
+// fetch one project summary
+const fetchProjectSummary = id => async dispatch => {
+  const res = await http.request({
+    url: '/analysis/project/summary/' + id,
+    method: 'GET',
+  })
+  dispatch(createAction('ANALYTICS_PROJECTS_SUMMARY')(transId(res)))
+}
+
 export default {
-  fetchDepartmentById,
   fetchDepartmentsList,
+  fetchDepartmentSummary,
   fetchProjectsList,
+  fetchProjectSummary,
 }

@@ -6,6 +6,7 @@ import department$ from './department'
 import project$ from './project'
 import mission$ from './mission'
 import analytics$ from './analytics'
+import events$ from './events'
 
 export default combineReducers({
   user$,
@@ -14,4 +15,5 @@ export default combineReducers({
   project$,
   mission$,
   analytics$,
+  events$,
 })

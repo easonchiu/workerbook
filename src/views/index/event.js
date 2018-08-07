@@ -4,19 +4,29 @@ import Toast from 'src/components/toast'
 export default class Event {
   // 获取首页需要的数据
   fetchData = async () => {
-    await fetcher.all([
+    const role = this.props.user$.profile.role
+
+    const list = [
       [this.props.$department.fetchList, {
         skip: 0,
         limit: 5,
       }],
-      this.props.$mission.fetchOwnsList,
-      this.props.$daily.fetchToday,
       this.props.$daily.fetchListByDay,
       [this.props.$user.fetchList, {
         skip: 0,
         limit: 6,
       }],
-    ])
+    ]
+
+    if (role !== 99) {
+      list.push(
+        this.props.$mission.fetchOwnsList,
+        this.props.$daily.fetchToday,
+        this.props.$events.fetchList,
+      )
+    }
+
+    await fetcher.all(list)
   }
 
   // 侧栏部门翻页

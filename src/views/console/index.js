@@ -5,6 +5,7 @@ import { Link, Route, Switch, Redirect } from 'react-router-dom'
 import ConsoleUser from 'src/views/consoleUser'
 import ConsoleDepartment from 'src/views/consoleDepartment'
 import ConsoleProject from 'src/views/consoleProject'
+import ConsoleEvent from 'src/views/consoleEvent'
 
 export default class View extends PureComponent {
   renderAside() {
@@ -19,7 +20,7 @@ export default class View extends PureComponent {
       title: '项目管理',
       to: 'project'
     }, {
-      title: '日程管理',
+      title: '日常管理',
       to: 'events'
     }]
     return (
@@ -53,6 +54,7 @@ export default class View extends PureComponent {
             <Route exact path="/console/user" component={ConsoleUser} />
             <Route exact path="/console/department" component={ConsoleDepartment} />
             <Route exact path="/console/project" component={ConsoleProject} />
+            <Route exact path="/console/events" component={ConsoleEvent} />
             <Redirect to="/console/user" />
           </Switch>
         </div>

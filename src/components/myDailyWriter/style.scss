@@ -63,6 +63,10 @@
         color: #eb7350;
         width: 550px;
         text-align: justify;
+        em {
+          padding-right: 5px;
+          color: #a8b0b9;
+        }
       }
       .progress {
         display: none;
@@ -217,9 +221,35 @@
     }
   }
 
-  .select-missions {
+  .select-missions_events {
     float: left;
     margin-right: 10px;
+    .title {
+      background: #edf2f7;
+      color: #8a929b;
+      padding: 0 10px;
+      line-height: 30px;
+      font-size: 12px;
+      pointer-events: none;
+    }
+    width: auto;
+    min-width: 160px;
+    .wb-select__value {
+      h2 {
+        display: none;
+      }
+    }
+    .wb-select__list {
+      right: auto;
+      width: 250px;
+      h2 {
+        font-size: 12px;
+        color: #8a929b;
+      }
+      a {
+        border-bottom: 1px solid #edf2f7;
+      }
+    }
   }
 
   .select-progress {

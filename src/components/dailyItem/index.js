@@ -1,5 +1,6 @@
 import './style'
 import React from 'react'
+import classNames from 'classnames'
 
 const DailyItem = props => {
   const source = props.source || { list: [] }
@@ -16,7 +17,21 @@ const DailyItem = props => {
           data[key] = { list: [] }
         }
         data[key]['progress'] = item.progress
-        data[key]['groupTitle'] = item.projectName + item.missionName
+        data[key]['type'] = 'mission'
+        data[key]['groupTitle'] = item.projectName + ' - ' + item.missionName
+        data[key]['list'].push({
+          content: item.record,
+          id: item.id,
+        })
+      }
+      // 这是日常
+      else if (item.eventId) {
+        const key = item.eventId
+        if (typeof data[key] === 'undefined') {
+          data[key] = { list: [] }
+        }
+        data[key]['type'] = 'events'
+        data[key]['groupTitle'] = item.eventName
         data[key]['list'].push({
           content: item.record,
           id: item.id,
@@ -28,11 +43,19 @@ const DailyItem = props => {
       <div className="daily-list">
         {
           Object.values(data).map((item, i) => {
+            const css = classNames('item', `item--${item.type}`)
             return (
-              <div key={i} className="item">
+              <div key={i} className={css}>
                 <div className="header clearfix">
-                  <span />
-                  <strong>{item.groupTitle}</strong>
+                  {
+                    item.type === 'mission' ? <span /> : null
+                  }
+                  {
+                    item.type === 'mission' ?
+                      <strong>{item.groupTitle}</strong> :
+                      <strong><em>[日常]</em>{item.groupTitle}</strong>
+                  }
+
                 </div>
                 {
                   item.list.map((k, i) => (

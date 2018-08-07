@@ -99,4 +99,17 @@ export default class Event {
     Toast.success('修改成功')
   }
 
+  // 删除任务提交
+  onDelMissionSubmit = async data => {
+    await fetcher.one(this.props.$mission.del, data)
+    this.onCloseAssignMissionDialog()
+    this.onCloseMissionDetailDialog()
+    const p = this.search.page || 1
+    await fetcher.one(this.props.$project.fetchList, {
+      skip: p * 3 - 3,
+      limit: 3,
+    })
+    Toast.success('修改成功')
+  }
+
 }
