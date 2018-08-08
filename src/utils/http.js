@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { getToken, clearToken } from 'src/utils/token'
+import transId from 'src/utils/transId'
 
 // type an error
 function HttpError(message, data) {
@@ -51,7 +52,7 @@ http.interceptors.response.use(
   config => {
     // success handle
     if (config.status === 204 || config.data.code === '000000') {
-      return config.data.data
+      return transId(config.data.data)
     }
     // need to login, token is overdue or empty
     else if (config.data.code === 401) {

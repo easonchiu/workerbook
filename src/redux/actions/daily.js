@@ -1,6 +1,5 @@
 import { createAction } from 'easy-action'
 import http from 'src/utils/http'
-import transId from 'src/utils/transId'
 import ignore from 'src/utils/ignore'
 
 // fetch daily list by day.
@@ -13,7 +12,7 @@ const fetchListByDay = ({ skip, limit = 10 } = {}) => async dispatch => {
       limit,
     }
   })
-  dispatch(createAction('DAILY_LIST_BY_DAY')(transId(res)))
+  dispatch(createAction('DAILY_LIST_BY_DAY')(res))
 }
 
 // create daily
@@ -23,7 +22,7 @@ const create = payload => async () => {
     method: 'POST',
     data: payload,
   })
-  return transId(res)
+  return res
 }
 
 // update daily
@@ -33,7 +32,7 @@ const update = payload => async () => {
     method: 'PUT',
     data: ignore(payload, 'id'),
   })
-  return transId(res)
+  return res
 }
 
 // delete daily
@@ -43,7 +42,7 @@ const del = payload => async () => {
     method: 'DELETE',
     data: ignore(payload, 'id'),
   })
-  return transId(res)
+  return res
 }
 
 // fetch my today's daily
@@ -52,7 +51,7 @@ const fetchToday = payload => async dispatch => {
     url: '/dailies/profile',
     method: 'GET',
   })
-  dispatch(createAction('DAILY_TODAY')(transId(res)))
+  dispatch(createAction('DAILY_TODAY')(res))
   return res
 }
 
@@ -65,7 +64,7 @@ const updateProgress = payload => async dispatch => {
       progress: payload.progress
     }
   })
-  return transId(res)
+  return res
 }
 
 export default {

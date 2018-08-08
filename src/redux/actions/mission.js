@@ -1,7 +1,6 @@
 import { createAction } from 'easy-action'
 import http from 'src/utils/http'
 import ignore from 'src/utils/ignore'
-import transId from 'src/utils/transId'
 
 // create mission
 const create = payload => async () => {
@@ -10,7 +9,7 @@ const create = payload => async () => {
     method: 'POST',
     data: payload
   })
-  return transId(res)
+  return res
 }
 
 // update mission
@@ -20,7 +19,7 @@ const update = payload => async () => {
     method: 'PUT',
     data: ignore(payload, 'id'),
   })
-  return transId(res)
+  return res
 }
 
 // delete mission
@@ -30,7 +29,7 @@ const del = payload => async () => {
     method: 'DELETE',
     data: ignore(payload, 'id'),
   })
-  return transId(res)
+  return res
 }
 
 // fetch owns mission list.
@@ -39,7 +38,7 @@ const fetchOwnsList = () => async dispatch => {
     url: '/missions/list',
     method: 'GET',
   })
-  dispatch(createAction('OWNS_MISSION_LIST')(transId(res)))
+  dispatch(createAction('OWNS_MISSION_LIST')(res))
 }
 
 // fetch mission one by id
@@ -48,7 +47,7 @@ const fetchOneById = id => async dispatch => {
     url: '/missions/info/' + id,
     method: 'GET',
   })
-  return transId(res)
+  return res
 }
 
 export default {

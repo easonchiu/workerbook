@@ -1,7 +1,6 @@
 import { createAction } from 'easy-action'
 import http from 'src/utils/http'
 import ignore from 'src/utils/ignore'
-import transId from 'src/utils/transId'
 
 // create project
 const c_create = payload => async () => {
@@ -10,7 +9,7 @@ const c_create = payload => async () => {
     method: 'POST',
     data: payload
   })
-  return transId(res)
+  return res
 }
 
 // update project
@@ -20,7 +19,7 @@ const c_update = payload => async () => {
     method: 'PUT',
     data: ignore(payload, 'id'),
   })
-  return transId(res)
+  return res
 }
 
 // fetch project list.
@@ -33,7 +32,7 @@ const c_fetchList = ({ skip = 0, limit = 10 } = {}) => async dispatch => {
       limit,
     }
   })
-  dispatch(createAction('C_PROJECT_LIST')(transId(res)))
+  dispatch(createAction('C_PROJECT_LIST')(res))
 }
 
 // fetch project one by id
@@ -42,7 +41,7 @@ const c_fetchOneById = id => async dispatch => {
     url: '/console/projects/' + id,
     method: 'GET',
   })
-  return transId(res)
+  return res
 }
 
 // delete project
@@ -51,7 +50,7 @@ const c_del = id => async dispatch => {
     url: '/console/projects/' + id,
     method: 'DELETE',
   })
-  return transId(res)
+  return res
 }
 
 // fetch project list.
@@ -61,7 +60,7 @@ const fetchList = payload => async dispatch => {
     method: 'GET',
     params: payload,
   })
-  dispatch(createAction('PROJECT_LIST')(transId(res)))
+  dispatch(createAction('PROJECT_LIST')(res))
 }
 
 export default {

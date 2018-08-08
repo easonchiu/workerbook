@@ -1,34 +1,47 @@
 import { createAction } from 'easy-action'
 import http from 'src/utils/http'
-import transId from 'src/utils/transId'
 
-// fetch departments list
+// fetch department list
 const fetchDepartmentsList = payload => async dispatch => {
   const res = await http.request({
     url: '/analysis/department',
     method: 'GET',
     params: payload,
   })
-  dispatch(createAction('ANALYTICS_DEPARTMENTS_LIST')(transId(res)))
+  dispatch(createAction('ANALYTICS_DEPARTMENTS_LIST')({
+    list: res,
+    skip: 0,
+    limit: 0,
+    count: res.length,
+  }))
 }
 
-// fetch one department summary
+// fetch department summary
 const fetchDepartmentSummary = id => async dispatch => {
   const res = await http.request({
     url: '/analysis/department/summary/' + id,
     method: 'GET',
   })
-  dispatch(createAction('ANALYTICS_DEPARTMENT_SUMMARY')(transId(res)))
+  dispatch(createAction('ANALYTICS_DEPARTMENT_SUMMARY')(res))
 }
 
-// fetch projects list
+// fetch department detail
+const fetchDepartmentDetail = id => async dispatch => {
+  const res = await http.request({
+    url: '/analysis/department/detail/' + id,
+    method: 'GET',
+  })
+  dispatch(createAction('ANALYTICS_DEPARTMENT_DETAIL')(res))
+}
+
+// fetch project list
 const fetchProjectsList = payload => async dispatch => {
   const res = await http.request({
     url: '/analysis/project',
     method: 'GET',
     params: payload,
   })
-  dispatch(createAction('ANALYTICS_PROJECTS_LIST')(transId(res)))
+  dispatch(createAction('ANALYTICS_PROJECTS_LIST')(res))
 }
 
 // fetch one project summary
@@ -37,12 +50,23 @@ const fetchProjectSummary = id => async dispatch => {
     url: '/analysis/project/summary/' + id,
     method: 'GET',
   })
-  dispatch(createAction('ANALYTICS_PROJECTS_SUMMARY')(transId(res)))
+  dispatch(createAction('ANALYTICS_PROJECT_SUMMARY')(res))
+}
+
+// fetch project detail
+const fetchProjectDetail = id => async dispatch => {
+  const res = await http.request({
+    url: '/analysis/project/detail/' + id,
+    method: 'GET',
+  })
+  dispatch(createAction('ANALYTICS_PROJECT_DETAIL')(res))
 }
 
 export default {
   fetchDepartmentsList,
   fetchDepartmentSummary,
+  fetchDepartmentDetail,
   fetchProjectsList,
   fetchProjectSummary,
+  fetchProjectDetail,
 }

@@ -1,7 +1,6 @@
 import http from 'src/utils/http'
 import { createAction } from 'easy-action'
 import ignore from 'src/utils/ignore'
-import transId from 'src/utils/transId'
 
 // 管理后台相关接口
 // create user
@@ -11,7 +10,7 @@ const c_create = payload => async () => {
     method: 'POST',
     data: payload,
   })
-  return transId(res)
+  return res
 }
 
 // update user
@@ -21,7 +20,7 @@ const c_update = payload => async () => {
     method: 'PUT',
     data: payload,
   })
-  return transId(res)
+  return res
 }
 
 // fetch users list.
@@ -35,7 +34,7 @@ const c_fetchList = ({ departmentId, skip, limit = 10 } = {}) => async dispatch 
       limit,
     }
   })
-  dispatch(createAction('C_USER_LIST')(transId(res)))
+  dispatch(createAction('C_USER_LIST')(res))
 }
 
 // fetch user one by id
@@ -44,7 +43,7 @@ const c_fetchOneById = id => async dispatch => {
     url: '/console/users/' + id,
     method: 'GET',
   })
-  return transId(res)
+  return res
 }
 
 // delete user
@@ -53,7 +52,7 @@ const c_del = id => async dispatch => {
     url: '/console/users/' + id,
     method: 'DELETE',
   })
-  return transId(res)
+  return res
 }
 
 // user login
@@ -76,7 +75,7 @@ const fetchProfile = () => async (dispatch, getState) => {
     url: '/users/profile',
     method: 'GET',
   })
-  dispatch(createAction('USER_PROFILE')(transId(res)))
+  dispatch(createAction('USER_PROFILE')(res))
 }
 
 // fetch users list.
@@ -93,7 +92,7 @@ const fetchList = payload => async dispatch => {
   if (departments && res) {
     res.departmentId = departments
   }
-  dispatch(createAction('USER_LIST')(transId(res)))
+  dispatch(createAction('USER_LIST')(res))
 }
 
 // fetch users list.
@@ -105,7 +104,7 @@ const fetchSubList = (departments = []) => async dispatch => {
       departments: departments.join(',')
     },
   })
-  dispatch(createAction('USER_SUB_LIST')(transId(res)))
+  dispatch(createAction('USER_SUB_LIST')(res))
 }
 
 export default {

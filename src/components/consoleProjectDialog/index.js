@@ -190,7 +190,33 @@ class ConsoleProjectDialog extends React.PureComponent {
     )
   }
 
+  // 键盘控制
+  onKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      if (this.state.id) {
+        this.onFormEditSubmit()
+      }
+      else {
+        this.onFormSubmit()
+      }
+    }
+    else if (e.keyCode === 27) {
+      this.props.onClose && this.props.onClose()
+    }
+  }
+
   render() {
+    // 添加或移除键盘事件
+    if (this.props.visible) {
+      if (!this.$listener) {
+        window.addEventListener('keydown', this.onKeyDown)
+        this.$listener = true
+      }
+    }
+    else if (this.$listener) {
+      this.$listener = false
+      window.removeEventListener('keydown', this.onKeyDown)
+    }
     return this.renderDialog()
   }
 }

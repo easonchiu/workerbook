@@ -1,6 +1,5 @@
 import { createAction } from 'easy-action'
 import http from 'src/utils/http'
-import transId from 'src/utils/transId'
 
 // create events
 const c_create = payload => async () => {
@@ -9,7 +8,7 @@ const c_create = payload => async () => {
     method: 'POST',
     data: payload,
   })
-  return transId(res)
+  return res
 }
 
 // fetch events list.
@@ -22,7 +21,7 @@ const c_fetchList = ({ skip = 0, limit = 10 } = {}) => async dispatch => {
       limit,
     }
   })
-  dispatch(createAction('C_EVENTS_LIST')(transId(res)))
+  dispatch(createAction('C_EVENTS_LIST')(res))
 }
 
 // delete department
@@ -31,7 +30,7 @@ const c_del = id => async dispatch => {
     url: '/console/events/' + id,
     method: 'DELETE',
   })
-  return transId(res)
+  return res
 }
 
 // fetch events list.
@@ -40,7 +39,7 @@ const fetchList = () => async dispatch => {
     url: '/events/list',
     method: 'GET',
   })
-  dispatch(createAction('EVENTS_LIST')(transId(res)))
+  dispatch(createAction('EVENTS_LIST')(res))
 }
 
 export default {

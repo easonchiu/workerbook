@@ -2,7 +2,6 @@ import React from 'react'
 import HighCharts from 'highcharts'
 
 class Chart extends React.PureComponent {
-
   // 算出x轴的天跨度
   getCategories = data => {
     const missions = data.missions || []
@@ -18,11 +17,11 @@ class Chart extends React.PureComponent {
         return
       }
 
-      // 日期排序
+      // 日期从小到大排序
       data.sort((a, b) => {
-        const d1 = a.day.replace(/-/g, '')
-        const d2 = b.day.replace(/-/g, '')
-        return d1 > d2
+        const d1 = new Date(a.day + D)
+        const d2 = new Date(b.day + D)
+        return d1 < d2 ? -1 : 1
       })
 
       const d1 = data[0].day
@@ -88,6 +87,30 @@ class Chart extends React.PureComponent {
       }
       series.push(d)
     })
+    if (series.length > 1) {
+      // 排序，最先有数据的排在最下方
+      series.sort((a, b) => {
+        let na = 0
+        for (let i = 0; 0 < a.data.length; i++) {
+          if (a.data[i] === null) {
+            na += 1
+          }
+          else {
+            break
+          }
+        }
+        let nb = 0
+        for (let i = 0; 0 < b.data.length; i++) {
+          if (a.data[i] === null) {
+            nb += 1
+          }
+          else {
+            break
+          }
+        }
+        return na - nb < 0 ? 1 : -1
+      })
+    }
     return series
   }
 
@@ -98,6 +121,9 @@ class Chart extends React.PureComponent {
       return null
     }
     const categories = this.getCategories(chart)
+    if (!categories.length) {
+      return null
+    }
     const categoriesStr = categories.map(i => i.format('M/d'))
     const series = this.getSeries(missions, categories)
     const tickPositions = []
@@ -106,8 +132,7 @@ class Chart extends React.PureComponent {
       tickPositions.push(Math.round((i * step) * 100) / 100)
     }
     tickPositions.push(100)
-    let plotLinesValue = categoriesStr.indexOf(new Date(chart.deadline).format('M/d'))
-
+    const plotLinesValue = categoriesStr.indexOf(new Date(chart.deadline).format('M/d'))
     return HighCharts.chart('summary-chart-' + chart.id, {
       chart: {
         type: 'area'
@@ -207,9 +232,9 @@ class Chart extends React.PureComponent {
     })
   }
 
-  $fill() {
-    const chart = this.props.source || {}
+  $fill(chart) {
     if (chart.missions && chart.missions.length) {
+      this.setState({})
       this.$chart = this.renderSummaryChart(chart)
     }
   }
@@ -221,9 +246,8 @@ class Chart extends React.PureComponent {
   }
 
   render() {
-    const chart = this.props.source || {}
     return (
-      <div id={'summary-chart-' + chart.id} style={{ height: '350px' }} />
+      <div id={'summary-chart-' + this.props.id} style={{ height: '350px' }} />
     )
   }
 }
