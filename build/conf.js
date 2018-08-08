@@ -23,7 +23,7 @@ const assetsPrePath = prefixPath ?
 
 module.exports = {
   development: {
-    port: 3880,
+    port: 3450,
     assetsPublicPath: '/',
     cssAssetsPath: '/',
     assetsSubDirectory: './',

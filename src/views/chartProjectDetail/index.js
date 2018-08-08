@@ -12,28 +12,29 @@ import ChartMission from 'src/components/chartMission'
 export default class View extends PureComponent {
   async componentDidMount() {
     await this.evt.fetchData()
-    if (this.summaryChart) {
-      this.summaryChart.$fill()
-    }
+    setTimeout(() => {
+      if (this.summaryChart) {
+        this.summaryChart.$fill()
+      }
+    })
   }
 
-  renderEachMission(id) {
+  renderEachMission(detail = { missions: [] }) {
     return (
-      <div className="mission-chart">
+      <div key={detail.id} className="mission-chart">
         <header className="header">
-          <h2>套餐下单h5修改</h2>
+          <h2>{detail.projectName} {detail.name}</h2>
           <div className="user">
             <p>执行人：张三</p>
-            <span>截至时间：2018-05-02</span>
+            <span>截至时间：{new Date(detail.deadline).format('yyyy-MM-dd')}</span>
           </div>
         </header>
-        <ChartMission id={id} />
+        <ChartMission source={detail} />
       </div>
     )
   }
 
-  renderSummary() {
-    const summary = this.props.analytics$.project.summary || { missions: [] }
+  renderSummary(summary) {
     return (
       <div className="summary">
         <div className="inner">
@@ -41,34 +42,31 @@ export default class View extends PureComponent {
             <h1>{summary.name}</h1>
             <span>项目进度</span>
           </header>
-          {
-            summary.id ?
-              <ChartProjectSummary
-                source={summary}
-                ref={r => { this.summaryChart = r }}
-              /> :
-              <div style={{ height: '350px' }} />
-          }
+          <ChartProjectSummary
+            source={summary}
+            ref={r => { this.summaryChart = r }}
+          />
         </div>
       </div>
     )
   }
 
   render(props, state) {
+    const summary = this.props.analytics$.project.summary || { missions: [] }
+    let detail = this.props.analytics$.project.detail || []
+    if (detail.length > 1) {
+      detail.sort((a, b) => {
+        return a.data.length - b.data.length
+      })
+    }
     return (
       <div className="view-project-chart">
-
-        {this.renderSummary()}
-
+        {this.renderSummary(summary)}
         <div className="body clearfix">
-
-          {this.renderEachMission(1)}
-          {this.renderEachMission(2)}
-          {this.renderEachMission(3)}
-          {this.renderEachMission(4)}
-
+          {
+            detail.map(item => this.renderEachMission(item))
+          }
         </div>
-
       </div>
     )
   }

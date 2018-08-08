@@ -19,6 +19,7 @@ class ChartProjectList extends PureComponent {
       skip: page * 3 - 3,
       limit: 3,
     })
+    this.chartList && this.chartList.forEach(i => { i.$fill() })
   }
 
   // 项目翻页
@@ -29,6 +30,7 @@ class ChartProjectList extends PureComponent {
 
   // 项目图表列表
   renderChartList() {
+    this.chartList = []
     const projects = this.props.analytics$.projectsList || { list: [] }
     return (
       <div className="list clearfix">
@@ -38,6 +40,9 @@ class ChartProjectList extends PureComponent {
               <PieChartProject
                 key={item.id}
                 source={item}
+                ref={r => {
+                  r && this.chartList.push(r)
+                }}
                 onClick={id => {
                   this.props.history.push('/chart/project/' + id)
                 }}

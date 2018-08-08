@@ -11,13 +11,22 @@ const fetchDepartmentsList = payload => async dispatch => {
   dispatch(createAction('ANALYTICS_DEPARTMENTS_LIST')(res))
 }
 
-// fetch one department summary
+// fetch department summary
 const fetchDepartmentSummary = id => async dispatch => {
   const res = await http.request({
     url: '/analytics/departments/summary/' + id,
     method: 'GET',
   })
   dispatch(createAction('ANALYTICS_DEPARTMENT_SUMMARY')(res))
+}
+
+// fetch department detail
+const fetchDepartmentDetail = id => async dispatch => {
+  const res = await http.request({
+    url: '/analytics/departments/detail/' + id,
+    method: 'GET',
+  })
+  dispatch(createAction('ANALYTICS_DEPARTMENT_DETAIL')(res))
 }
 
 // fetch projects list
@@ -36,12 +45,23 @@ const fetchProjectSummary = id => async dispatch => {
     url: '/analytics/projects/summary/' + id,
     method: 'GET',
   })
-  dispatch(createAction('ANALYTICS_PROJECTS_SUMMARY')(res))
+  dispatch(createAction('ANALYTICS_PROJECT_SUMMARY')(res))
+}
+
+// fetch project detail
+const fetchProjectDetail = id => async dispatch => {
+  const res = await http.request({
+    url: '/analytics/projects/detail/' + id,
+    method: 'GET',
+  })
+  dispatch(createAction('ANALYTICS_PROJECT_DETAIL')(res))
 }
 
 export default {
   fetchDepartmentsList,
   fetchDepartmentSummary,
+  fetchDepartmentDetail,
   fetchProjectsList,
   fetchProjectSummary,
+  fetchProjectDetail,
 }

@@ -88,6 +88,13 @@ class Chart extends React.PureComponent {
       }
       series.push(d)
     })
+    if (series.length > 1) {
+      series.sort((a, b) => {
+        const ta = a.data.reduce((a, b) => a + b)
+        const tb = b.data.reduce((a, b) => a + b)
+        return ta - tb
+      })
+    }
     return series
   }
 
@@ -98,6 +105,9 @@ class Chart extends React.PureComponent {
       return null
     }
     const categories = this.getCategories(chart)
+    if (!categories.length) {
+      return null
+    }
     const categoriesStr = categories.map(i => i.format('M/d'))
     const series = this.getSeries(missions, categories)
     const tickPositions = []
@@ -106,8 +116,7 @@ class Chart extends React.PureComponent {
       tickPositions.push(Math.round((i * step) * 100) / 100)
     }
     tickPositions.push(100)
-    let plotLinesValue = categoriesStr.indexOf(new Date(chart.deadline).format('M/d'))
-
+    const plotLinesValue = categoriesStr.indexOf(new Date(chart.deadline).format('M/d'))
     return HighCharts.chart('summary-chart-' + chart.id, {
       chart: {
         type: 'area'

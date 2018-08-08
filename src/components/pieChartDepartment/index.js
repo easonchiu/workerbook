@@ -100,7 +100,7 @@ class PirChartDepartment extends React.PureComponent {
     })
   }
 
-  componentDidMount() {
+  $fill() {
     const data = this.props.source
     this.$chart = this.renderChart('chart' + data.id, data.missions || [])
   }

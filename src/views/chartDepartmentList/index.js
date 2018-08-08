@@ -19,6 +19,7 @@ class ChartDepartmentList extends PureComponent {
       skip: page * 3 - 3,
       limit: 3,
     })
+    this.chartList && this.chartList.forEach(i => { i.$fill() })
   }
 
   // 部门翻页
@@ -30,6 +31,7 @@ class ChartDepartmentList extends PureComponent {
   // 部门图表列表
   renderChartList() {
     const departments = this.props.analytics$.departmentsList || { list: [] }
+    this.chartList = []
     return (
       <div className="list clearfix">
         {
@@ -38,6 +40,9 @@ class ChartDepartmentList extends PureComponent {
               <PieChartDepartment
                 key={item.id}
                 source={item}
+                ref={r => {
+                  r && this.chartList.push(r)
+                }}
                 onClick={id => {
                   this.props.history.push('/chart/department/' + id)
                 }}

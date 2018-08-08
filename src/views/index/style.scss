@@ -3,7 +3,7 @@
 .view-index {
   > .header-missions {
     background: #fff;
-    padding: 20px 0 20px;
+    padding: 20px 0 5px 0;
     margin: 0 -1600px 20px -1600px;
     border-bottom: 1px solid #dee3e8;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
@@ -21,7 +21,7 @@
       .list {
         margin-right: -15px;
         > div {
-          margin-right: 15px;
+          margin: 0 15px 15px 0;
           float: left;
         }
       }

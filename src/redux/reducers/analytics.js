@@ -2,10 +2,12 @@ import { handleActions } from 'easy-action'
 
 const initialState = {
   department: {
-    summary: { users: [] }
+    summary: { users: [] },
+    detail: [],
   },
   project: {
-    summary: { missions: [] }
+    summary: { missions: [] },
+    detail: [],
   },
   departmentsList: {
     list: [],
@@ -31,12 +33,30 @@ export default handleActions({
       }
     }
   },
-  ANALYTICS_PROJECTS_SUMMARY(state, action) {
+  ANALYTICS_DEPARTMENT_DETAIL(state, action) {
+    return {
+      ...state,
+      department: {
+        ...state.department,
+        detail: action.payload || []
+      }
+    }
+  },
+  ANALYTICS_PROJECT_SUMMARY(state, action) {
     return {
       ...state,
       project: {
         ...state.project,
         summary: action.payload || { missions: [] }
+      }
+    }
+  },
+  ANALYTICS_PROJECT_DETAIL(state, action) {
+    return {
+      ...state,
+      project: {
+        ...state.department,
+        detail: action.payload.missions || []
       }
     }
   },

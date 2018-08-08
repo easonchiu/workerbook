@@ -18,9 +18,6 @@ export default class View extends PureComponent {
     }, {
       title: '项目管理',
       to: 'project'
-    }, {
-      title: '日程管理',
-      to: 'events'
     }]
     return (
       <div className="console-aside">
