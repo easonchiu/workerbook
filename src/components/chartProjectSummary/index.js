@@ -145,7 +145,8 @@ class Chart extends React.PureComponent {
       },
       xAxis: {
         crosshair: {
-          color: '#5081ff10',
+          color: 'rgba(0,0,0,0.02)',
+          zIndex: 0,
         },
         categories: categoriesStr,
         tickmarkPlacement: 'on',
@@ -153,8 +154,8 @@ class Chart extends React.PureComponent {
           enabled: false
         },
         plotLines: [{
-          color: '#ff9900',
-          width: 2,
+          color: '#ff3300',
+          width: 1,
           value: plotLinesValue,
         }],
         tickWidth: 0,
@@ -163,14 +164,15 @@ class Chart extends React.PureComponent {
           style: {
             color: '#586069',
             fontSize: 12,
-          }
+          },
+          step: 7,
         }
       },
       yAxis: [{
         visible: false,
         crosshair: {
           width: 1,
-          color: '#5081ff90',
+          color: 'rgba(0,0,0,0.3)',
         },
         tickPositions: [0, missions.length * 100],
       }, {
@@ -213,15 +215,27 @@ class Chart extends React.PureComponent {
         shared: true,
         valueSuffix: ' %'
       },
-      colors: ['#c7b3ff', '#68e4b1', '#a6ee5f', '#82c6f1', '#f8b981', '#feb5cc'],
+      colors: [
+        '#ff0035',
+        '#ff8900',
+        '#88d52c',
+        '#00d1d1',
+        '#0090f3',
+        '#8037ff',
+      ],
       plotOptions: {
         area: {
+          fillOpacity: 0.4,
+          hover: {
+            opacity: 0.1,
+          },
+          lineColor: 'rgba(0,0,0,0)',
           stacking: 'normal',
           lineWidth: 0,
           marker: {
-            lineWidth: 0,
+            lineWidth: 4,
             radius: 0,
-            symbol: 'circle'
+            symbol: 'circle',
           },
           animation: {
             duration: 250

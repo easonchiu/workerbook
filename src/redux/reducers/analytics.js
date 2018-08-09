@@ -6,8 +6,7 @@ const initialState = {
     detail: [],
   },
   project: {
-    summary: { missions: [] },
-    detail: [],
+    detail: { missions: [] },
   },
   departmentsList: {
     list: [],
@@ -25,11 +24,15 @@ const initialState = {
 
 export default handleActions({
   ANALYTICS_DEPARTMENT_SUMMARY(state, action) {
+    const summary = {
+      ...action.payload,
+      users: action.payload.list || []
+    }
     return {
       ...state,
       department: {
         ...state.department,
-        summary: action.payload || { users: [] }
+        summary: summary || { users: [] }
       }
     }
   },
@@ -42,21 +45,12 @@ export default handleActions({
       }
     }
   },
-  ANALYTICS_PROJECT_SUMMARY(state, action) {
-    return {
-      ...state,
-      project: {
-        ...state.project,
-        summary: action.payload || { missions: [] }
-      }
-    }
-  },
   ANALYTICS_PROJECT_DETAIL(state, action) {
     return {
       ...state,
       project: {
         ...state.project,
-        detail: action.payload.missions || []
+        detail: action.payload || { missions: [] }
       }
     }
   },

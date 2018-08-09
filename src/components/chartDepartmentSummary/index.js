@@ -6,7 +6,7 @@ class Chart extends React.PureComponent {
 
   // 渲染chart
   renderSummaryChart = chart => {
-    const list = chart.list || []
+    const list = chart.users || []
     const X = [] // 横坐标，用户名
     const Y = [[], [], [], []] // 纵坐标，任务
     list.forEach((item, index) => {
@@ -16,17 +16,17 @@ class Chart extends React.PureComponent {
       Y[2].push(0)
       Y[3].push(0)
       item.missions.forEach(item => {
-        // 已延期任务+1
-        if (item.isTimeout) {
-          Y[1][index] += 1
-        }
         // 未开始任务+1
-        else if (item.progress === 0) {
+        if (item.progress === 0) {
           Y[0][index] += 1
         }
         // 已完成任务+1
         else if (item.progress === 100) {
           Y[3][index] += 1
+        }
+        // 已延期任务+1
+        else if (item.isTimeout) {
+          Y[1][index] += 1
         }
         // 进行中任务+1
         else {
@@ -114,8 +114,7 @@ class Chart extends React.PureComponent {
     })
   }
 
-  $fill() {
-    const chart = this.props.source || {}
+  $fill(chart) {
     if (chart.id) {
       this.$chart = this.renderSummaryChart(chart)
     }
@@ -128,9 +127,8 @@ class Chart extends React.PureComponent {
   }
 
   render() {
-    const chart = this.props.source || {}
     return (
-      <div id={'summary-chart' + chart.id} style={{ height: '250px' }} />
+      <div id={'summary-chart' + this.props.id} style={{ height: '250px' }} />
     )
   }
 }

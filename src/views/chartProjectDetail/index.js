@@ -6,6 +6,7 @@ import Event from './event'
 
 import ChartProjectSummary from 'src/components/chartProjectSummary'
 import ChartMission from 'src/components/chartMission'
+import UserHeader from 'src/components/userHeader'
 
 @VIEW
 @ComponentEvent('evt', Event)
@@ -16,20 +17,21 @@ export default class View extends PureComponent {
     // 加载图表
     setTimeout(() => {
       if (this.summaryChart) {
-        const data = this.props.analytics$.project.summary || { missions: [] }
+        const data = this.props.analytics$.project.detail || { missions: [] }
         this.summaryChart.$fill(data)
       }
     })
   }
 
-  renderEachMission(detail = { missions: [] }) {
+  renderEachMission(detail = {}) {
+    const user = detail.user || {}
     return (
       <div key={detail.id} className="mission-chart">
         <header className="header">
-          <h2>{detail.name}</h2>
-          <div className="user">
-            <p>执行人：张三</p>
-            <span>截至时间：{new Date(detail.deadline).format('yyyy-MM-dd')}</span>
+          <UserHeader mini name={user.nickname} id={user.id} />
+          <div className="info">
+            <h2>{detail.name}</h2>
+            <time>截至时间：{new Date(detail.deadline).format('yyyy-MM-dd')}</time>
           </div>
         </header>
         <ChartMission source={detail} />
@@ -43,7 +45,13 @@ export default class View extends PureComponent {
         <div className="inner">
           <header className="header">
             <h1>{summary.name}</h1>
-            <span>项目进度</span>
+            <span>项目进度 {summary.progress}%</span>
+            <div className="deadline">
+              <p>项目截至时间</p>
+              <time className={summary.isTimeout ? 'delay' : ''}>
+                {new Date(summary.deadline).format('yyyy-MM-dd')}
+              </time>
+            </div>
           </header>
           <ChartProjectSummary
             id={summary.id}
@@ -55,19 +63,18 @@ export default class View extends PureComponent {
   }
 
   render(props, state) {
-    const summary = this.props.analytics$.project.summary || { missions: [] }
-    let detail = this.props.analytics$.project.detail || []
-    if (detail.length > 1) {
-      detail.sort((a, b) => {
+    const detail = this.props.analytics$.project.detail || { missions: [] }
+    if (detail.missions.length > 1) {
+      detail.missions.sort((a, b) => {
         return a.data.length - b.data.length <= 0 ? -1 : 1
       })
     }
     return (
       <div className="view-project-chart">
-        {this.renderSummary(summary)}
+        {this.renderSummary(detail)}
         <div className="body clearfix">
           {
-            detail.map(item => this.renderEachMission(item))
+            detail.missions.map(item => this.renderEachMission(item))
           }
         </div>
       </div>
