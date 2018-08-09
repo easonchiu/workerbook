@@ -81,12 +81,16 @@ const fetchProfile = () => async (dispatch, getState) => {
 // fetch users list.
 const fetchList = payload => async dispatch => {
   const departments = payload.departmentId
+  const skip = payload.skip || 0
+  const limit = payload.limit || 12
   payload = ignore(payload, 'departmentId')
   const res = await http.request({
     url: '/users',
     method: 'GET',
     params: {
-      departments
+      departments,
+      skip,
+      limit,
     },
   })
   if (departments && res) {

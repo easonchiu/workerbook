@@ -9,12 +9,12 @@ export default class Event {
     const list = [
       [this.props.$department.fetchList, {
         skip: 0,
-        limit: 5,
+        limit: 8,
       }],
       this.props.$daily.fetchListByDay,
       [this.props.$user.fetchList, {
         skip: 0,
-        limit: 6,
+        limit: 12,
       }],
     ]
 
@@ -38,12 +38,21 @@ export default class Event {
     })
   }
 
+  // 侧栏用户翻页
+  userPageChange = async page => {
+    const { limit } = this.props.user$.users
+    await fetcher.one(this.props.$user.fetchList, {
+      skip: (page - 1) * limit,
+      limit
+    })
+  }
+
   // 侧栏部门点击
   departmentClick = async id => {
     await fetcher.one(this.props.$user.fetchList, {
       skip: 0,
-      limit: 6,
-      departmentId: id,
+      limit: 12,
+      departmentId: id || '',
     })
   }
 

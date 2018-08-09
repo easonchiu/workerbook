@@ -19,7 +19,7 @@ export default class Event {
   onAddUserSubmit = async data => {
     await fetcher.one(this.props.$user.c_create, data)
     this.onCloseUserDialog()
-    await this.fetchData()
+    await this.fetchData(1)
     Toast.success('添加成功')
   }
 
@@ -27,7 +27,8 @@ export default class Event {
   onEditUserSubmit = async data => {
     await fetcher.one(this.props.$user.c_update, data)
     this.onCloseUserDialog()
-    await this.fetchData()
+    const p = this.search.page || 1
+    await this.fetchData(p)
     Toast.success('修改成功')
   }
 
@@ -83,7 +84,12 @@ export default class Event {
   onDelUserSubmit = async data => {
     if (data && data.id) {
       await fetcher.one(this.props.$user.c_del, data.id)
-      await this.fetchData()
+      const { skip = 0, count = 0 } = this.props.user$.c_users
+      let p = this.search.page || 1
+      if (count - skip === 1) {
+        p = Math.max(p - 1, 1)
+      }
+      await this.fetchData(p)
       this.onCloseDelUserDialog()
       Toast.success('删除成功')
     }

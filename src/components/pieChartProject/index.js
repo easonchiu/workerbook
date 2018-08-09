@@ -84,13 +84,18 @@ class PirChartProject extends React.PureComponent {
           <span><em>剩余</em>{data.totalDay - data.costDay}天</span>
         </p>
         <Button
+          disabled={missionsCount === 0}
           light
           className="detail"
           onClick={() => {
             this.props.onClick && this.props.onClick(data.id)
           }}
         >
-          详情
+          {
+            missionsCount === 0 ?
+              '暂无数据' :
+              '详情'
+          }
         </Button>
       </div>
     )

@@ -19,7 +19,7 @@ export default class Event {
   onAddProjectSubmit = async data => {
     await fetcher.one(this.props.$project.c_create, data)
     this.onCloseProjectDialog()
-    await this.fetchData()
+    await this.fetchData(1)
     Toast.success('添加成功')
   }
 
@@ -27,7 +27,8 @@ export default class Event {
   onEditProjectSubmit = async data => {
     await fetcher.one(this.props.$project.c_update, data)
     this.onCloseProjectDialog()
-    await this.fetchData()
+    const p = this.search.page || 1
+    await this.fetchData(p)
     Toast.success('修改成功')
   }
 
@@ -75,7 +76,12 @@ export default class Event {
   onDelProjectSubmit = async data => {
     if (data && data.id) {
       await fetcher.one(this.props.$project.c_del, data.id)
-      await this.fetchData()
+      const { skip = 0, count = 0 } = this.props.project$.c_projects
+      let p = this.search.page || 1
+      if (count - skip === 1) {
+        p = Math.max(p - 1, 1)
+      }
+      await this.fetchData(p)
       this.onCloseDelProjectDialog()
       Toast.success('删除成功')
     }

@@ -54,8 +54,8 @@ class MissionDetailDialog extends React.PureComponent {
     source = source || {}
     const user = source.user || {}
     const stText = user.isDelete ?
-      <em className="del">[已删除]</em> :
-      user.status === 2 ? <em className="stop">[停用]</em> : ''
+      <del>[已删除]</del> :
+      user.status === 2 ? <del>[停用]</del> : ''
 
     return (
       <div className="mission-info">

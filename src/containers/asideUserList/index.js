@@ -3,11 +3,23 @@ import React from 'react'
 
 import AsidePanel from '../asidePanel'
 import UserHeader from 'src/components/userHeader'
+import MiniPager from 'src/components/miniPager'
 
 const AsideUserList = props => {
-  const { list, isAll } = props
+  const data = props.data || {}
+  const { list = [], skip = 0, limit = 0, count = 0 } = data
   return (
-    <AsidePanel title={isAll ? '全部成员' : '部门成员'} className="wb-aside-user-list">
+    <AsidePanel
+      title={props.isAll ? '全部成员' : '部门成员'}
+      className="wb-aside-user-list"
+      addonRight={
+        <MiniPager
+          current={skip / limit + 1}
+          max={Math.ceil(count / limit)}
+          onChange={props.onPageChange}
+        />
+      }
+    >
       <div className="list clearfix">
         {
           list && list.length ?

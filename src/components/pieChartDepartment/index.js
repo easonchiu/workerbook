@@ -123,13 +123,18 @@ class PirChartDepartment extends React.PureComponent {
           暂无任务数据
         </div>
         <Button
+          disabled={data.count === 0}
           light
           className="detail"
           onClick={() => {
             this.props.onClick && this.props.onClick(data.id)
           }}
         >
-          详情
+          {
+            data.count === 0 ?
+              '暂无数据' :
+              '详情'
+          }
         </Button>
       </div>
     )

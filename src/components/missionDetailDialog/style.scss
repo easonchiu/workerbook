@@ -100,13 +100,11 @@
             color: #a8b0b9;
             line-height: 1.2;
           }
-          em {
+          del {
             font-size: 12px;
             margin-left: 5px;
-            color: #ff6600;
-            &.del {
-              color: #ff3300;
-            }
+            color: #ff3300;
+            text-decoration: none;
           }
         }
       }

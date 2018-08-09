@@ -19,7 +19,7 @@ export default class Event {
   onAddEventsSubmit = async data => {
     await fetcher.one(this.props.$events.c_create, data)
     this.onCloseEventsDialog()
-    await this.fetchData()
+    await this.fetchData(1)
     Toast.success('添加成功')
   }
 
@@ -55,7 +55,12 @@ export default class Event {
   onDelEventsSubmit = async data => {
     if (data && data.id) {
       await fetcher.one(this.props.$events.c_del, data.id)
-      await this.fetchData()
+      const { skip = 0, count = 0 } = this.props.events$.c_events
+      let p = this.search.page || 1
+      if (count - skip === 1) {
+        p = Math.max(p - 1, 1)
+      }
+      await this.fetchData(p)
       this.onCloseDelEventsDialog()
       Toast.success('删除成功')
     }

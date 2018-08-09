@@ -213,7 +213,7 @@ class Chart extends React.PureComponent {
         shared: true,
         valueSuffix: ' %'
       },
-      // colors: ['rgb(230, 230, 30)', '#ff7700', '#5081ff', 'rgb(200, 100, 200)', '#00bb88'],
+      colors: ['#c7b3ff', '#68e4b1', '#a6ee5f', '#82c6f1', '#f8b981', '#feb5cc'],
       plotOptions: {
         area: {
           stacking: 'normal',

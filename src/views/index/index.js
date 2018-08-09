@@ -98,8 +98,9 @@ export default class View extends PureComponent {
     const users = this.props.user$.users || { list: [] }
     return (
       <AsideUserList
-        list={users.list}
+        data={users}
         isAll={!users.departmentId}
+        onPageChange={this.evt.userPageChange}
       />
     )
   }
