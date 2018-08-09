@@ -78,7 +78,8 @@ export default class View extends PureComponent {
 
   // 主体区的日报列表
   renderDailyList() {
-    return <MainDailyList source={this.props.daily$.day} />
+    const data = this.props.daily$.day || { list: [] }
+    return <MainDailyList source={data} />
   }
 
   // 侧栏的部门模块

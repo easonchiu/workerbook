@@ -5,6 +5,15 @@ import UserHeader from 'src/components/userHeader'
 
 const MainDailyList = props => {
   const source = props.source || { list: [] }
+
+  if (!source.list.length) {
+    return (
+      <article className="wb-main-daily-list">
+        <p className="empty">暂无日报</p>
+      </article>
+    )
+  }
+
   return (
     <article className="wb-main-daily-list">
       {

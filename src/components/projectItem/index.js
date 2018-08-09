@@ -81,7 +81,7 @@ class ProjectItem extends React.PureComponent {
           />
           <div className="info">
             <h6>{data.name}</h6>
-            <time>截至时间 {(new Date(data.deadline)).format('yyyy年 MM月dd日')}</time>
+            <time>截至时间 {(new Date(data.deadline)).format('yyyy年 MM月dd日 hh:mm:ss:zzz')}</time>
           </div>
           <Progress width={40} value={data.progress} isDelay={data.isDelay} />
         </div>

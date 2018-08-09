@@ -1,6 +1,13 @@
 @charset "utf-8";
 
 .wb-main-daily-list {
+  > .empty {
+    width: 100%;
+    line-height: 300px;
+    text-align: center;
+    color: #a8b0b9;
+    font-size: 14px;
+  }
   > .row {
     .wb-user-header {
       float: left;

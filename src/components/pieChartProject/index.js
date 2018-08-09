@@ -68,6 +68,7 @@ class PirChartProject extends React.PureComponent {
 
   render() {
     const data = this.props.source
+    const remainDay = data.totalDay - data.costDay
     const missionsCount = data.missions ? data.missions.length : 0
     return (
       <div key={data.id} className="wb-pie-chart-project">
@@ -81,7 +82,11 @@ class PirChartProject extends React.PureComponent {
         <p className="info">
           <span><em>截止时间</em>{new Date(data.deadline).format('yyyy-MM-dd')}</span>
           <span><em>已用时</em>{data.costDay}天</span>
-          <span><em>剩余</em>{data.totalDay - data.costDay}天</span>
+          {
+            remainDay < 0 ?
+              <span className="delay"><em>延期</em>{-remainDay}天</span> :
+              <span><em>剩余</em>{remainDay}天</span>
+          }
         </p>
         <Button
           disabled={missionsCount === 0}

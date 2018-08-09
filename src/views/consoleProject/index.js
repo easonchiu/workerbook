@@ -86,7 +86,7 @@ class ConsoleProject extends React.PureComponent {
         <td>
           <Progress value={res.progress} width={80} />
         </td>
-        <td>{new Date(res.deadline).format('yyyy-MM-dd')}</td>
+        <td>{new Date(res.deadline).format('yyyy-MM-dd hh:mm:ss:zzz')}</td>
         <td>{new Date(res.createTime).format('yyyy-MM-dd hh:mm')}</td>
         <td className="c">
           <IconRewrite.A
