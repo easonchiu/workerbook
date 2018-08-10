@@ -1,3 +1,4 @@
+import './style'
 import React from 'react'
 import HighCharts from 'highcharts'
 
@@ -19,8 +20,15 @@ class Chart extends React.PureComponent {
       return d1 < d2 ? -1 : 1
     })
 
-    const d1 = mission[0].day
+    let d1 = mission[0].day
     const d2 = mission[mission.length - 1].day
+
+    // 只有一天的数据时，加上前一天为0的数据，不然显示不出内容
+    if (d1 === d2) {
+      let d = new Date(d1 + D)
+      d.setHours(-24)
+      d1 = d.format('yyyy-MM-dd')
+    }
 
     // 只允许2006-01-02格式
     const reg = /^\d{4}(-\d{2}){2}$/
@@ -58,22 +66,17 @@ class Chart extends React.PureComponent {
       return []
     }
     categories = categories.map(i => i.format('yyyy-MM-dd'))
-    const series = new Array(categories.length).fill(null)
+    const series = new Array(categories.length).fill(0)
     data.forEach(item => {
       if (item && item.day && item.progress) {
         const index = categories.indexOf(item.day)
-        if (index !== -1) {
-          series[index] = item.progress
-        }
+        series[index] = item.progress
       }
     })
     // 补全空档的那些天，用前一天的数据填充
     series.forEach((i, index) => {
-      if (series[index + 1] === null && i !== null) {
+      if (series[index + 1] === 0 && i !== 0) {
         series[index + 1] = i
-      }
-      if (i === 0) {
-        series[index] = null
       }
     })
     return series
@@ -99,19 +102,26 @@ class Chart extends React.PureComponent {
         enabled: false
       },
       xAxis: {
-        crosshair: {
-          color: '#5081ff10',
-        },
         categories: categoriesStr,
         tickmarkPlacement: 'on',
         title: {
           enabled: false
         },
         plotLines: [{
-          color: '#ff3300',
+          color: '#ff6600',
           width: 1,
           value: plotLinesValue,
-          zIndex: 3,
+          zIndex: 5,
+          label: {
+            text: '截止线',
+            align: 'right',
+            x: -10,
+            y: 20,
+            rotation: 0,
+            style: {
+              color: '#ff6600',
+            }
+          }
         }],
         tickWidth: 0,
         lineColor: '#dee3e8',
@@ -208,7 +218,12 @@ class Chart extends React.PureComponent {
       return null
     }
     return (
-      <div id={'mission-chart-' + this.props.source.id} style={{ height: '150px' }} />
+      <div
+        className="wb-mission-chart"
+        id={'mission-chart-' + this.props.source.id}
+      >
+        暂无数据
+      </div>
     )
   }
 }

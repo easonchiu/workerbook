@@ -1,3 +1,4 @@
+import './style'
 import React from 'react'
 import HighCharts from 'highcharts'
 
@@ -67,7 +68,7 @@ class Chart extends React.PureComponent {
     data.forEach(item => {
       const d = {
         name: item.name,
-        data: new Array(categories.length).fill(null),
+        data: new Array(categories.length).fill(0),
       }
       if (item.data && item.data.length) {
         item.data.forEach(i => {
@@ -77,11 +78,8 @@ class Chart extends React.PureComponent {
           }
         })
         d.data.forEach((i, index) => {
-          if (d.data[index + 1] === null && i !== null) {
+          if (d.data[index + 1] === 0 && i !== 0) {
             d.data[index + 1] = i
-          }
-          if (i === 0) {
-            d.data[index] = null
           }
         })
       }
@@ -92,7 +90,7 @@ class Chart extends React.PureComponent {
       series.sort((a, b) => {
         let na = 0
         for (let i = 0; 0 < a.data.length; i++) {
-          if (a.data[i] === null) {
+          if (a.data[i] === 0) {
             na += 1
           }
           else {
@@ -101,7 +99,7 @@ class Chart extends React.PureComponent {
         }
         let nb = 0
         for (let i = 0; 0 < b.data.length; i++) {
-          if (a.data[i] === null) {
+          if (a.data[i] === 0) {
             nb += 1
           }
           else {
@@ -154,9 +152,20 @@ class Chart extends React.PureComponent {
           enabled: false
         },
         plotLines: [{
-          color: '#ff3300',
+          color: '#ff6600',
           width: 1,
           value: plotLinesValue,
+          zIndex: 5,
+          label: {
+            text: '截止线',
+            align: 'right',
+            x: -10,
+            y: 20,
+            rotation: 0,
+            style: {
+              color: '#ff6600',
+            }
+          }
         }],
         tickWidth: 0,
         lineColor: '#dee3e8',
@@ -261,7 +270,12 @@ class Chart extends React.PureComponent {
 
   render() {
     return (
-      <div id={'summary-chart-' + this.props.id} style={{ height: '350px' }} />
+      <div
+        className="wb-project-summary-chart"
+        id={'summary-chart-' + this.props.id}
+      >
+        暂无数据
+      </div>
     )
   }
 }
