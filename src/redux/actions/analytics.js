@@ -44,15 +44,6 @@ const fetchProjectsList = payload => async dispatch => {
   dispatch(createAction('ANALYTICS_PROJECTS_LIST')(res))
 }
 
-// fetch one project summary
-const fetchProjectSummary = id => async dispatch => {
-  const res = await http.request({
-    url: '/analysis/project/summary/' + id,
-    method: 'GET',
-  })
-  dispatch(createAction('ANALYTICS_PROJECT_SUMMARY')(res))
-}
-
 // fetch project detail
 const fetchProjectDetail = id => async dispatch => {
   const res = await http.request({
@@ -67,6 +58,5 @@ export default {
   fetchDepartmentSummary,
   fetchDepartmentDetail,
   fetchProjectsList,
-  fetchProjectSummary,
   fetchProjectDetail,
 }
