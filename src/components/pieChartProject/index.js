@@ -84,7 +84,7 @@ class PirChartProject extends React.PureComponent {
           <span><em>已用时</em>{data.costDay}天</span>
           {
             remainDay < 0 ?
-              <span className="delay"><em>延期</em>{-remainDay}天</span> :
+              <span className="timeout"><em>延期</em>{-remainDay}天</span> :
               <span><em>剩余</em>{remainDay}天</span>
           }
         </p>

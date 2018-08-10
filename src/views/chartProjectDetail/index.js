@@ -48,7 +48,7 @@ export default class View extends PureComponent {
             <span>项目进度 {summary.progress}%</span>
             <div className="deadline">
               <p>项目截至时间</p>
-              <time className={summary.isTimeout ? 'delay' : ''}>
+              <time className={summary.isTimeout ? 'timeout' : ''}>
                 {new Date(summary.deadline).format('yyyy-MM-dd')}
               </time>
             </div>
