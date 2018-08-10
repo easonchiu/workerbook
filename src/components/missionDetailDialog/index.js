@@ -60,7 +60,7 @@ class MissionDetailDialog extends React.PureComponent {
     return (
       <div className="mission-info">
         <h3>{source.name}</h3>
-        <Progress width={60} value={source.progress} isDelay={source.isDelay} />
+        <Progress width={60} value={source.progress} isTimeout={source.isTimeout} />
         <time>
           <span>截至时间</span> {new Date(source.deadline).format('yyyy年 MM月dd日')}
         </time>

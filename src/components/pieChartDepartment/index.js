@@ -73,7 +73,7 @@ class PirChartDepartment extends React.PureComponent {
     ]
     data.forEach(item => {
       // 已延期任务+1
-      if (item.isDelay) {
+      if (item.isTimeout) {
         chartData[2][1] += 1
       }
       // 待执行任务+1

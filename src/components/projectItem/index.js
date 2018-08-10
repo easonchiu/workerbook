@@ -46,7 +46,7 @@ class ProjectItem extends React.PureComponent {
   // 添加任务
   onAddAssignMissionClick = () => {
     const source = this.props.source || {}
-    if (source.isDelay) {
+    if (source.isTimeout) {
       Toast.error('项目已超过截至时间，不能添加任务')
       return
     }
@@ -61,7 +61,7 @@ class ProjectItem extends React.PureComponent {
     const Item = data => {
       const user = data ? data.user ? data.user : {} : {}
       const css = classNames('item', {
-        'timeout': data.isDelay
+        'timeout': data.isTimeout
       })
       return (
         <div
@@ -83,7 +83,7 @@ class ProjectItem extends React.PureComponent {
             <h6>{data.name}</h6>
             <time>截至时间 {(new Date(data.deadline)).format('yyyy年 MM月dd日 hh:mm:ss:zzz')}</time>
           </div>
-          <Progress width={40} value={data.progress} isDelay={data.isDelay} />
+          <Progress width={40} value={data.progress} isTimeout={data.isTimeout} />
         </div>
       )
     }

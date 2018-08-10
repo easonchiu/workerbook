@@ -7,8 +7,8 @@ import Button from 'src/components/button'
 class PirChartProject extends React.PureComponent {
 
   // 项目图表的配置
-  chartConf = (progress, isDelay) => {
-    const addonTitle = isDelay ?
+  chartConf = (progress, isTimeout) => {
+    const addonTitle = isTimeout ?
       '<br><span style="color:#ff6600;font-size:12px;">已延期</span>' : ''
     return {
       credits: {
@@ -43,8 +43,8 @@ class PirChartProject extends React.PureComponent {
   }
 
   // 渲染项目图表
-  renderChart = (id, progress, isDelay) => {
-    return HighCharts.chart(id, this.chartConf(progress, isDelay), function (c) {
+  renderChart = (id, progress, isTimeout) => {
+    return HighCharts.chart(id, this.chartConf(progress, isTimeout), function (c) {
       // 环形图圆心
       let centerY = c.series[0].center[1]
       let titleHeight = parseInt(c.title.styles.fontSize, 10)
@@ -57,7 +57,7 @@ class PirChartProject extends React.PureComponent {
 
   componentDidMount() {
     const data = this.props.source
-    this.$chart = this.renderChart('chart' + data.id, data.progress, data.isDelay)
+    this.$chart = this.renderChart('chart' + data.id, data.progress, data.isTimeout)
   }
 
   componentWillUnmount() {
