@@ -19,10 +19,10 @@ class MissionItem extends React.PureComponent {
           }
           {source.name}
         </h2>
-        <Progress width={60} value={source.progress} isDelay={source.isDelay} />
+        <Progress width={60} value={source.progress} isTimeout={source.isTimeout} />
         <footer>
+          <p><span>截止时间</span>{new Date(source.deadline).format('yyyy年 MM月dd日')}</p>
           <p><span>归属项目</span>{project.name}</p>
-          <p><span>截至时间</span>{new Date(source.deadline).format('yyyy-MM-dd')}</p>
         </footer>
       </div>
     )

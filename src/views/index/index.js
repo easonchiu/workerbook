@@ -14,24 +14,38 @@ import MainDailyList from 'src/containers/mainDailyList'
 @VIEW
 @ComponentEvent('evt', Event)
 export default class View extends PureComponent {
+  constructor(props) {
+    super(props)
+    this.state = {
+      showAllOwnsMission: false
+    }
+  }
+
   componentDidMount() {
     this.evt.fetchData()
   }
 
   // 任务栏
-  renderMissionBar() {
-    const list = this.props.mission$.owns_missions || []
+  renderOwnsMissionList() {
+    let list = this.props.mission$.owns_missions || []
     return (
-      <div className="header-missions">
+      <div className="owns-mission-list">
         <div className="inner">
-          <header>
+          <header className="header clearfix">
             <h1>参与的任务</h1>
+            <span>
+              共{list.length}个任务
+              <a href="javascript:;">显示全部</a>
+            </span>
           </header>
           <div className="list clearfix">
             {
-              list.map(item => (
-                <MissionItem key={item.id} source={item} />
-              ))
+              list.map((item, i) => {
+                if (!this.state.showAllOwnsMission && i >= 3) {
+                  return null
+                }
+                return <MissionItem key={item.id} source={item} />
+              })
             }
           </div>
         </div>
@@ -88,11 +102,11 @@ export default class View extends PureComponent {
     )
   }
 
-  render(props, state) {
+  render() {
     return (
       <div className="view-index">
 
-        {this.renderMissionBar()}
+        {this.renderOwnsMissionList()}
 
         <div className="body clearfix">
           <div className="main">

@@ -41,9 +41,9 @@ export default class View extends PureComponent {
     )
   }
 
-  render(props, state) {
-    const { profile } = props.user$
-    const projects = props.project$.projects || { list: [] }
+  render() {
+    const { profile } = this.props.user$
+    const projects = this.props.project$.projects || { list: [] }
 
     return (
       <div className="view-project">
@@ -72,8 +72,8 @@ export default class View extends PureComponent {
         </div>
 
         <MissionDetailDialog
-          source={state.missionDetailDialogDate}
-          visible={state.missionDetailDialogVisible}
+          source={this.state.missionDetailDialogDate}
+          visible={this.state.missionDetailDialogVisible}
           onEditClick={this.evt.onEditAssignMissionClick}
           onCloseClick={this.evt.onCloseMissionDetailDialog}
         />

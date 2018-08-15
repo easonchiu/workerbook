@@ -42,10 +42,10 @@ class Wrapper extends React.PureComponent {
           <div className="profile">
             <h6>晚上好：{profile.nickname}</h6>
             <p>{profile.title}@{department.name}</p>
-            <span>
-              <a href="javascript:;">修改密码</a>
-              <a href="javascript:;">退出帐号</a>
-            </span>
+            {/* <span> */}
+            {/* <a href="javascript:;">修改密码</a> */}
+            {/* <Link to="/login">退出帐号</Link> */}
+            {/* </span> */}
           </div>
         </div>
       </header>

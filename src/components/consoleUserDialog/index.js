@@ -77,7 +77,7 @@ class ConsoleUserDialog extends React.PureComponent {
     Err.IfEmpty(this.state.nickname, '姓名不能为空')
     Err.IfEmpty(this.state.departmentId, '请选择部门')
     Err.IfEmpty(this.state.title, '职称不能为空')
-    Err.IfEmpty(this.state.role, '请选择职位')
+    Err.IfEmpty(this.state.role, '请选择角色')
 
     if (!Err.Handle()) {
       this.props.onSubmit && this.props.onSubmit(ignore(this.state, 'id'))
@@ -88,7 +88,7 @@ class ConsoleUserDialog extends React.PureComponent {
     Err.IfEmpty(this.state.nickname, '姓名不能为空')
     Err.IfEmpty(this.state.departmentId, '请选择部门')
     Err.IfEmpty(this.state.title, '职称不能为空')
-    Err.IfEmpty(this.state.role, '请选择职位')
+    Err.IfEmpty(this.state.role, '请选择角色')
 
     if (!Err.Handle()) {
       this.props.onEditSubmit && this.props.onEditSubmit(ignore(this.state, 'password'))
@@ -157,7 +157,7 @@ class ConsoleUserDialog extends React.PureComponent {
             />
           </Form.Row>
 
-          <Form.Row label="职位">
+          <Form.Row label="角色">
             <Select
               value={this.state.role}
               onClick={this.onRoleChange}
@@ -198,7 +198,33 @@ class ConsoleUserDialog extends React.PureComponent {
     )
   }
 
+  // 键盘控制
+  onKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      if (this.state.id) {
+        this.onFormEditSubmit()
+      }
+      else {
+        this.onFormSubmit()
+      }
+    }
+    else if (e.keyCode === 27) {
+      this.props.onClose && this.props.onClose()
+    }
+  }
+
   render() {
+    // 添加或移除键盘事件
+    if (this.props.visible) {
+      if (!this.$listener) {
+        window.addEventListener('keydown', this.onKeyDown)
+        this.$listener = true
+      }
+    }
+    else if (this.$listener) {
+      this.$listener = false
+      window.removeEventListener('keydown', this.onKeyDown)
+    }
     return this.renderDialog()
   }
 }

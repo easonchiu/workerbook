@@ -40,9 +40,19 @@
       width: 150px;
       text-align: center;
     }
-    td:last-child {
-      width: 120px;
+    td:nth-child(7) {
+      width: 160px;
       text-align: center;
+      .wb-button {
+        opacity: 0.3;
+        display: inline;
+        position: relative;
+        top: -3px;
+        margin-left: 10px;
+      }
+    }
+    tr:hover .wb-button {
+      opacity: 1;
     }
   }
 }

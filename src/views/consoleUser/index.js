@@ -66,7 +66,7 @@ class ConsoleUser extends React.PureComponent {
         <td>帐号</td>
         <td>部门</td>
         <td>职称</td>
-        <td>职位</td>
+        <td>角色</td>
         <td>状态</td>
         <td>加入时间</td>
         <td>操作</td>

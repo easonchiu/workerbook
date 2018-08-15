@@ -33,6 +33,23 @@
       border-radius: 3px;
       background: #33b400;
     }
+    em {
+      width: 16px;
+      height: 16px;
+      background: #fff;
+      border: 2px solid #33b400;
+      position: absolute;
+      right: 0;
+      top: 2px;
+      border-radius: 50%;
+    }
+    svg {
+      display: block;
+      width: 10px;
+      height: 10px;
+      margin: 1px;
+      fill: #33b400;
+    }
   }
 
   &--blue {
@@ -43,6 +60,12 @@
       background: #5081ff30;
       span {
         background: #5081ff;
+      }
+      em {
+        border-color: #5081ff;
+      }
+      svg {
+        fill: #5081ff;
       }
     }
   }
@@ -56,6 +79,12 @@
       span {
         background: #ff3300;
       }
+      em {
+        border-color: #ff3300;
+      }
+      svg {
+        fill: #ff3300;
+      }
     }
   }
 
@@ -65,6 +94,12 @@
     }
     .line {
       opacity: 0.1;
+    }
+  }
+
+  &--100:hover {
+    .line {
+      opacity: 1;
     }
   }
 }

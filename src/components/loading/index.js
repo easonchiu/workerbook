@@ -9,6 +9,9 @@ class Loading {
       loading.id = 'j-wb-loading'
       loading.innerHTML = `<div class="wb-loading__inner"></div>`
       document.body.appendChild(loading)
+      setTimeout(() => {
+        loading.classList.add('wb-loading--ani')
+      })
     }
     const focusdom = document.querySelector(':focus')
     if (focusdom) {

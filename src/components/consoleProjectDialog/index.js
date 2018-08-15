@@ -84,7 +84,7 @@ class ConsoleProjectDialog extends React.PureComponent {
 
   onFormSubmit = () => {
     Err.IfEmpty(this.state.name, '项目名称不能为空')
-    Err.IfEmpty(this.state.deadline, '截至时间不能为空')
+    Err.IfEmpty(this.state.deadline, '截止时间不能为空')
     Err.IfEmptyArr(this.state.departments, '参与部门不能为空')
 
     if (!Err.Handle()) {
@@ -94,7 +94,7 @@ class ConsoleProjectDialog extends React.PureComponent {
 
   onFormEditSubmit = () => {
     Err.IfEmpty(this.state.name, '项目名称不能为空')
-    Err.IfEmpty(this.state.deadline, '截至时间不能为空')
+    Err.IfEmpty(this.state.deadline, '截止时间不能为空')
     Err.IfEmptyArr(this.state.departments, '参与部门不能为空')
 
     if (!Err.Handle()) {
@@ -120,7 +120,7 @@ class ConsoleProjectDialog extends React.PureComponent {
             />
           </Form.Row>
 
-          <Form.Row label="截至时间">
+          <Form.Row label="截止时间">
             <DayPicker
               value={this.state.deadline}
               onChange={this.onDeadlineChange}
@@ -190,7 +190,33 @@ class ConsoleProjectDialog extends React.PureComponent {
     )
   }
 
+  // 键盘控制
+  onKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      if (this.state.id) {
+        this.onFormEditSubmit()
+      }
+      else {
+        this.onFormSubmit()
+      }
+    }
+    else if (e.keyCode === 27) {
+      this.props.onClose && this.props.onClose()
+    }
+  }
+
   render() {
+    // 添加或移除键盘事件
+    if (this.props.visible) {
+      if (!this.$listener) {
+        window.addEventListener('keydown', this.onKeyDown)
+        this.$listener = true
+      }
+    }
+    else if (this.$listener) {
+      this.$listener = false
+      window.removeEventListener('keydown', this.onKeyDown)
+    }
     return this.renderDialog()
   }
 }

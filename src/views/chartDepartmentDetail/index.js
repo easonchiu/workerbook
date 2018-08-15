@@ -6,6 +6,7 @@ import Event from './event'
 
 import ChartDepartmentSummary from 'src/components/chartDepartmentSummary'
 import ChartMission from 'src/components/chartMission'
+import UserHeader from 'src/components/userHeader'
 
 @VIEW
 @ComponentEvent('evt', Event)
@@ -13,53 +14,78 @@ export default class View extends PureComponent {
   async componentDidMount() {
     await this.evt.fetchData()
     if (this.summaryChart) {
-      this.summaryChart.$fill()
+      const data = this.props.analytics$.department.summary || {}
+      this.summaryChart.$fill(data)
     }
   }
 
-  renderEachUser = (detail = { missions: [] }) => {
-    const chartData = detail.missions.filter(i => i.data.length > 0)
-    const waitData = detail.missions.filter(i => i.data.length === 0)
+  renderEachUser = (data = { missions: [] }) => {
+    const chartData = data.missions.filter(i => i.data.length > 0)
+    const waitData = data.missions.filter(i => i.data.length === 0)
     return (
-      <div className="user-chart" key={detail.id}>
-        <header>
-          <h2>{detail.nickname}</h2>
-          <span>{detail.title}</span>
-          <div className="wait">
-            <p>待执行任务：3个</p>
+      <div className="user-chart" key={data.id}>
+        <header className="header clearfix">
+          <UserHeader
+            mini
+            name={data.nickname}
+            id={data.id}
+          />
+          <div className="info">
+            <h2>{data.nickname}</h2>
+            <span>{data.title}</span>
           </div>
         </header>
-        {
-          chartData.map((data = { data: [] }) => {
-            if (!data.id || !data.data.length) {
-              return null
-            }
-            return [
-              <div key={'mission-title-' + data.id} className="missions">
-                <div className="mission">
-                  <sub style={{ background: '#63a5e2' }} />
-                  <p>{data.projectName} {data.name}</p>
-                  <time>
-                    <span>截至时间</span>
-                    {new Date(data.deadline).format('yyyy-MM-dd')}
-                  </time>
+        <div className="missions clearfix">
+          {
+            chartData.map((data = { data: [] }) => {
+              if (!data.id || !data.data.length) {
+                return null
+              }
+              return (
+                <div className="item" key={'mission-chart-' + data.id}>
+                  <header className="header clearfix">
+                    <div className="name">
+                      <h3>{data.project.name}</h3>
+                      <p>{data.name}</p>
+                    </div>
+                    <div className="info">
+                      <span>任务进度：{data.progress}%</span>
+                      <time>
+                        截止时间：{new Date(data.deadline).format('yyyy-MM-dd')}
+                      </time>
+                    </div>
+                  </header>
+                  <ChartMission source={data} />
                 </div>
-              </div>,
-              <ChartMission
-                key={'mission-chart-' + data.id}
-                source={data}
-              />
-            ]
-          })
-        }
+              )
+            })
+          }
+          {
+            waitData.map(data => {
+              return (
+                <div className="item" key={data.id}>
+                  <header className="header clearfix">
+                    <div className="name">
+                      <h3>{data.project.name}</h3>
+                      <p>{data.name}</p>
+                    </div>
+                    <div className="info">
+                      <span>任务进度：未开始</span>
+                      <time>
+                        截止时间：{new Date(data.deadline).format('yyyy-MM-dd')}
+                      </time>
+                    </div>
+                  </header>
+                  <div className="empty">任务未开始</div>
+                </div>
+              )
+            })
+          }
+        </div>
         {
-          waitData.map(data => {
-            return (
-              <div key={data.id}>
-                {data.name}
-              </div>
-            )
-          })
+          !chartData.length && !waitData.length ?
+            <div className="empty">暂无任务</div> :
+            null
         }
       </div>
     )
@@ -74,7 +100,7 @@ export default class View extends PureComponent {
             <span>任务汇总</span>
           </header>
           <ChartDepartmentSummary
-            source={summary}
+            id={summary.id}
             ref={r => { this.summaryChart = r }}
           />
         </div>
@@ -82,7 +108,7 @@ export default class View extends PureComponent {
     )
   }
 
-  render(props, state) {
+  render() {
     const summary = this.props.analytics$.department.summary || {}
     const detail = this.props.analytics$.department.detail || []
     return (

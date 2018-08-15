@@ -10,5 +10,5 @@ export default handleActions({
       ...state,
       owns_missions: action.payload.list || [],
     }
-  }
+  },
 }, initialState)

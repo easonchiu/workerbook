@@ -58,10 +58,12 @@ http.interceptors.response.use(
       clearToken()
       return false
     }
+    console.log(config)
     // return reject error
     return Promise.reject(new HttpError(config.data.msg, config.code))
   },
   error => {
+    console.log(error.response)
     return Promise.reject(new HttpError(error.response.data.msg || '系统错误', error.response.data.code))
   }
 )

@@ -60,6 +60,7 @@ class ChartProjectList extends PureComponent {
       <div className="chart-project-list">
         <header className="header">
           <h1>进行中的项目</h1>
+          <a href="javascript:;">已归档项目</a>
         </header>
         {this.renderChartList()}
         <Pager

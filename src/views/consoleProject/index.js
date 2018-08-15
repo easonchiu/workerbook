@@ -64,7 +64,7 @@ class ConsoleProject extends React.PureComponent {
         <td>名称</td>
         <td>任务数</td>
         <td>进度</td>
-        <td>截至时间</td>
+        <td>截止时间</td>
         <td>创建时间</td>
         <td>操作</td>
       </tr>
@@ -86,7 +86,7 @@ class ConsoleProject extends React.PureComponent {
         <td>
           <Progress value={res.progress} width={80} />
         </td>
-        <td>{new Date(res.deadline).format('yyyy-MM-dd')}</td>
+        <td>{new Date(res.deadline).format('yyyy-MM-dd hh_mm_ss')}</td>
         <td>{new Date(res.createTime).format('yyyy-MM-dd hh:mm')}</td>
         <td className="c">
           <IconRewrite.A
@@ -97,6 +97,7 @@ class ConsoleProject extends React.PureComponent {
             tips="删除"
             onClick={() => this.evt.onDelProjectClick(res)}
           />
+          <Button mini>归档</Button>
         </td>
       </tr>
     ))

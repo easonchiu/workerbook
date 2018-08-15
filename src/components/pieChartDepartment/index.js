@@ -72,17 +72,17 @@ class PirChartDepartment extends React.PureComponent {
       ['已完成', 0, 'rgb(134, 212, 50)'],
     ]
     data.forEach(item => {
-      // 已延期任务+1
-      if (item.isTimeout) {
-        chartData[2][1] += 1
-      }
       // 待执行任务+1
-      else if (item.progress === 0) {
+      if (item.progress === 0) {
         chartData[0][1] += 1
       }
       // 已完成任务+1
       else if (item.progress === 100) {
         chartData[3][1] += 1
+      }
+      // 已延期任务+1
+      else if (item.isTimeout) {
+        chartData[2][1] += 1
       }
       // 进行中任务+1
       else {
@@ -124,12 +124,15 @@ class PirChartDepartment extends React.PureComponent {
         </div>
         <Button
           light
+          disabled={data.userCount === 0}
           className="detail"
           onClick={() => {
             this.props.onClick && this.props.onClick(data.id)
           }}
         >
-          详情
+          {
+            data.userCount === 0 ? '暂无数据' : '详情'
+          }
         </Button>
       </div>
     )
