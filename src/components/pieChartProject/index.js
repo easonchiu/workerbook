@@ -1,6 +1,7 @@
 import './style'
 import React from 'react'
 import HighCharts from 'highcharts'
+import classNames from 'classnames'
 
 import Button from 'src/components/button'
 
@@ -55,7 +56,7 @@ class PirChartProject extends React.PureComponent {
     })
   }
 
-  componentDidMount() {
+  $fill() {
     const data = this.props.source
     this.$chart = this.renderChart('chart' + data.id, data.progress, data.isTimeout)
   }
@@ -69,12 +70,14 @@ class PirChartProject extends React.PureComponent {
   render() {
     const data = this.props.source
     const remainDay = data.totalDay - data.costDay
-    const missionsCount = data.missions ? data.missions.length : 0
+    const css = classNames('wb-pie-chart-project', {
+      'timeout': remainDay < 0
+    })
     return (
-      <div key={data.id} className="wb-pie-chart-project">
+      <div key={data.id} className={css}>
         <header className="header clearfix">
           <h2>{data.name}</h2>
-          <span>任务数：{missionsCount}</span>
+          <span>任务数：{data.missions.length}</span>
         </header>
         <div className="chart" id={'chart' + data.id}>
           暂无项目数据
@@ -89,17 +92,15 @@ class PirChartProject extends React.PureComponent {
           }
         </p>
         <Button
-          disabled={missionsCount === 0}
           light
+          disabled={data.missionCount === 0}
           className="detail"
           onClick={() => {
             this.props.onClick && this.props.onClick(data.id)
           }}
         >
           {
-            missionsCount === 0 ?
-              '暂无数据' :
-              '详情'
+            data.missionCount === 0 ? '暂无数据' : '详情'
           }
         </Button>
       </div>

@@ -1,6 +1,4 @@
 
-
-
 .wb-pie-chart-project {
   border: 1px solid #dee3e8;
   background: #fff;
@@ -48,13 +46,17 @@
       padding-right: 5px;
       font-weight: normal;
     }
-    .timeout {
-      color: #ff6600;
-    }
   }
   .detail {
     display: block;
     width: 100px;
     margin: 0 auto 15px auto;
+  }
+  &.timeout {
+    .info {
+      .timeout {
+        color: #ff6600;
+      }
+    }
   }
 }

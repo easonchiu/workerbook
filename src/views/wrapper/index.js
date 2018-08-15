@@ -6,6 +6,11 @@ import className from 'classnames'
 import VIEW from 'src/hoc/view'
 import fetcher from 'src/utils/fetcher'
 
+import MainDialog from 'src/containers/mainDialog'
+import Form from 'src/containers/form'
+import Input from 'src/components/input'
+import Button from 'src/components/button'
+
 const Index = AsyncComponent(() => import('src/views/index'))
 const Project = AsyncComponent(() => import('src/views/project'))
 const Chart = AsyncComponent(() => import('src/views/chart'))
@@ -15,6 +20,16 @@ const Console = AsyncComponent(() => import('src/views/console'))
 
 @VIEW
 class Wrapper extends React.PureComponent {
+  constructor(props) {
+    super(props)
+    this.state = {
+      dialogChangePwVisible: false,
+      password: '',
+      newPassword: '',
+      newPassword2: '',
+    }
+  }
+
   componentDidMount() {
     this.fetchData()
   }
@@ -49,13 +64,30 @@ class Wrapper extends React.PureComponent {
                   null
             }
             <span>
-              <a href="javascript:;">修改密码</a>
+              <a
+                href="javascript:;"
+                onClick={() => {
+                  this.setState({
+                    dialogChangePwVisible: true
+                  })
+                }}
+              >
+                修改密码
+              </a>
               <a href="javascript:;">退出帐号</a>
             </span>
           </div>
         </div>
       </header>
     )
+  }
+
+  // 修改密码表单字段修改
+  onPwFormChange = e => {
+    const key = e.target.name
+    this.setState({
+      [key]: e.target.value.substr(0, 20)
+    })
   }
 
   render() {
@@ -80,6 +112,48 @@ class Wrapper extends React.PureComponent {
         <div className="wb-footer">
           <p>WorkerBook @2017-2019 React & Gin</p>
         </div>
+
+        <MainDialog
+          title="修改密码"
+          visible={this.state.dialogChangePwVisible}
+          className="dialog-change-password"
+          onClose={() => {
+            this.setState({
+              dialogChangePwVisible: false
+            })
+          }}
+        >
+          <Form>
+            <Form.Row label="原密码">
+              <Input
+                name="password"
+                type="password"
+                value={this.state.password}
+                onChange={this.onPwFormChange}
+              />
+            </Form.Row>
+            <Form.Row label="新密码">
+              <Input
+                name="newPassword"
+                type="password"
+                value={this.state.newPassword}
+                onChange={this.onPwFormChange}
+              />
+            </Form.Row>
+            <Form.Row label="确认密码">
+              <Input
+                name="newPassword2"
+                type="password"
+                value={this.state.newPassword2}
+                onChange={this.onPwFormChange}
+              />
+            </Form.Row>
+            <Form.Row>
+              <Button>修改</Button>
+            </Form.Row>
+          </Form>
+        </MainDialog>
+
       </div>
     )
   }

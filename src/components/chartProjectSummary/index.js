@@ -12,21 +12,16 @@ class Chart extends React.PureComponent {
     const D = 'T23:59:59+08:00'
     const range = []
 
+    // 取所有任务的最大时间跨度
     missions.forEach(item => {
       let data = item.data
       if (!data || !data.length) {
         return
       }
 
-      // 日期从小到大排序
-      data.sort((a, b) => {
-        const d1 = new Date(a.day + D)
-        const d2 = new Date(b.day + D)
-        return d1 < d2 ? -1 : 1
-      })
-
+      // 头一天和最后一天
       const d1 = data[0].day
-      const d2 = data[item.data.length - 1].day
+      const d2 = item.today || new Date().format('yyyy-MM-dd')
 
       // 只允许2006-01-02格式
       const reg = /^\d{4}(-\d{2}){2}$/
@@ -34,7 +29,10 @@ class Chart extends React.PureComponent {
         return
       }
 
+      // 第一天往前移一天
       const first = new Date(d1 + D)
+      first.setHours(-24)
+
       const last = new Date(d2 + D)
       if (!range[0] || first < range[0]) {
         range[0] = first
@@ -43,6 +41,8 @@ class Chart extends React.PureComponent {
         range[1] = last
       }
     })
+
+    // 填充每一天
     const categories = []
     if (range[0] && range[1]) {
       const r = (range[1] - range[0]) / 1000 / 60 / 60 / 24
@@ -52,7 +52,6 @@ class Chart extends React.PureComponent {
         for (let i = 1; i < r; i++) {
           categories.push(new Date((day - 0) + 1000 * 60 * 60 * 24 * i))
         }
-        categories.push(range[1])
       }
     }
     return categories
@@ -142,12 +141,12 @@ class Chart extends React.PureComponent {
         enabled: false
       },
       xAxis: {
+        showFirstLabel: false,
         crosshair: {
           color: 'rgba(0,0,0,0.02)',
           zIndex: 0,
         },
         categories: categoriesStr,
-        tickmarkPlacement: 'on',
         title: {
           enabled: false
         },
@@ -174,7 +173,7 @@ class Chart extends React.PureComponent {
             color: '#586069',
             fontSize: 12,
           },
-          step: 7,
+          step: Math.ceil(Math.min(series.length, 35) / 5),
         }
       },
       yAxis: [{
@@ -210,6 +209,9 @@ class Chart extends React.PureComponent {
           format: '{value} %',
         }
       }],
+      legend: {
+        enabled: false
+      },
       tooltip: {
         backgroundColor: 'rgba(0,0,0,0.8)',
         borderWidth: 0,
@@ -221,8 +223,53 @@ class Chart extends React.PureComponent {
           color: '#fff',
           lineHeight: 20,
         },
-        shared: true,
-        valueSuffix: ' %'
+        formatter: function () {
+          const hd = `<span style="font-size: 10px">日期：${this.x}</span><br/>`
+          let bd = ''
+          let bd2 = ''
+          let totalProgress = 0
+          this.points.forEach(i => {
+            if (i.y !== 0) {
+              const progress = i.y < 100 ?
+                `<span style="color:#ccc;">${i.y} %</span>` :
+                `<b style="color:#33b400;">完成</b>`
+              bd += `
+                <span style="color:${i.color}">\u25CF</span>
+                <span style="color:#ccc;">${i.series.name} 进度: ${progress}</span><br/>
+              `
+              totalProgress += i.y
+            }
+            else {
+              bd2 += `
+                <span style="color:#ccc;">\u25CF</span>
+                <span style="color:#ccc;">${i.series.name}</span><br/>
+              `
+            }
+          })
+          if (bd !== '') {
+            totalProgress = Math.floor(totalProgress / this.points.length)
+            if (totalProgress < 100) {
+              totalProgress = `<b>${totalProgress}%</b>`
+              const ft = `项目总进度：${totalProgress}<br/>`
+              const title = '<span style="font-size:10px;color:#ccc;">任务：</span><br/>'
+              let res = hd + ft + title + bd
+              if (bd2 !== '') {
+                res += '<span style="font-size:10px;color:#ccc;">未开始任务：</span><br/>'
+                res += bd2
+              }
+              return res
+            }
+            else {
+              totalProgress = `<span style="color:#33b400;font-weight:bold;">完成</span>`
+              const ft = `项目总进度：${totalProgress}<br/>`
+              const title = `<span style="font-size:10px;color:#ccc;">( 所有任务均已完成 )</span><br/>`
+              return hd + ft + title
+            }
+          }
+          // 如果没有数据
+          return `<span style="color:#999;">项目创建于：${new Date(chart.createTime).format('MM/dd')}</span>`
+        },
+        shared: true
       },
       colors: [
         '#ff0035',
@@ -235,9 +282,6 @@ class Chart extends React.PureComponent {
       plotOptions: {
         area: {
           fillOpacity: 0.4,
-          hover: {
-            opacity: 0.1,
-          },
           lineColor: 'rgba(0,0,0,0)',
           stacking: 'normal',
           lineWidth: 0,

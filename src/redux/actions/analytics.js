@@ -8,12 +8,7 @@ const fetchDepartmentsList = payload => async dispatch => {
     method: 'GET',
     params: payload,
   })
-  dispatch(createAction('ANALYTICS_DEPARTMENTS_LIST')({
-    list: res,
-    skip: 0,
-    limit: 0,
-    count: res.length,
-  }))
+  dispatch(createAction('ANALYTICS_DEPARTMENTS_LIST')(res))
 }
 
 // fetch department summary
