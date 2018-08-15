@@ -5,6 +5,7 @@ import { Route, Switch, Link, Redirect } from 'react-router-dom'
 import className from 'classnames'
 import VIEW from 'src/hoc/view'
 import fetcher from 'src/utils/fetcher'
+import { clearToken } from 'src/utils/token'
 
 import MainDialog from 'src/containers/mainDialog'
 import Form from 'src/containers/form'
@@ -38,6 +39,12 @@ class Wrapper extends React.PureComponent {
     await fetcher.one(this.props.$user.fetchProfile)
   }
 
+  // 退出登录
+  logout = () => {
+    clearToken()
+    this.props.history.replace('/login')
+  }
+
   renderHeader() {
     const page = this.props.location.pathname
     let { profile } = this.props.user$
@@ -51,8 +58,17 @@ class Wrapper extends React.PureComponent {
           <nav>
             <Link className={nav === 'index' ? 'active' : ''} to="/index">日报</Link>
             <Link className={nav === 'project' ? 'active' : ''} to="/project">项目</Link>
-            <Link className={nav === 'chart' ? 'active' : ''} to="/chart/project">数据</Link>
-            <Link className={nav === 'console' ? 'active' : ''} to="/console/user">管理后台</Link>
+            <Link className={nav === 'chart' ? 'active' : ''} to="/chart/project">统计</Link>
+            {
+              profile.role === 99 ?
+                <Link
+                  className={nav === 'console' ? 'active' : ''}
+                  to="/console/user"
+                >
+                  管理后台
+                </Link> :
+                null
+            }
           </nav>
           <div className="profile">
             <h6>晚上好：{profile.nickname}</h6>
@@ -74,7 +90,9 @@ class Wrapper extends React.PureComponent {
               >
                 修改密码
               </a>
-              <a href="javascript:;">退出帐号</a>
+              <a href="javascript:;" onClick={this.logout}>
+                退出帐号
+              </a>
             </span>
           </div>
         </div>
@@ -110,7 +128,7 @@ class Wrapper extends React.PureComponent {
           </Switch>
         </div>
         <div className="wb-footer">
-          <p>WorkerBook @2017-2019 React & Gin</p>
+          <p>WorkerBook @2017-2019 Auto FE</p>
         </div>
 
         <MainDialog

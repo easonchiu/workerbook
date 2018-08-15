@@ -3,6 +3,13 @@ import React from 'react'
 import HighCharts from 'highcharts'
 
 class Chart extends React.PureComponent {
+  constructor(props) {
+    super(props)
+    this.state = {
+      height: 350
+    }
+  }
+
   // 算出x轴的天跨度
   getCategories = data => {
     const missions = data.missions || []
@@ -301,7 +308,9 @@ class Chart extends React.PureComponent {
 
   $fill(chart) {
     if (chart.missions && chart.missions.length) {
-      this.setState({})
+      this.setState({
+        height: Math.max(chart.missions.length * 30 + 48, 350)
+      })
       this.$chart = this.renderSummaryChart(chart)
     }
   }
@@ -316,6 +325,7 @@ class Chart extends React.PureComponent {
     return (
       <div
         className="wb-project-summary-chart"
+        style={{ height: this.state.height + 'px' }}
         id={'summary-chart-' + this.props.id}
       >
         暂无数据

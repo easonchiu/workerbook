@@ -14,8 +14,9 @@ export default class View extends PureComponent {
     super(props)
 
     this.state = {
-      username: 'eason3',
-      password: '123456'
+      username: '',
+      password: '',
+      loading: false,
     }
   }
 
@@ -23,24 +24,35 @@ export default class View extends PureComponent {
     return (
       <main className="view-login">
         <form>
-          <Input
-            placeholder="用户名"
-            className="username"
-            value={this.state.username}
-            onChange={this.evt.usernameChange}
-          />
+          <h1 className="logo" />
 
-          <Input
-            type="password"
-            placeholder="密码"
-            className="password"
-            value={this.state.password}
-            onChange={this.evt.passwordChange}
-          />
+          <div className="row">
+            <label>用户名</label>
+            <Input
+              placeholder="用户名"
+              className="username"
+              value={this.state.username}
+              onChange={this.evt.usernameChange}
+            />
+          </div>
 
-          <Button onClick={this.evt.onSubmit}>
-            登录
-          </Button>
+          <div className="row">
+            <label>用户名</label>
+            <Input
+              type="password"
+              placeholder="密码"
+              className="password"
+              value={this.state.password}
+              onChange={this.evt.passwordChange}
+            />
+          </div>
+
+          <div className="row">
+            <label />
+            <Button onClick={this.evt.onSubmit}>
+              登录
+            </Button>
+          </div>
 
         </form>
       </main>

@@ -1,5 +1,6 @@
 import { setToken } from 'src/utils/token'
 import fetcher from 'src/utils/fetcher'
+import Err from 'src/utils/errif'
 
 export default class Event {
 
@@ -20,6 +21,13 @@ export default class Event {
   // click handle on submit button.
   onSubmit = async e => {
     e.preventDefault()
+    Err.IfEmpty(this.state.username, '用户名不能为空')
+    Err.IfEmpty(this.state.password, '密码不能为空')
+
+    if (Err.Handle()) {
+      return
+    }
+
     try {
       const token = await fetcher.one(this.props.$user.login, {
         username: this.state.username,
