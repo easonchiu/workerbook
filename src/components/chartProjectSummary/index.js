@@ -272,6 +272,12 @@ class Chart extends React.PureComponent {
             lineWidth: 4,
             radius: 0,
             symbol: 'circle',
+            enabled: false,
+            states: {
+              hover: {
+                enabled: false
+              }
+            },
           },
           animation: {
             duration: 250

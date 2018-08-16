@@ -39,6 +39,12 @@ class Err {
       this.errMsg = msg
     }
   }
+
+  static IfDiff(a, b, msg) {
+    if (this.errMsg === '' && a !== b) {
+      this.errMsg = msg
+    }
+  }
 }
 
 export default Err

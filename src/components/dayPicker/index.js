@@ -68,7 +68,13 @@ class DayPicker extends React.PureComponent {
       select = null
     }
 
-    const downIcon = <svg className="wb-day-picker__down" width="128" height="128" viewBox="0 0 1024 1024"><path d={'M126.040 295.7c18.8-18.8 49.1-18.801 67.901 0l318 318 318-318c18.8-18.8 49.2-18.8 67.901 0 18.8 18.8 18.801 49.1 0 67.901l-352 352c-18.8 18.8-49.2 18.8-67.901 0l-352-352c-9.4-9.4-14-21.7-14-34 0.1-12.2 4.7-24.501 14.1-33.9z'} /></svg>
+    const downIcon = (
+      <svg className="wb-day-picker__down" width="128" height="128" viewBox="0 0 1024 1024">
+        <path
+          d={'M126.040 295.7c18.8-18.8 49.1-18.801 67.901 0l318 318 318-318c18.8-18.8 49.2-18.8 67.901 0 18.8 18.8 18.801 49.1 0 67.901l-352 352c-18.8 18.8-49.2 18.8-67.901 0l-352-352c-9.4-9.4-14-21.7-14-34 0.1-12.2 4.7-24.501 14.1-33.9z'}
+        />
+      </svg>
+    )
 
     const mm = '一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月'.split('_')
     const wk = '日一二三四五六'.split('')
@@ -78,8 +84,13 @@ class DayPicker extends React.PureComponent {
       before: new Date()
     }
 
-    const fromMonth = new Date()
+    let fromMonth = new Date()
     let toMonth = new Date(new Date().setFullYear(fromMonth.getFullYear() + 2))
+
+    if (props.start) {
+      range.before = props.start
+      fromMonth = props.start
+    }
 
     if (props.end) {
       range.after = new Date(props.end - 0)
@@ -98,7 +109,7 @@ class DayPicker extends React.PureComponent {
           className="wb-day-picker__value"
           onClick={this.transVisible}
         >
-          {current || <sup>请选择</sup>}
+          {current || <sup>{this.props.placeholder || '请选择'}</sup>}
           {downIcon}
         </a>
         {

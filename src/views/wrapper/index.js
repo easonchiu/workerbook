@@ -11,6 +11,8 @@ import MainDialog from 'src/containers/mainDialog'
 import Form from 'src/containers/form'
 import Input from 'src/components/input'
 import Button from 'src/components/button'
+import Err from 'src/utils/errif'
+import Toast from 'src/components/toast'
 
 const Index = AsyncComponent(() => import('src/views/index'))
 const Project = AsyncComponent(() => import('src/views/project'))
@@ -108,6 +110,24 @@ class Wrapper extends React.PureComponent {
     })
   }
 
+  // 修改密码提交
+  changePwSubmit = async () => {
+    Err.IfEmpty(this.state.password, '原密码不能为空')
+    Err.IfEmpty(this.state.newPassword, '新密码不能为空')
+    Err.IfEmpty(this.state.newPassword2, '请再次确认新密码')
+    Err.IfDiff(this.state.newPassword, this.state.newPassword2, '再次密码输入不一致')
+    if (Err.Handle()) {
+      return
+    }
+    await fetcher.one(this.props.$user.changePwd, {
+      password: this.state.password,
+      newPassword: this.state.newPassword,
+    })
+    Toast.success('修改成功，请重新登录')
+    clearToken()
+    this.props.history.replace('/login')
+  }
+
   render() {
     return (
       <div
@@ -167,7 +187,9 @@ class Wrapper extends React.PureComponent {
               />
             </Form.Row>
             <Form.Row>
-              <Button>修改</Button>
+              <Button onClick={this.changePwSubmit}>
+                修改
+              </Button>
             </Form.Row>
           </Form>
         </MainDialog>

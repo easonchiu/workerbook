@@ -65,6 +65,15 @@ const login = payload => async () => {
   return res.token
 }
 
+// change password
+const changePwd = payload => async () => {
+  await http.request({
+    url: '/users/editPwd',
+    method: 'PATCH',
+    data: payload,
+  })
+}
+
 // my profile
 const fetchProfile = () => async (dispatch, getState) => {
   const state = getState()
@@ -113,6 +122,7 @@ const fetchSubList = (departments = []) => async dispatch => {
 
 export default {
   login,
+  changePwd,
   fetchProfile,
   c_create,
   c_del,

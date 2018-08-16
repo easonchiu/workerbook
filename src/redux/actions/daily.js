@@ -3,13 +3,15 @@ import http from 'src/utils/http'
 import ignore from 'src/utils/ignore'
 
 // fetch daily list by day.
-const fetchListByDay = ({ skip, limit = 10 } = {}) => async dispatch => {
+const fetchListByDay = ({ skip = 0, limit = 0, date = 0, department } = {}) => async dispatch => {
   const res = await http.request({
     url: '/dailies',
     method: 'GET',
     params: {
       skip,
       limit,
+      date,
+      department
     }
   })
   dispatch(createAction('DAILY_LIST_BY_DAY')(res))

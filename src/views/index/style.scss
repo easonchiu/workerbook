@@ -39,6 +39,34 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
     border-radius: 4px;
     margin: 0 0 15px 70px;
+    > a, > p {
+      display: block;
+      float: left;
+      width: 80px;
+      font-size: 14px;
+      text-align: center;
+      height: 50px;
+      line-height: 50px;
+      color: #8a929b;
+    }
+    > a:hover {
+      opacity: 0.7;
+    }
+    > p {
+      color: #5081ff;
+      font-weight: bold;
+    }
+    .wb-day-picker {
+      float: right;
+      width: 320px;
+      margin: 5px 5px 0 0;
+      border: none !important;
+      box-shadow: none !important;
+      &__value {
+        width: auto;
+        float: right;
+      }
+    }
   }
 
   .body {

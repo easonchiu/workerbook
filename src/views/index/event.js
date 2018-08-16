@@ -1,17 +1,17 @@
 import fetcher from 'src/utils/fetcher'
 import Toast from 'src/components/toast'
+import qs from 'qs'
 
 export default class Event {
   // 获取首页需要的数据
   fetchData = async () => {
     const role = this.props.user$.profile.role
-
     const list = [
       [this.props.$department.fetchList, {
         skip: 0,
         limit: 8,
       }],
-      this.props.$daily.fetchListByDay,
+      this.fetchListByDay,
       [this.props.$user.fetchList, {
         skip: 0,
         limit: 12,
@@ -27,6 +27,42 @@ export default class Event {
     }
 
     await fetcher.all(list)
+  }
+
+  // 获取日报列表
+  fetchListByDay = () => {
+    const search = this.search
+    let day = search.day
+    if (day) {
+      day = day.replace(/-/g, '')
+    }
+    return this.props.$daily.fetchListByDay({
+      date: day || 0,
+      department: search.department || ''
+    })
+  }
+
+  // 天选择器change
+  dayPickerChange = async e => {
+    this.setState({
+      dayPickerValue: e
+    })
+    const d = e.format('yyyy-MM-dd')
+    const search = this.search
+    search.day = d
+    await this.props.history.replace('?' + qs.stringify(search))
+    fetcher.one(this.fetchListByDay)
+  }
+
+  // 天选择
+  dayClick = async day => {
+    this.setState({
+      dayPickerValue: null
+    })
+    const search = this.search
+    search.day = day
+    await this.props.history.replace('?' + qs.stringify(search))
+    fetcher.one(this.fetchListByDay)
   }
 
   // 侧栏部门翻页
@@ -49,11 +85,25 @@ export default class Event {
 
   // 侧栏部门点击
   departmentClick = async id => {
-    await fetcher.one(this.props.$user.fetchList, {
-      skip: 0,
-      limit: 12,
-      departmentId: id || '',
+    this.setState({
+      department: id
     })
+    const search = this.search
+    if (id) {
+      search.department = id
+    }
+    else {
+      delete search.department
+    }
+    await this.props.history.replace('?' + qs.stringify(search))
+    fetcher.all([
+      [this.props.$user.fetchList, {
+        skip: 0,
+        limit: 12,
+        departmentId: id || '',
+      }],
+      this.fetchListByDay
+    ])
   }
 
   // 发布新日报
@@ -61,7 +111,7 @@ export default class Event {
     await fetcher.one(this.props.$daily.create, data)
     await fetcher.all([
       this.props.$daily.fetchToday,
-      this.props.$daily.fetchListByDay,
+      this.fetchListByDay,
       this.props.$mission.fetchOwnsList,
     ])
     if (this.myDailyWriter) {
@@ -75,7 +125,7 @@ export default class Event {
     await fetcher.one(this.props.$daily.update, data)
     await fetcher.all([
       this.props.$daily.fetchToday,
-      this.props.$daily.fetchListByDay,
+      this.fetchListByDay,
     ])
     if (this.myDailyWriter) {
       this.myDailyWriter.$clear()
@@ -88,7 +138,7 @@ export default class Event {
     await fetcher.one(this.props.$daily.del, { id })
     await fetcher.all([
       this.props.$daily.fetchToday,
-      this.props.$daily.fetchListByDay,
+      this.fetchListByDay,
       this.props.$mission.fetchOwnsList,
     ])
     if (this.myDailyWriter) {
@@ -102,7 +152,7 @@ export default class Event {
     await fetcher.one(this.props.$daily.updateProgress, data)
     await fetcher.all([
       this.props.$daily.fetchToday,
-      this.props.$daily.fetchListByDay,
+      this.fetchListByDay,
       this.props.$mission.fetchOwnsList,
     ])
     if (this.myDailyWriter) {

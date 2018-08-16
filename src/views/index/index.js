@@ -10,11 +10,31 @@ import AsideUserList from 'src/containers/asideUserList'
 import MissionItem from 'src/components/missionItem'
 import MyDailyWriter from 'src/components/myDailyWriter'
 import MainDailyList from 'src/containers/mainDailyList'
+import DayPicker from 'src/components/dayPicker'
 
 @VIEW
 @ComponentEvent('evt', Event)
 export default class View extends PureComponent {
+  constructor(props) {
+    super(props)
+    this.state = {
+      dayPickerValue: null,
+      department: null
+    }
+  }
+
   componentDidMount() {
+    const search = this.search
+    if (search.department) {
+      this.setState({
+        department: search.department
+      })
+    }
+    if (search.day && search.day.length > 3) {
+      this.setState({
+        dayPickerValue: new Date(search.day)
+      })
+    }
     this.evt.fetchData()
   }
 
@@ -87,7 +107,7 @@ export default class View extends PureComponent {
     return (
       <AsideDepartmentList
         data={this.props.department$.departments}
-        active={this.props.user$.users.departmentId}
+        active={this.state.department}
         itemClick={this.evt.departmentClick}
         onPageChange={this.evt.departmentPageChange}
       />
@@ -108,9 +128,40 @@ export default class View extends PureComponent {
 
   // 日期选择
   renderDayPicker() {
+    const search = this.search
+    const start = new Date()
+    start.setMonth(start.getMonth() - 2)
+    const now = new Date()
     return (
-      <div className="daily-day-picker">
-        xxx
+      <div className="daily-day-picker clearfix">
+        {
+          search.day === '0' || !search.day ?
+            <p>今天</p> :
+            <a href="javascript:;" onClick={this.evt.dayClick.bind(this, '0')}>
+              今天
+            </a>
+        }
+        {
+          search.day === '1' ?
+            <p>昨天</p> :
+            <a href="javascript:;" onClick={this.evt.dayClick.bind(this, '1')}>
+              昨天
+            </a>
+        }
+        {
+          search.day === '2' ?
+            <p>前天</p> :
+            <a href="javascript:;" onClick={this.evt.dayClick.bind(this, '2')}>
+              前天
+            </a>
+        }
+        <DayPicker
+          start={start}
+          placeholder="更多日期"
+          end={now}
+          value={this.state.dayPickerValue}
+          onChange={this.evt.dayPickerChange}
+        />
       </div>
     )
   }
