@@ -8,7 +8,9 @@ import IconDelete from 'src/components/svg/delete'
 import UserHeader from 'src/components/userHeader'
 import Progress from 'src/components/progress'
 import ConsoleDeleteDialog from 'src/components/consoleDeleteDialog'
+import connect from 'src/redux/connect'
 
+@connect
 class MissionDetailDialog extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -56,6 +58,7 @@ class MissionDetailDialog extends React.PureComponent {
     const stText = user.isDelete ?
       <del>[已删除]</del> :
       user.status === 2 ? <del>[停用]</del> : ''
+    const profile = props.user$.profile || {}
 
     return (
       <div className="mission-info">
@@ -78,19 +81,23 @@ class MissionDetailDialog extends React.PureComponent {
             <span>{user.title}</span>
           </div>
         </div>
-        <div className="tools">
-          <IconRewrite.A
-            tips="编辑"
-            onClick={() => {
-              props.onEditClick &&
-              props.onEditClick(source)
-            }}
-          />
-          <IconDelete.A
-            tips="删除"
-            onClick={this.onDeleteClick}
-          />
-        </div>
+        {
+          profile.role === 2 || profile.role === 99 ?
+            <div className="tools">
+              <IconRewrite.A
+                tips="编辑"
+                onClick={() => {
+                  props.onEditClick &&
+                  props.onEditClick(source)
+                }}
+              />
+              <IconDelete.A
+                tips="删除"
+                onClick={this.onDeleteClick}
+              />
+            </div> :
+            null
+        }
       </div>
     )
   }
@@ -124,7 +131,7 @@ class MissionDetailDialog extends React.PureComponent {
           {this.renderMission()}
           <div className="dailies">
             <h3>相关日报</h3>
-            <p className="empty">暂无日报</p>
+            <p className="empty">未开发</p>
           </div>
         </div>
         {this.renderDelDialog()}

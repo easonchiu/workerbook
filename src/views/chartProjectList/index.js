@@ -16,8 +16,8 @@ class ChartProjectList extends PureComponent {
   // 获取项目的数据
   fetchData = async (page = 1) => {
     await fetcher.one(this.props.$analytics.fetchProjectsList, {
-      skip: page * 3 - 3,
-      limit: 3,
+      skip: page * 9 - 9,
+      limit: 9,
     })
     this.chartList && this.chartList.forEach(i => { i.$fill() })
   }

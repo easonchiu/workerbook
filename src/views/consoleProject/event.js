@@ -4,8 +4,8 @@ import fetcher from 'src/utils/fetcher'
 export default class Event {
   fetchData = async (pager = 1) => {
     await fetcher.one(this.props.$project.c_fetchList, {
-      skip: pager * 5 - 5,
-      limit: 5,
+      skip: pager * 15 - 15,
+      limit: 15,
     })
   }
 

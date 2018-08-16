@@ -5,8 +5,8 @@ export default class Event {
   // 获取首页需要的数据
   fetchData = async (page = 1) => {
     await fetcher.one(this.props.$project.fetchList, {
-      skip: page * 3 - 3,
-      limit: 3,
+      skip: page * 6 - 6,
+      limit: 6,
     })
   }
 
@@ -60,6 +60,10 @@ export default class Event {
   // 编辑任务点击
   onEditAssignMissionClick = async data => {
     const project = data.project || {}
+    if (project.isTimeout) {
+      Toast.error('项目已过期，请联系管理员')
+      return
+    }
     const res = await fetcher.all([
       [this.props.$mission.fetchOneById, data.id],
       [this.props.$user.fetchSubList, project.departments]

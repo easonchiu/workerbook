@@ -62,7 +62,6 @@ class MyDailyWriter extends PureComponent {
   // 任务/日常选择
   onMissionChange = e => {
     const isMission = (/\*\*mission/).test(e)
-    console.log(isMission)
     this.setState({
       missionId: e,
       type: isMission ? 'mission' : 'events',

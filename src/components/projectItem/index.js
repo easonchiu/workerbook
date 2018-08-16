@@ -8,7 +8,9 @@ import IconAdd from 'src/components/svg/add'
 import UserHeader from 'src/components/userHeader'
 import Toast from 'src/components/toast'
 import Progress from 'src/components/progress'
+import connect from 'src/redux/connect'
 
+@connect
 class ProjectItem extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -57,6 +59,7 @@ class ProjectItem extends React.PureComponent {
   renderMissions() {
     const { props } = this
     const source = props.source || {}
+    const profile = props.user$.profile || {}
 
     const Item = data => {
       const user = data ? data.user ? data.user : {} : {}
@@ -81,7 +84,7 @@ class ProjectItem extends React.PureComponent {
           />
           <div className="info">
             <h6>{data.name}</h6>
-            <time>截至时间 {(new Date(data.deadline)).format('yyyy年 MM月dd日 hh:mm:ss:zzz')}</time>
+            <time>截至时间 {(new Date(data.deadline)).format('yyyy年 MM月dd日')}</time>
           </div>
           <Progress width={40} value={data.progress} isTimeout={data.isTimeout} />
         </div>
@@ -92,12 +95,16 @@ class ProjectItem extends React.PureComponent {
       <div className="missions">
         <header className="header">
           <h5>任务列表</h5>
-          <a
-            href="javascript:;"
-            onClick={this.onAddAssignMissionClick}
-          >
-            <IconAdd />添加
-          </a>
+          {
+            profile.role === 2 || profile.role === 99 ?
+              <a
+                href="javascript:;"
+                onClick={this.onAddAssignMissionClick}
+              >
+                <IconAdd />添加
+              </a> :
+              null
+          }
         </header>
         {
           source.missions && source.missions.length ?

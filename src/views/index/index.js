@@ -157,7 +157,7 @@ export default class View extends PureComponent {
         }
         <DayPicker
           start={start}
-          placeholder="更多日期"
+          placeholder="更早"
           end={now}
           value={this.state.dayPickerValue}
           onChange={this.evt.dayPickerChange}
