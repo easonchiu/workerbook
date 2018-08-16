@@ -5,6 +5,7 @@ import className from 'classnames'
 
 import Input from 'src/components/input'
 import Button from 'src/components/button'
+import Progress from 'src/components/progress'
 import Select from 'src/components/select'
 import IconDel from 'src/components/svg/delete'
 import IconRewrite from 'src/components/svg/rewrite'
@@ -124,6 +125,7 @@ class MyDailyWriter extends PureComponent {
       content: '',
       type: '',
       rewriteId: '',
+      missionId: '',
       rewriteContent: '',
       deleteId: '',
     })
@@ -197,7 +199,7 @@ class MyDailyWriter extends PureComponent {
         data[key]['type'] = 'mission'
         data[key]['mission'] = key
         data[key]['progress'] = item.progress
-        data[key]['groupTitle'] = item.projectName + ' - ' + item.missionName
+        data[key]['groupTitle'] = <strong><em>{item.projectName}</em>{item.missionName}</strong>
         data[key]['list'].push({
           content: item.record,
           id: item.id,
@@ -210,7 +212,7 @@ class MyDailyWriter extends PureComponent {
           data[key] = { list: [] }
         }
         data[key]['type'] = 'events'
-        data[key]['groupTitle'] = item.eventName
+        data[key]['groupTitle'] = <strong><em>日常</em>{item.eventName}</strong>
         data[key]['list'].push({
           content: item.record,
           id: item.id,
@@ -296,17 +298,10 @@ class MyDailyWriter extends PureComponent {
                   <div className={headerCss}>
                     {
                       item.type === 'mission' ?
-                        <span /> :
+                        <Progress value={item.progress} width={40} /> :
                         null
                     }
-                    <strong>
-                      {
-                        item.type === 'events' ?
-                          <em>[日常]</em> :
-                          null
-                      }
-                      {item.groupTitle}
-                    </strong>
+                    {item.groupTitle}
                     {
                       item.type === 'mission' ?
                         <div className="progress clearfix">
@@ -482,7 +477,13 @@ class MyDailyWriter extends PureComponent {
   render() {
     return (
       <div className="wb-daily-writer">
-        <div className="icon" />
+        <div className="icon">
+          <svg viewBox="0 0 1025 1024" width="256.25" height="256">
+            <path
+              d="M940.64 82.56c-52.64-52.576-121.952-82.56-190.272-82.56-57.632 0-110.688 21.376-149.44 60.064l-155.744 156.928c-0.48 0.448-1.024 0.736-1.504 1.216-0.256 0.256-0.416 0.608-0.672 0.832l0.064 0.064-330.528 333.088c-15.232 15.136-26.272 33.984-32.416 54.56l-75.168 272.256c-0.064 0.736-4.96 22.112-4.96 32.992 0 61.824 50.208 112 112.128 112 12.32 0 36.16-5.888 37.024-6.016l271.296-71.328c20.608-6.112 39.328-17.248 54.56-32.512l488.416-492.256c88.832-88.896 78.816-237.888-22.784-339.328zM512.448 761.44c-2.624-28.864-10.784-57.184-23.008-84.064l302.56-302.528c18.496 58.432 8.992 119.552-31.552 160.128-0.256 0.256-0.576 0.416-0.8 0.672l0.448 0.416-247.296 249.28c0-7.968 0.384-15.776-0.352-23.904zM473.376 648.192c-11.936-19.616-25.504-38.56-42.304-55.328-19.552-19.552-41.984-34.88-65.408-47.744l305.024-305.024c23.936 10.624 46.88 25.76 67.136 46.016 17.312 17.248 30.688 36.576 40.992 56.672l-305.44 305.408zM335.552 529.984c-29.632-11.936-60.672-18.752-91.776-19.168l246.496-248.384c37.728-36.8 92.672-47.392 146.784-33.984l-301.504 301.536zM133.344 955.936c-3.488 0.8-14.336 3.552-21.696 4.064-26.304-0.32-47.648-21.696-47.648-48 0.384-5.376 2.528-14.624 3.264-17.984l33.696-122.048c36.576-0.992 75.936 13.248 106.88 44.256 31.424 31.36 46.208 71.488 44.608 108.512l-119.104 31.2zM283.968 916.384c-0.768-42.944-18.24-87.616-53.504-122.816-33.344-33.376-76.992-52.64-120.512-54.368l31.872-115.424c2.304-7.68 6.88-15.264 12.512-21.888 64.192-45.952 162.912-32.384 231.488 36.256 72.544 72.512 83.744 178.752 27.872 242.176-3.712 1.952-7.456 3.808-11.488 4.992l-118.24 31.072zM918.112 376.704l-53.888 54.304c0-7.232 0.864-14.176 0.192-21.568-5.632-61.92-34.496-121.792-81.376-168.608-52.128-52.16-121.248-82.08-189.696-82.272l52.992-53.44c26.528-26.464 63.552-41.12 104.032-41.12 51.488 0 104.384 23.296 145.056 63.84 38.176 38.112 60.928 85.472 64.192 133.376 3.008 44.704-11.744 85.696-41.504 115.488z"
+            />
+          </svg>
+        </div>
         <div className="content">
           {this.renderMyDailyList()}
           {this.renderWriter()}

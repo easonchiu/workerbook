@@ -2,6 +2,8 @@ import './style'
 import React from 'react'
 import classNames from 'classnames'
 
+import Progress from 'src/components/progress'
+
 const DailyItem = props => {
   const source = props.source || { list: [] }
 
@@ -18,7 +20,7 @@ const DailyItem = props => {
         }
         data[key]['progress'] = item.progress
         data[key]['type'] = 'mission'
-        data[key]['groupTitle'] = item.projectName + ' - ' + item.missionName
+        data[key]['groupTitle'] = <strong><em>{item.projectName}</em>{item.missionName}</strong>
         data[key]['list'].push({
           content: item.record,
           id: item.id,
@@ -31,7 +33,7 @@ const DailyItem = props => {
           data[key] = { list: [] }
         }
         data[key]['type'] = 'events'
-        data[key]['groupTitle'] = item.eventName
+        data[key]['groupTitle'] = <strong><em>日常</em>{item.eventName}</strong>
         data[key]['list'].push({
           content: item.record,
           id: item.id,
@@ -48,14 +50,11 @@ const DailyItem = props => {
               <div key={i} className={css}>
                 <div className="header clearfix">
                   {
-                    item.type === 'mission' ? <span /> : null
-                  }
-                  {
                     item.type === 'mission' ?
-                      <strong>{item.groupTitle}</strong> :
-                      <strong><em>[日常]</em>{item.groupTitle}</strong>
+                      <Progress width={40} value={item.progress} /> :
+                      null
                   }
-
+                  {item.groupTitle}
                 </div>
                 {
                   item.list.map((k, i) => (

@@ -36,40 +36,23 @@
         border-bottom: none;
         padding-bottom: 15px;
       }
-      &.item--events {
-        .header em {
-          padding-right: 5px;
-          color: #a8b0b9;
-        }
+      .header em {
+        padding-right: 5px;
+        color: #a8b0b9;
       }
     }
     .header {
       font-size: 14px;
       margin-bottom: 5px;
-      > span {
-        display: block;
+      > .wb-progress {
         float: left;
-        width: 14px;
-        height: 14px;
-        margin: 3px 6px 0 0;
-        background: #f7f9fc - 5;
-        border-radius: 50%;
-        overflow: hidden;
-        &:after {
-          content: '';
-          display: block;
-          width: 7px;
-          height: 7px;
-          background: #5081ff;
-          margin-left: 7px;
-        }
+        margin: 0 6px 0 0;
       }
       strong {
         display: block;
         float: left;
         line-height: 20px;
         color: #eb7350;
-        width: 688px;
         text-align: justify;
       }
     }
