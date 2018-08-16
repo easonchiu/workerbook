@@ -12,7 +12,6 @@ class Loading {
     loading.classList.add('wb-loading')
     loading.id = 'j-wb-loading'
     loading.innerHTML = `<div class="wb-loading__inner"></div>`
-    console.log(loading)
     document.body.appendChild(loading)
     setTimeout(() => {
       loading.classList.add('wb-loading--ani')

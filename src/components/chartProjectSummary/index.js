@@ -91,30 +91,6 @@ class Chart extends React.PureComponent {
       }
       series.push(d)
     })
-    if (series.length > 1) {
-      // 排序，最先有数据的排在最下方
-      series.sort((a, b) => {
-        let na = 0
-        for (let i = 0; 0 < a.data.length; i++) {
-          if (a.data[i] === 0) {
-            na += 1
-          }
-          else {
-            break
-          }
-        }
-        let nb = 0
-        for (let i = 0; 0 < b.data.length; i++) {
-          if (a.data[i] === 0) {
-            nb += 1
-          }
-          else {
-            break
-          }
-        }
-        return na - nb < 0 ? 1 : -1
-      })
-    }
     return series
   }
 
@@ -239,7 +215,7 @@ class Chart extends React.PureComponent {
             if (i.y !== 0) {
               const progress = i.y < 100 ?
                 `<span style="color:#ccc;">${i.y} %</span>` :
-                `<span style="color:#33b400;font-weight:bold;">完成</span>`
+                `<span style="font-weight:bold;color:#33b400;">完成</span>`
               bd += `
                 <span style="color:${i.color}">\u25CF</span>
                 <span style="color:#ccc;">${i.series.name} 进度: ${progress}</span><br/>

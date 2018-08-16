@@ -72,8 +72,22 @@ export default class View extends PureComponent {
   render(props, state) {
     const detail = this.props.analytics$.project.detail || { missions: [] }
     if (detail.missions.length > 1) {
+      const D = 'T23:59:59+08:00'
       detail.missions.sort((a, b) => {
-        return a.data.length - b.data.length <= 0 ? -1 : 1
+        if (!a.data || !b.data) {
+          return -1
+        }
+        const fa = a.data[0] ? a.data[0].day : ''
+        const fb = b.data[0] ? b.data[0].day : ''
+        if (!fa) {
+          return 1
+        }
+        else if (!fb) {
+          return -1
+        }
+        const da = new Date(fa + D)
+        const db = new Date(fb + D)
+        return da > db ? -1 : 1
       })
     }
     return (
