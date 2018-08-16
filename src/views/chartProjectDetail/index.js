@@ -34,7 +34,14 @@ export default class View extends PureComponent {
             <time>截至时间：{new Date(detail.deadline).format('yyyy-MM-dd')}</time>
           </div>
         </header>
-        <ChartMission source={detail} />
+        <ChartMission
+          id={detail.id}
+          ref={r => {
+            if (r) {
+              r.$fill && r.$fill(detail)
+            }
+          }}
+        />
       </div>
     )
   }

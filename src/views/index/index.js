@@ -106,6 +106,15 @@ export default class View extends PureComponent {
     )
   }
 
+  // 日期选择
+  renderDayPicker() {
+    return (
+      <div className="daily-day-picker">
+        xxx
+      </div>
+    )
+  }
+
   render(props, state) {
     return (
       <div className="view-index">
@@ -115,6 +124,7 @@ export default class View extends PureComponent {
         <div className="body clearfix">
           <div className="main">
             {this.renderMyDailyWriter()}
+            {this.renderDayPicker()}
             {this.renderDailyList()}
           </div>
 

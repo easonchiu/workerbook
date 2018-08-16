@@ -32,6 +32,15 @@
     }
   }
 
+  .daily-day-picker {
+    clear: both;
+    border: 1px solid #dee3e8;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    border-radius: 4px;
+    margin: 0 0 15px 70px;
+  }
+
   .body {
     > .main {
       width: 810px;

@@ -73,7 +73,7 @@ class Chart extends React.PureComponent {
     }
     const categoriesStr = categories.map(i => i.format('M/d'))
     const plotLinesValue = categoriesStr.indexOf(new Date(chart.deadline).format('M/d'))
-    return HighCharts.chart('mission-chart-' + chart.id, {
+    return HighCharts.chart('mission-chart-' + this.props.id, {
       chart: {
         type: 'area'
       },
@@ -199,8 +199,7 @@ class Chart extends React.PureComponent {
     })
   }
 
-  componentDidMount() {
-    const chart = this.props.source || {}
+  $fill(chart) {
     if (chart.id) {
       this.$chart = this.renderMissionChart(chart)
     }
@@ -213,13 +212,10 @@ class Chart extends React.PureComponent {
   }
 
   render() {
-    if (!this.props.source || !this.props.source.id) {
-      return null
-    }
     return (
       <div
         className="wb-mission-chart"
-        id={'mission-chart-' + this.props.source.id}
+        id={'mission-chart-' + this.props.id}
       >
         暂无数据
       </div>

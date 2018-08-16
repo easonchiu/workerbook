@@ -55,7 +55,14 @@ export default class View extends PureComponent {
                       </time>
                     </div>
                   </header>
-                  <ChartMission source={data} />
+                  <ChartMission
+                    id={data.id}
+                    ref={r => {
+                      if (r) {
+                        r.$fill && r.$fill(data)
+                      }
+                    }}
+                  />
                 </div>
               )
             })

@@ -239,7 +239,7 @@ class Chart extends React.PureComponent {
             if (i.y !== 0) {
               const progress = i.y < 100 ?
                 `<span style="color:#ccc;">${i.y} %</span>` :
-                `<b style="color:#33b400;">完成</b>`
+                `<span style="color:#33b400;font-weight:bold;">完成</span>`
               bd += `
                 <span style="color:${i.color}">\u25CF</span>
                 <span style="color:#ccc;">${i.series.name} 进度: ${progress}</span><br/>
