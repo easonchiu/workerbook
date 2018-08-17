@@ -1,0 +1,26 @@
+
+
+.wb-form {
+  width: 400px;
+  margin: 0 auto;
+  .wb-form__row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .wb-form__label {
+    display: block;
+    white-space: nowrap;
+    margin-right: 10px;
+    color: #586069;
+    font-size: 14px;
+    width: 5em;
+    text-align: right;
+  }
+  .wb-form__content {
+    flex: 1;
+  }
+}

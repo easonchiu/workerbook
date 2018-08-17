@@ -1,0 +1,21 @@
+
+.console-department {
+  table {
+    td:nth-child(1) {
+      width: 80px;
+      text-align: center;
+    }
+    td:nth-child(3) {
+      width: 150px;
+      text-align: center;
+    }
+    td:nth-child(4) {
+      width: 150px;
+      text-align: center;
+    }
+    td:last-child {
+      width: 120px;
+      text-align: center;
+    }
+  }
+}

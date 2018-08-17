@@ -1,0 +1,36 @@
+
+.console-user {
+  table {
+    td:nth-child(1) {
+      width: 80px;
+      text-align: center;
+    }
+    td:nth-child(3) {
+      width: 120px;
+    }
+    td:nth-child(4) {
+      width: 120px;
+      text-align: center;
+    }
+    td:nth-child(5) {
+      width: 120px;
+      text-align: center;
+    }
+    td:nth-child(6) {
+      width: 100px;
+      text-align: center;
+    }
+    td:nth-child(7) {
+      width: 100px;
+      text-align: center;
+    }
+    td:nth-child(8) {
+      width: 150px;
+      text-align: center;
+    }
+    td:last-child {
+      width: 120px;
+      text-align: center;
+    }
+  }
+}

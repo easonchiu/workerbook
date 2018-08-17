@@ -1,42 +1,61 @@
-const path = require('path')
-const config = require('../config')
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+const config = require('./conf')
 const utils = require('./utils')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 
-const baseWebpackConfig = require('./webpack.base.conf')
 
+const baseWebpackConfig = require('./webpack.base.conf')
 
 // 针对生产环境修改配置
 const webpackConfig = merge(baseWebpackConfig, {
+  devtool: '#cheap-module-eval-source-map',
+  output: {
+    path: config[process.env.PACKAGE].assetsRoot,
+    filename: utils.assetsPath('js/[name].js'),
+    chunkFilename: utils.assetsPath('js/[name].js'),
+    publicPath: config[process.env.PACKAGE].assetsPublicPath,
+  },
 
-	devtool: '#cheap-module-eval-source-map',
+  plugins: [
 
-	plugins: [
-		new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin(),
-	],
+    // 设置环境变量
+    new webpack.DefinePlugin({
+      'process.env.PACKAGE': JSON.stringify(process.env.PACKAGE),
+    }),
 
-	devServer: {
-		contentBase: config.develop.srcRoot,
-	    historyApiFallback: true,
-	    hot: true,
-	    open: true,
-	    inline: true,
-	    disableHostCheck: true,
-	    port: config.develop.port,
-	    proxy: {
-	    	'/proxy': {
-	            target: 'http://daily.atzuche.com/api',
-	            // target: 'http://10.0.3.21:3333/api',
-	            pathRewrite: {
-	            	'/proxy': ''
-	            },
-	            changeOrigin: true,
-	            secure: false,
-	        },
-	    }
-	}
+    // 热更新
+    new webpack.HotModuleReplacementPlugin(),
+
+    // 美化本地开发时的终端界面
+    new FriendlyErrorsWebpackPlugin({
+      compilationSuccessInfo: {
+        messages: ['You application is running here http://localhost:' + config[process.env.PACKAGE].port],
+      },
+    }),
+  ],
+
+  devServer: {
+    contentBase: __dirname,
+    historyApiFallback: true,
+    hot: true,
+    open: true,
+    inline: true,
+    quiet: true,
+    disableHostCheck: true,
+    port: config[process.env.PACKAGE].port,
+    proxy: {
+      '/proxy/*': {
+        // target: 'http://localhost:8080/',
+        target: 'http://10.0.3.21:7001/',
+        pathRewrite: {
+          '^/proxy/': '/',
+        },
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 })
 
 module.exports = webpackConfig

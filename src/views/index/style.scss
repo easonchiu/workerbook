@@ -1,19 +1,83 @@
 @charset "utf-8";
 
-.view {
-	.app-main {
-		padding-top: 110px;
-		width: 1040px;
-		margin: 0 auto;
-		display: -webkit-box;
-		-webkit-box-align: start;
-		.app-body {
-			width: 760px;
-			margin-right: 15px;
-			min-height: 800px;
-		}
-		.app-aside {
-			-webkit-box-flex: 1;
-		}
-	}
+.view-index {
+  .empty-header-missions {
+    height: 20px;
+  }
+
+  > .header-missions {
+    background: #fff;
+    padding: 20px 0 20px;
+    margin: 0 -1600px 20px -1600px;
+    border-bottom: 1px solid #dee3e8;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    > .inner {
+      width: 1128px;
+      margin: 0 auto;
+      > header {
+        margin-bottom: 15px;
+        h1 {
+          font-size: 18px;
+          line-height: 20px;
+          font-weight: 700;
+        }
+      }
+      .list {
+        margin-right: -15px;
+        > div {
+          margin-right: 15px;
+          float: left;
+        }
+      }
+    }
+  }
+
+  .daily-day-picker {
+    clear: both;
+    border: 1px solid #dee3e8;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    border-radius: 4px;
+    margin: 0 0 15px 70px;
+    > a, > p {
+      display: block;
+      float: left;
+      width: 80px;
+      font-size: 14px;
+      text-align: center;
+      height: 50px;
+      line-height: 50px;
+      color: #8a929b;
+    }
+    > a:hover {
+      opacity: 0.7;
+    }
+    > p {
+      color: #5081ff;
+      font-weight: bold;
+    }
+    .wb-day-picker {
+      float: right;
+      width: 320px;
+      margin: 5px 5px 0 0;
+      border: none !important;
+      box-shadow: none !important;
+      &__value {
+        width: auto;
+        float: right;
+      }
+    }
+  }
+
+  .body {
+    > .main {
+      width: 810px;
+      margin-right: 15px;
+      float: left;
+    }
+    > .aside {
+      width: 303px;
+      float: right;
+    }
+  }
 }

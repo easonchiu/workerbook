@@ -1,110 +1,90 @@
 @charset "utf-8";
 
-.user-header {
-	display: block;
-	width: 60px;
-	height: 60px;
-	line-height: 60px;
-	text-align: center;
-	color: #fff;
-	font-size: 14px;
-	background-color: #a8b0b9 + 40;
-	border-radius: 50%;
-	position: relative;
-	
-	&--hidden {
-		visibility: hidden;
-	}
+.wb-user-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  color: #fff;
+  font-size: 14px;
+  background-color: #d0d8e1;
+  border-radius: 50%;
+  position: relative;
+  transition: all 0.1s ease-out;
 
-	&--big-font {
-		font-size: 20px;
-	}
+  &.big-font {
+    font-size: 20px;
+  }
 
-	p {
-		position: absolute;
-		left: 50%;
-		top: -10px;
-		-webkit-transform: translate(-50%,-100%);
-		z-index: 99;
-		pointer-events: none;
-		font-size: 12px;
-		line-height: 1.5;
-		display: none;
-		em {
-			display: block;
-			position: relative;
-			z-index: 2;
-			white-space: nowrap;
-			color: #fff;
-			font-size: 12px;
-			padding: 6px 10px;
-		}
-		span {
-			position: absolute;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			background: #000;
-			border-radius: 4px;
-			opacity: 0.8;
-			&:after {
-				content: "";
-				display: block;
-				position: absolute;
-				left: 50%;
-				margin-left: -2px;
-				bottom: -3px;
-				border: 4px solid #000;
-				-webkit-transform: rotate(-45deg);
-				width: 0;
-				height: 0;
-			}
-		}
-	}
-	&:hover {
-		p {
-			display: block;
-		}
-	}
+  &.mini {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  .wb-tips {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .del, .stop, .self {
+    display: block;
+    width: 10px;
+    height: 10px;
+    background: #ff3300;
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+  }
+
+  .self {
+    background: #5081ff;
+  }
 }
-div.user-header {
-	&.c0 {
-		background: #feb5cc;
-	}
-	&.c1 {
-		background: #c7b3ff;
-	}
-	&.c2 {
-		background: #68e4b1;
-	}
-	&.c3 {
-		background: #a8e26f;
-	}
-	&.c4 {
-		background: #82c6f1;
-	}
-	&.c5 {
-		background: #f8b981;
-	}
+
+.wb-user-header.color-0 {
+  background: #feb5cc;
 }
-a.user-header:hover {
-	&.c0 {
-		background: #feb5cc;
-	}
-	&.c1 {
-		background: #c7b3ff;
-	}
-	&.c2 {
-		background: #68e4b1;
-	}
-	&.c3 {
-		background: #a8e26f;
-	}
-	&.c4 {
-		background: #82c6f1;
-	}
-	&.c5 {
-		background: #f8b981;
-	}
+.wb-user-header.color-1 {
+  background: #c7b3ff;
+}
+.wb-user-header.color-2 {
+  background: #68e4b1;
+}
+.wb-user-header.color-3 {
+  background: #a8e26f;
+}
+.wb-user-header.color-4 {
+  background: #82c6f1;
+}
+.wb-user-header.color-5 {
+  background: #f8b981;
+}
+.wb-user-header.gray {
+  background: #d0d8e1;
+}
+
+a.wb-user-header.color-0:hover {
+  background: #feb5cc;
+}
+a.wb-user-header.color-1:hover {
+  background: #c7b3ff;
+}
+a.wb-user-header.color-2:hover {
+  background: #68e4b1;
+}
+a.wb-user-header.color-3:hover {
+  background: #a8e26f;
+}
+a.wb-user-header.color-4:hover {
+  background: #82c6f1;
+}
+a.wb-user-header.color-5:hover {
+  background: #f8b981;
 }
