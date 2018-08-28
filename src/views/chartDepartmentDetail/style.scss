@@ -1,0 +1,131 @@
+
+.view-department-chart {
+
+  .summary {
+    background: #fff;
+    padding: 20px 0 10px 0;
+    margin: 0 -1600px 20px -1600px;
+    border-bottom: 1px solid #dee3e8;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    > .inner {
+      width: 1128px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: block;
+      overflow: hidden;
+      margin-bottom: 15px;
+      h1 {
+        font-size: 18px;
+        line-height: 20px;
+        font-weight: 700;
+        float: left;
+        margin-right: 10px;
+        color: #222;
+      }
+      span {
+        display: block;
+        float: left;
+        font-size: 14px;
+        line-height: 20px;
+        color: #a8b0b9;
+      }
+    }
+  }
+
+  .user-chart {
+    border: 1px solid #dee3e8;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    border-radius: 4px;
+    margin-bottom: 15px;
+    padding: 15px 15px 0 15px;
+    > .header {
+      margin-bottom: 15px;
+      .wb-user-header {
+        float: left;
+        margin-right: 10px;
+        width: 40px;
+        height: 40px;
+      }
+      .info {
+        float: left;
+        h2 {
+          font-size: 16px;
+          line-height: 1.5;
+          font-weight: 700;
+          color: #222;
+          margin-bottom: 2px;
+        }
+        span {
+          display: block;
+          font-size: 12px;
+          line-height: 1.2;
+          color: #a8b0b9;
+        }
+      }
+    }
+    > .empty {
+      line-height: 100px;
+      height: 150px;
+      text-align: center;
+      font-size: 14px;
+      color: #d8d9df;
+    }
+    > .missions {
+      margin-right: -15px;
+      > .item {
+        width: 540px;
+        float: left;
+        margin: 0 15px 15px 0;
+        background: #f7f9fc;
+        padding: 15px;
+        border-radius: 4px;
+        > div {
+          position: relative;
+          padding-top: 15px;
+          background: #fff;
+          border-radius: 4px;
+          overflow: hidden;
+          height: 150px;
+          &.empty {
+            padding-top: 0;
+            line-height: 150px;
+            text-align: center;
+            font-size: 14px;
+            color: #d8d9df;
+          }
+        }
+        .header {
+          margin-bottom: 10px;
+          .name {
+            float: left;
+          }
+          .info {
+            float: right;
+          }
+          h3 {
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 22px;
+          }
+          p {
+            display: block;
+            font-size: 14px;
+            line-height: 18px;
+            color: #586069;
+          }
+          span, time {
+            display: block;
+            font-size: 12px;
+            line-height: 20px;
+            color: #a8b0b9;
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
+
+}

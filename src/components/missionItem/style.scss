@@ -1,0 +1,61 @@
+
+.wb-mission-item {
+  position: relative;
+  width: 366px;
+  height: 100px;
+  border-radius: 4px;
+  border: 1px solid #dee3e8;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  > h2 {
+    padding: 10px 80px 0 10px;
+    color: #222;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.5;
+    margin-bottom: 5px;
+    span {
+      display: block;
+      float: left;
+      border-radius: 50px;
+      margin: 2px 5px 0 0;
+      color: #fff;
+      font-size: 12px;
+      font-weight: normal;
+      line-height: 1;
+      padding: 4px 6px;
+      &.weight-2 {
+        background: #ff9900;
+      }
+      &.weight-3 {
+        background: #ff3300;
+      }
+    }
+  }
+  > footer {
+    padding: 10px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+    p {
+      font-size: 12px;
+      line-height: 1.5;
+      float: left;
+      color: #a8b0b9;
+      span {
+        color: #8a929b;
+        margin-right: 5px;
+      }
+    }
+    p:last-child {
+      float: right;
+    }
+  }
+  .wb-progress {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+  }
+}

@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+.wb-main-daily-list {
+  > .row {
+    .wb-user-header {
+      float: left;
+      margin-right: 10px;
+    }
+    .wb-daily-item {
+      float: left;
+      width: 740px;
+    }
+  }
+}

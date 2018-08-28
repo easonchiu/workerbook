@@ -1,44 +1,36 @@
-@charset "utf-8";
 
-.x-toast {
-	position: fixed;
-	left: 0;
-	top: 10px;
-	display: -webkit-box;
-	-webkit-box-pack: center;
-	-webkit-box-align: start;
-	width: 100%;
-	height: 100%;
-	z-index: 99997;
-	background: rgba(0,0,0,0);
-	pointer-events: none;
-	&__inner {
-		background: rgba(255,255,255,0.9);
-		padding: 10px 16px;
-		border-radius: 3px;
-		-webkit-transform-origin: 50%;
-		box-shadow: 0 0 15px rgba(0,39,61,0.1);
-		border-top: none;
-		-webkit-transform: translate(0, -150%);
-		-webkit-transition: all 0.15s ease-out;
-		p {
-			color: #ff6600;
-			font-size: 14px;
-		}
-	}
-	&--success {
-		p {
-			color: #5081ff;
-		}
-	}
-	&--show {
-		.x-toast__inner {
-			-webkit-transform: translate(0, 0);
-		}
-	}
-	&--hide {
-		.x-toast__inner {
-			-webkit-transform: translate(0, -150%);
-		}
-	}
+.wb-toast {
+  position: fixed;
+  left: 50%;
+  top: 20px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 35px rgba(0, 39, 61, 0.1);
+  z-index: 99999;
+  height: 50px;
+  min-width: 250px;
+  transform: translate(-50%, -60px);
+  opacity: 0;
+  transition: all 0.15s ease-out;
+  &__inner {
+    color: #5081ff;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    justify-content: center;
+  }
+  &--error {
+    .wb-toast__inner {
+      color: #ff3300;
+    }
+  }
+  &--show {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  &--hide {
+    transform: translate(-50%, 0) scale(0.9);
+    opacity: 0;
+  }
 }

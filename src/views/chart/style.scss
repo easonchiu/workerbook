@@ -1,0 +1,33 @@
+
+.view-chart {
+  padding-top: 20px;
+
+  > .chart-tabs {
+    border: 1px solid #dee3e8;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    border-radius: 4px;
+    width: 302px;
+    height: 42px;
+    margin: 0 auto 15px auto;
+    overflow: hidden;
+    a {
+      display: block;
+      float: left;
+      width: 150px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      font-size: 14px;
+      color: #586069;
+      &:hover {
+        color: #5081ff;
+      }
+      &.active {
+        background: #f7f9fc;
+        color: #5081ff;
+        font-weight: bold;
+      }
+    }
+  }
+}

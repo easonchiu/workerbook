@@ -1,0 +1,30 @@
+
+
+.dialog-console-del {
+  .main-dialog__content {
+    width: 460px;
+    margin-left: -230px;
+  }
+  .main-dialog__body {
+    p {
+      text-align: center;
+      font-size: 14px;
+      color: #586069;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    span {
+      color: #5081ff;
+      font-weight: bold;
+      padding: 0 5px;
+    }
+    .btn {
+      display: flex;
+      justify-content: center;
+      .wb-button {
+        margin: 0 5px;
+        width: 100px;
+      }
+    }
+  }
+}

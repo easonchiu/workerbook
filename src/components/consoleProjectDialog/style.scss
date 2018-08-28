@@ -1,0 +1,65 @@
+.dialog-console-project {
+  .wb-form {
+    padding-bottom: 20px;
+    .wb-select {
+      max-width: 100%;
+    }
+    .weight {
+      display: flex;
+      align-items: center;
+      padding: 10px 5px;
+      li {
+        font-size: 13px;
+        color: #586069;
+        display: flex;
+        align-items: center;
+        margin-right: 15px;
+        cursor: pointer;
+        &:hover {
+          color: #5081ff;
+        }
+        span {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          margin-right: 5px;
+          width: 14px;
+          height: 14px;
+          opacity: 0.6;
+        }
+        &.weight-3 span {
+          background: #ff3300;
+        }
+        &.weight-2 span {
+          background: #ff9900;
+        }
+        &.weight-1 span {
+          background: #33b400;
+        }
+        &.active {
+          &.weight-3 {
+            color: #ff3300;
+          }
+          &.weight-2 {
+            color: #ff9900;
+          }
+          &.weight-1 {
+            color: #33b400;
+          }
+          span {
+            opacity: 1;
+            &:after {
+              content: '';
+              display: block;
+              width: 10px;
+              height: 10px;
+              background: #fff;
+              border-radius: 50%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

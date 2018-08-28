@@ -1,0 +1,29 @@
+.wb-icon {
+  display: block;
+  user-select: none;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  .wb-tips {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 2px;
+  }
+  &:hover .wb-svg {
+    fill: #5081ff;
+    &--red {
+      fill: #ff3300;
+    }
+  }
+}
+
+.wb-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  fill: #a8b0b9;
+}

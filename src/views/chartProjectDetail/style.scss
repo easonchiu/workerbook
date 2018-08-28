@@ -1,0 +1,102 @@
+
+.view-project-chart {
+
+  .summary {
+    background: #fff;
+    padding: 20px 0 10px 0;
+    margin: 0 -1600px 20px -1600px;
+    border-bottom: 1px solid #dee3e8;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    > .inner {
+      width: 1128px;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: block;
+      overflow: hidden;
+      margin-bottom: 15px;
+      h1 {
+        font-size: 18px;
+        line-height: 20px;
+        font-weight: 700;
+        float: left;
+        margin-right: 10px;
+        color: #222;
+      }
+      span {
+        display: block;
+        float: left;
+        font-size: 14px;
+        line-height: 20px;
+        color: #a8b0b9;
+      }
+      .deadline {
+        float: right;
+        overflow: hidden;
+        p, time {
+          float: left;
+          font-size: 14px;
+          line-height: 20px;
+          color: #586069;
+        }
+        p {
+          margin-right: 5px;
+          color: #a8b0b9;
+          &.timeout {
+            color: #ff6600;
+          }
+        }
+      }
+    }
+  }
+
+  .mission-chart {
+    border: 1px solid #dee3e8;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    border-radius: 4px;
+    margin-bottom: 15px;
+    padding: 15px 15px 0 15px;
+    > .header {
+      display: block;
+      overflow: hidden;
+      margin-bottom: 15px;
+      .wb-user-header {
+        float: left;
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+      }
+      .info {
+        float: left;
+        h2 {
+          font-size: 16px;
+          line-height: 1.5;
+          font-weight: 700;
+          color: #222;
+          margin-bottom: 2px;
+        }
+        time {
+          display: block;
+          font-size: 12px;
+          line-height: 1.2;
+          color: #a8b0b9;
+        }
+      }
+    }
+
+
+    > .chart {
+      width: 100%;
+      height: 140px;
+      text-align: center;
+      line-height: 140px;
+      border-left: 1px solid #f7f9fc - 20;
+      border-bottom: 1px solid #f7f9fc - 20;
+      color: #d0d8e1;
+      font-size: 12px;
+    }
+  }
+
+}

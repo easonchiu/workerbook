@@ -1,0 +1,133 @@
+html {
+  color: #222;
+  overflow-x: hidden;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  color: inherit;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+input {
+  outline: none;
+}
+
+*, *:before, *:after {
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  outline: none;
+}
+
+.clearfix:before, .clearfix:after {
+  content: "\0020";
+  display: block;
+  height: 0;
+  overflow: hidden
+}
+
+.clearfix:after {
+  clear: both
+}
+
+.clearfix {
+  zoom: 1
+}
+
+.console-table {
+  width: 100%;
+  border-top: 1px solid #ebedf0;
+  font-size: 14px;
+  thead tr {
+    background: #f7f9fc;
+    border-bottom: 1px solid #ebedf0;
+    color: #333;
+  }
+  tbody tr {
+    border-bottom: 1px solid #ebedf0;
+    color: #586069;
+    &:hover {
+      background: #fffff1;
+    }
+    td {
+      font-size: 13px;
+    }
+  }
+  td {
+    padding: 16px 10px;
+    vertical-align: middle;
+    line-height: 20px;
+    &.c {
+      .wb-icon {
+        top: 2px;
+        display: inline-block;
+        visibility: hidden;
+        margin: 0 5px;
+      }
+    }
+  }
+  tr:hover td.c a {
+    visibility: visible;
+  }
+}
+
+.scroller {
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #dee3e8;
+  }
+  &::-webkit-scrollbar-track {
+    background: #fff;
+    border-left: 1px solid #dee3e8;
+  }
+}

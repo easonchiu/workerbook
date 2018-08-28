@@ -1,0 +1,22 @@
+.chart-department-list {
+  > .header {
+    margin-bottom: 15px;
+    h1 {
+      font-size: 18px;
+      line-height: 20px;
+      font-weight: bold;
+    }
+  }
+
+  .list {
+    margin-right: -15px;
+    .wb-pie-chart-department {
+      float: left;
+      margin: 0 15px 15px 0;
+    }
+  }
+
+  > .wb-pager {
+    justify-content: center;
+  }
+}

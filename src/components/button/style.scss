@@ -1,65 +1,52 @@
 @charset "utf-8";
 
-.app-button {
-	display: -webkit-box;
-	-webkit-box-align: center;
-	height: 40px;
-	background: #5081ff;
-	color: #fff;
-	font-size: 14px;
-	border: 1px solid #2c61e9;
-	box-shadow: 0 0 0 1px rgba(255,255,255,0.1) inset;
-	padding: 0 20px;
-	cursor: pointer;
-	border-radius: 3px;
-	-webkit-user-select: none;
-
-	&--loading {
-		pointer-events: none;
-		opacity: 0.7;
-	}
-
-	&:hover {
-		background: #5081ff - 10;
-		color: #fff;
-	}
-
-	&--disabled {
-		opacity: 0.7;
-		pointer-events: none;
-	}
-
-	&--danger {
-		border: 1px solid rgb(246,130,59);
-		background: rgb(246,150,59);
-		&:hover {
-			background: rgb(246,150,59) - 10;
-		}
-	}
-
-	.x-loading__spin {
-		width: 14px;
-		height: 14px;
-		margin-right: 5px;
-		position: relative;
-		&_circular {
-			-webkit-animation: '__x_loading_rotate' 2s linear infinite;
-			height: 100%;
-			transform-origin: center center;
-			width: 100%;
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			margin: auto;
-		}
-		&_path {
-			stroke-dasharray: 1, 200;
-			stroke-dashoffset: 0;
-			stroke: #fff;
-			-webkit-animation: '__x_loading_dash' 1.5s ease-in-out infinite;
-			stroke-linecap: round;
-		}
-	}
+.wb-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  line-height: 1;
+  background: #5081ff;
+  color: #fff;
+  font-size: 14px;
+  border: 1px solid #2c61e9;
+  box-shadow: inset 0 0 0 1px hsla(0,0%,100%,.1);
+  padding: 0 20px;
+  cursor: pointer;
+  border-radius: 3px;
+  -webkit-user-select: none;
+  outline: none;
+  &:hover {
+    background: #4677f5;
+  }
+  &.mini {
+    height: auto;
+    line-height: 1;
+    padding: 6px;
+    font-size: 12px;
+    color: #fff;
+    border-radius: 2px;
+    border: none;
+    box-shadow: none;
+  }
+  &.light {
+    background: #fff;
+    border: 1px solid #dee3e8;
+    color: #8a929b;
+    box-shadow: inset 0 0 0 1px hsla(0,0%,100%,1);
+    &:hover {
+      background: #f7f9fc;
+    }
+  }
+  &.danger {
+    background: #eb5555;
+    border: 1px solid #c61414;
+    &:hover {
+      background: #eb5555 - 15;
+    }
+  }
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 }

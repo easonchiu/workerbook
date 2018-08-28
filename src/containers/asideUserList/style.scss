@@ -1,0 +1,19 @@
+@charset "utf-8";
+
+.wb-aside-user-list {
+  > .list {
+    padding: 15px 0 5px 15px;
+    .wb-user-header {
+      margin: 0 15px 15px 0;
+      float: left;
+      width: 56px;
+      height: 56px;
+    }
+  }
+  .empty {
+    text-align: center;
+    padding: 30px 15px 60px 0;
+    font-size: 12px;
+    color: #d8d9df;
+  }
+}

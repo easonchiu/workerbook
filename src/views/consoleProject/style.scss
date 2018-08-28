@@ -1,0 +1,58 @@
+
+.console-project {
+  .weight-2, .weight-3 {
+    display: inline-block;
+    border-radius: 50px;
+    margin: 0 5px 0 0;
+    position: relative;
+    top: -1px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1;
+    padding: 4px 6px;
+    background: #ff9900;
+  }
+  .weight-3 {
+    background: #ff3300;
+  }
+  .wb-progress {
+    margin: 0 auto;
+  }
+  table {
+    td:nth-child(1) {
+      width: 80px;
+      text-align: center;
+    }
+    td:nth-child(3) {
+      width: 120px;
+      text-align: center;
+    }
+    td:nth-child(4) {
+      width: 120px;
+      text-align: center;
+    }
+    td:nth-child(5) {
+      width: 150px;
+      text-align: center;
+    }
+    td:nth-child(6) {
+      width: 150px;
+      text-align: center;
+    }
+    td:nth-child(7) {
+      width: 160px;
+      text-align: center;
+      .wb-button {
+        opacity: 0.3;
+        display: inline;
+        position: relative;
+        top: -3px;
+        margin-left: 10px;
+      }
+    }
+    tr:hover .wb-button {
+      opacity: 1;
+    }
+  }
+}
